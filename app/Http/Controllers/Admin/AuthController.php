@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class AuthController extends Controller
             return redirect('dashboard'); // Redirect to dashboard if session is set
         }
 
-        return view('auth');
+        return view('admin.auth');
 
     }
 

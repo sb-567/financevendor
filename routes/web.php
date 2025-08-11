@@ -1,17 +1,18 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DistrictController;
-use App\Http\Controllers\VendorsController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\StateController;
-use App\Http\Controllers\SubeventController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CommonController;
-use App\Http\Controllers\GuestController;
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DistrictController;
+use App\Http\Controllers\Admin\VendorsController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\StateController;
+use App\Http\Controllers\Admin\SubeventController;
+use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CommonController;
+use App\Http\Controllers\Admin\GuestController;
 
 /*
 |--------------------------------------------------------------------------

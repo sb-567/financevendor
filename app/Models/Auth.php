@@ -11,5 +11,5 @@ class Auth extends Model
 {
     use HasFactory;
 
-    protected $table = 'tbl_auth';
+    protected $table = 'tbl_admin';
 }

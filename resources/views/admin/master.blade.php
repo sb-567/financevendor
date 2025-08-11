@@ -8,7 +8,7 @@
     <title>@yield('title','SUPER ADMIN')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    @include('includes.style')
+    @include('admin.includes.style')
 
 </head>
 
@@ -17,14 +17,14 @@
     <!-- Begin page -->
     <div id="layout-wrapper">
 
-       @include('includes.header')
+       @include('admin.includes.header')
 
    
             @yield('content')
             
 
    
-      @include('includes.script')
+      @include('admin.includes.script')
 
       @yield('customscript')
 </body>

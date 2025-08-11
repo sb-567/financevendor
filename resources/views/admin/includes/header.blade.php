@@ -32,7 +32,7 @@
                 </button>
 
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
+                {{-- <form class="app-search d-none d-md-block">
                     <div class="position-relative">
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off" id="search-options" value="">
                         <span class="mdi mdi-magnify search-widget-icon"></span>
@@ -115,12 +115,12 @@
                             <a href="pages-search-results.html" class="btn btn-primary btn-sm">View All Results <i class="ri-arrow-right-line ms-1"></i></a>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
 
             <div class="d-flex align-items-center">
 
-                <div class="dropdown d-md-none topbar-head-dropdown header-item">
+                {{-- <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar material-shadow-none btn-ghost-secondary rounded-circle" id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="bx bx-search fs-22"></i>
                     </button>
@@ -134,7 +134,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                </div> --}}
 
             
 
@@ -471,21 +471,21 @@
             <a href="index.html" class="logo logo-dark">
                 <span class="logo-sm">
                     {{-- <img src="assets/images/logo-sm.png" alt="" height="22"> --}}
-                    <h2 class="text-white">Event Management</h2>
+                    <h2 class="text-white"></h2>
                 </span>
                 <span class="logo-lg">
-                    <h2 class="text-white">Event Management</h2>
+                    <h2 class="text-white"></h2>
                     {{-- <img src="assets/images/logo-dark.png" alt="" height="17"> --}}
                 </span>
             </a>
             <!-- Light Logo-->
             <a href="index.html" class="logo logo-light">
                 <span class="logo-sm">
-                    <h2 class="text-white">Event Management</h2>
+                    <h2 class="text-white"></h2>
                     {{-- <img src="assets/images/logo-sm.png" alt="" height="22"> --}}
                 </span>
                 <span class="logo-lg">
-                    <h2 class="text-white">Event Management</h2>
+                    <h2 class="text-white"></h2>
                     {{-- <img src="assets/images/logo-light.png" alt="" height="17"> --}}
                 </span>
             </a>
