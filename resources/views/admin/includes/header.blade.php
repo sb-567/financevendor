@@ -534,19 +534,40 @@
 
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('userlist') }}" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Users</span>
+                            <i class="ri-account-circle-line"></i> <span data-key="t-dashboards">Staff Management</span>
                         </a>
                     </li>
-
+                   
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('tasklist') }}" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Task List Suggestions</span>
+                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                            <i class="ri-user-voice-line"></i> <span data-key="t-dashboards">Announcements</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                            <i class="ri-message-line"></i> <span data-key="t-dashboards">Communication</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                            <i class="ri-settings-line"></i> <span data-key="t-dashboards">Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                            <i class="ri-palette-line"></i> <span data-key="t-dashboards">Subscription </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Lead Management </span>
                         </a>
                     </li>
 
+                    
                 
 
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link menu-link" href="#sidebarAppssettings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                             <i class="ri-apps-2-line"></i> <span data-key="t-apps">App Settings</span>
                         </a>
@@ -580,7 +601,7 @@
                                 
                             </ul>
                         </div>
-                    </li>  
+                    </li>   -->
 
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('vendorlist') }}" >
@@ -588,7 +609,7 @@
                         </a>
                     </li>
                     
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                             <i class="ri-apps-2-line"></i> <span data-key="t-apps">Payments</span>
                         </a>
@@ -616,7 +637,7 @@
                             </ul>
                         </div>
                     </li>  
-                    
+                     -->
                     
                     {{-- <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('subeventlist') }}" >

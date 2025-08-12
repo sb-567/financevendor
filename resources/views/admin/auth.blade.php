@@ -7,7 +7,7 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Event management</title>
+    <title>Finance Vendor Listing Platform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- App favicon -->
@@ -44,7 +44,7 @@
                                     <div class="p-lg-5 p-4">
                                         <div>
                                             <h5 class="text-primary">Welcome Back !</h5>
-                                            <p class="text-muted">Sign in to continue to EventManagement.</p>
+                                            <p class="text-muted">Sign in to continue to Finance Platform.</p>
                                         </div>
 
                                         <div class="mt-4">
