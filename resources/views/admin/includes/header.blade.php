@@ -533,34 +533,39 @@
                     </li> <!-- end Dashboard Menu -->
 
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-account-circle-line"></i> <span data-key="t-dashboards">Staff Management</span>
                         </a>
                     </li>
                    
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-user-voice-line"></i> <span data-key="t-dashboards">Announcements</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-message-line"></i> <span data-key="t-dashboards">Communication</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-settings-line"></i> <span data-key="t-dashboards">Settings</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-palette-line"></i> <span data-key="t-dashboards">Subscription </span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('userlist') }}" >
+                        <a class="nav-link menu-link" href="" >
                             <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Lead Management </span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="" >
+                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Role </span>
                         </a>
                     </li>
 
@@ -574,26 +579,26 @@
                         <div class="collapse menu-dropdown" id="sidebarAppssettings">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
-                                    <a href="{{ route('statelist') }}" class="nav-link" >
+                                    <a href="" class="nav-link" >
                                         State
                                     </a>
                                     
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('districtlist') }}" class="nav-link" >
+                                    <a href="" class="nav-link" >
                                         District
                                     </a>
                                     
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('subdistrictlist') }}" class="nav-link" >
+                                    <a href="" class="nav-link" >
                                         Sub District
                                     </a>
                                     
                                 </li>
                                 
                                 <li class="nav-item">
-                                    <a href="{{ route('prefixlist') }}" class="nav-link" >
+                                    <a href="" class="nav-link" >
                                         Prefix
                                     </a>
                                     
@@ -609,55 +614,6 @@
                         </a>
                     </li>
                     
-                    <!-- <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                            <i class="ri-apps-2-line"></i> <span data-key="t-apps">Payments</span>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarApps">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="#sidebarCalendar" class="nav-link" >
-                                        Monthly/Yearly Subscriptions
-                                    </a>
-                                    
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#sidebarCalendar" class="nav-link" >
-                                        Bulk SMS Data Package Details
-                                    </a>
-                                    
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#sidebarCalendar" class="nav-link" >
-                                        Particular Events Package Data
-                                    </a>
-                                    
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </li>  
-                     -->
-                    
-                    {{-- <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('subeventlist') }}" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Sub Events</span>
-                        </a>
-                    </li> --}}
-
-                      
-
-                
-                    
-                    {{-- <li class="nav-item">
-                        <a class="nav-link menu-link" href="#sidebarDashboards" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Guests</span>
-                        </a>
-                    </li> --}}
-                    
-                    
-
-
                       
 
                     
