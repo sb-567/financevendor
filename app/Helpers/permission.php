@@ -1,4 +1,7 @@
+<?php
+
 use App\Models\RolePermission;
+use App\Models\Menu;
 
 function hasPermission($menuId, $action)
 {
@@ -9,3 +12,6 @@ function hasPermission($menuId, $action)
 
     return $perm && $perm->$action;
 }
+
+
+

@@ -45,6 +45,7 @@ Route::middleware(['guard'])->group(function(){
     Route::get('rolelist',[RoleController::class, 'index'])->name(name: 'rolelist');
     Route::get('getrolelistdata',[RoleController::class, 'getrolelistdata'])->name('getrolelistdata');
     Route::get('rolecreate',[RoleController::class, 'create'])->name('rolecreate');
+    Route::get('roleedit/{id}',[RoleController::class, 'edit']);
     Route::post('rolesave',[RoleController::class, 'store'])->name('rolesave');
 
 

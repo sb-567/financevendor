@@ -13,7 +13,10 @@ class RoleController extends Controller
 {
     
     public function index()
-    {
+    {   
+
+           
+
         $roles = Role::all();
         return view('admin.roles.index', compact('roles'));
     }
@@ -45,7 +48,7 @@ class RoleController extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('guestedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('roleedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                   
                                   
                                 </div>';
@@ -59,22 +62,50 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $role = Role::create([
-            'role_name' => $request->role_name
-        ]);
-
-        foreach ($request->permissions as $menuId => $perm) {
-            RolePermission::create([
-                'role_id'   => $role->id,
-                'menu_id'   => $menuId,
-                'can_view'  => isset($perm['can_view']),
-                'can_add'   => isset($perm['can_add']),
-                'can_edit'  => isset($perm['can_edit']),
-                'can_delete'=> isset($perm['can_delete']),
+        // Check if we are editing or creating
+    if (!empty($request->id)) {
+        // UPDATE existing role
+            $role = Role::findOrFail($request->id);
+            $role->update([
+                'role_name' => $request->role_name
             ]);
+
+            // Remove old permissions before re-inserting
+            RolePermission::where('role_id', $role->id)->delete();
+        } else {
+            // CREATE new role
+            $role = Role::create([
+                'role_name' => $request->role_name
+            ]);
+        }
+
+        // Save permissions
+        if (!empty($request->permissions)) {
+            foreach ($request->permissions as $menuId => $perm) {
+                RolePermission::create([
+                    'role_id'   => $role->id,
+                    'menu_id'   => $menuId,
+                    'can_view'  => isset($perm['can_view']),
+                    'can_add'   => isset($perm['can_add']),
+                    'can_edit'  => isset($perm['can_edit']),
+                    'can_delete'=> isset($perm['can_delete']),
+                ]);
+            }
         }
 
         return redirect()->route('rolelist')->with('success', 'Role created successfully');
     }
 
+    public function edit(Request $request)
+    {   
+
+        
+
+        $role = Role::findOrFail($request->id);
+        $menus = Menu::all();
+        $permissions = RolePermission::where('role_id', $request->id)->get()->keyBy('menu_id');
+        $title = 'Edit Role';
+        
+        return view('admin.roles.create', compact('role', 'menus', 'permissions', 'title'));
+    }
 }

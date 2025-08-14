@@ -526,51 +526,24 @@
                 </div>
                 <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+                   
+                    @php
+                    $menus = getMenus();
+
+                    @endphp
+
+                    @foreach(getMenus() as $menu)
+
+                        
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('dashboard') }}" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                            <i class="{{ $menu->icon }}"></i> <span data-key="t-dashboards">{{ $menu->menu_name }}</span>
                         </a>
-                    </li> <!-- end Dashboard Menu -->
+                    </li> 
+                    @endforeach
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-account-circle-line"></i> <span data-key="t-dashboards">Staff Management</span>
-                        </a>
-                    </li>
-                   
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-user-voice-line"></i> <span data-key="t-dashboards">Announcements</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-message-line"></i> <span data-key="t-dashboards">Communication</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-settings-line"></i> <span data-key="t-dashboards">Settings</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-palette-line"></i> <span data-key="t-dashboards">Subscription </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Lead Management </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="" >
-                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Role </span>
-                        </a>
-                    </li>
-
-                    
                 
+                    
 
                     <!-- <li class="nav-item">
                         <a class="nav-link menu-link" href="#sidebarAppssettings" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
@@ -608,12 +581,11 @@
                         </div>
                     </li>   -->
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('vendorlist') }}" >
-                            <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Vendors</span>
+                  <li class="nav-item">
+                        <a class="nav-link menu-link" href="" >
+                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Role </span>
                         </a>
                     </li>
-                    
                       
 
                     

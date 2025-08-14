@@ -43,39 +43,63 @@
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-12">
-                                            <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
+                                            <input type="hidden" name="id" value="@if(!empty($role->id)){{$role->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="role_name" placeholder="Enter your Role Name" value="@if(!empty($fetched->role_name)){{$fetched->role_name}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="role_name" placeholder="Enter your Role Name" value="@if(!empty($role->role_name)){{$role->role_name}}@endif" required>
                                                 <label for="firstnamefloatingInput">Role Name</label>
                                             </div>
                                         </div>
 
                                         
                                             <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Menu</th>
-                                                        <th>View</th>
-                                                        <th>Add</th>
-                                                        <th>Edit</th>
-                                                        <th>Delete</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach($menus as $menu)
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" id="menu-{{ $menu->id }}" class="check-all-row">
-                                                            <label for="menu-{{ $menu->id }}">{{ $menu->menu_name }}</label>
-                                                        </td>
-                                                        <td><input type="checkbox" name="permissions[{{ $menu->id }}][can_view]" value="1" class="perm"></td>
-                                                        <td><input type="checkbox" name="permissions[{{ $menu->id }}][can_add]" value="1" class="perm"></td>
-                                                        <td><input type="checkbox" name="permissions[{{ $menu->id }}][can_edit]" value="1" class="perm"></td>
-                                                        <td><input type="checkbox" name="permissions[{{ $menu->id }}][can_delete]" value="1" class="perm"></td>
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Menu</th>
+                                                            <th>View</th>
+                                                            <th>Add</th>
+                                                            <th>Edit</th>
+                                                            <th>Delete</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($menus as $menu)
+                                                            @php
+                                                            $isAllChecked="";
+                                                                if(!empty($permissions)) {
+                                                                    // Check if permissions exist for this menu
+                                                                
+                                                                    $perm = $permissions->get($menu->id); // Get this menu's permissions
+                                                                    $isAllChecked = $perm && $perm->can_view && $perm->can_add && $perm->can_edit && $perm->can_delete;
+                                                                }
+                                                            @endphp
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="checkbox" id="menu-{{ $menu->id }}" class="check-all-row" {{ $isAllChecked ? 'checked' : '' }}>
+                                                                    <label for="menu-{{ $menu->id }}">{{ $menu->menu_name }}</label>
+                                                                </td>
+                                                                <td>
+                                                                    @if(!empty($perm))
+                                                                        <input type="checkbox" name="permissions[{{ $menu->id }}][can_view]" value="1" class="perm" {{ $perm->can_view ? 'checked' : '' }}>
+                                                                    @else
+                                                                        <input type="checkbox" name="permissions[{{ $menu->id }}][can_view]" value="1" class="perm">
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" name="permissions[{{ $menu->id }}][can_add]" value="1" class="perm" 
+                                                                        @if(!empty($perm) && $perm->can_add) checked @endif>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" name="permissions[{{ $menu->id }}][can_edit]" value="1" class="perm" 
+                                                                        @if(!empty($perm) && $perm->can_edit) checked @endif>
+                                                                </td>
+                                                                <td>
+                                                                    <input type="checkbox" name="permissions[{{ $menu->id }}][can_delete]" value="1" class="perm" 
+                                                                        @if(!empty($perm) && $perm->can_delete) checked @endif>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
                                         
                                         
                                         
