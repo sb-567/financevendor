@@ -9,24 +9,24 @@ use Yajra\DataTables\DataTables;
 
 class Announcement extends Controller
 {
-    public function index(Request $request){
-
-        $data['user_id'] = $request->user_id;
-        $data['event_id'] =  "";
-        $data['page'] = "Announcement";
-        return view('announcement/announcementlist',$data);
+    public function index()
+    {
+        $data['title'] = "User List";
+        return view('admin.announcement.announcementlist', $data);
     }
 
-   
-
-    public function getannouncementlistdata(Request $request){
-
-
-        $query = DB::table('tbl_Announcement');
+    public function getannouncementlistdata(Request $request)
+    {
+        $query = DB::table('tbl_announcement');
         
         // Apply ordering
-        $query->orderBy('id', direction: 'desc');
-        $query->where('user_id', '=',$request->user_id);
+        $query->orderBy('tbl_announcement.id', 'desc');
+        // $query->leftJoin('tbl_states', 'tbl_admin.state_id', '=', 'tbl_states.id');
+        // $query->leftJoin('tbl_district', 'tbl_admin.district_id', '=', 'tbl_district.id');
+        // $query->leftJoin('tbl_subdistrict', 'tbl_admin.subdistrict_id', '=', 'tbl_subdistrict.id')
+        
+        // ->select('tbl_admin.*'); 
+        
         
         // Return DataTable response
         return DataTables::of($query)
@@ -35,7 +35,7 @@ class Announcement extends Controller
                 if ($request->has('search') && !empty($request->input('search.value'))) {
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
-                        $q->where('event_title', 'like', "%{$keyword}%");
+                        $q->where('tbl_announcement.message', 'like', "%{$keyword}%");
                     });
                 }
             })
@@ -50,10 +50,7 @@ class Announcement extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('vendorlistbyeventid/'.$row->user_id.'/'.$row->id) . '"  class="btn btn-sm btn-primary me-2"> Vendor</a>
-                                    <a href="' . url('guestlistbyeventid/'.$row->id.'/'.$row->user_id) . '"  class="btn btn-sm btn-primary me-2"> Guest</a>
-                                    <a href="' . url('budgetlistbyeventid/'. $row->user_id.'/'. $row->id) . '"  class="btn btn-sm btn-primary me-2"> Budget</a>
-                                    <a href="' . url('eventedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('announcementedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';
@@ -62,152 +59,130 @@ class Announcement extends Controller
             ->editColumn('status', function ($row) {
 
                 if($row->status==1){
-                    return '<div class="form-check form-switch">
-                            <input class="form-check-input toggle-switch" type="checkbox" role="switch" data-id="' . $row->id.'" checked>
 
-                        </div>';
+                    return '<div class="form-check form-switch">
+                                <input class="form-check-input toggle-switch statuschange"  type="checkbox"  role="switch" data-id="' . $row->id.'" checked>
+
+                            </div>';
                 }else{
 
                     return '<div class="form-check form-switch">
-                        <input class="form-check-input toggle-switch" type="checkbox" role="switch" data-id="' . $row->id.'" >
+                                <input class="form-check-input toggle-switch statuschange" type="checkbox"  role="switch" data-id="' . $row->id.'" >
 
-                    </div>';
+                            </div>';
 
                 }
                 
             })
-            ->editColumn('event_title', function ($row) {
-                return '<a href="' . url('subeventlist/' . $row->id.'/'.$row->user_id) . '">'.$row->event_title.'</a>';
-            })
-            // Set row attributes
-            // ->setRowAttr([
-            //     'data-url' => function ($row) {
-            //         return url('subcategories_edit/' . $row->id);
-            //     }
-            // ])
+            
+            
+            
             // Ensure HTML columns are rendered as raw HTML
-            ->rawColumns(['checkbox','event_title','status', 'action'])
+            ->rawColumns(['checkbox', 'status', 'action'])
             ->make(true);
-
-
     }
 
 
-    public function announcementedit(Request $request){
+    public function useredit(Request $request){
 
         $data['title']="Announcement Edit";
-        $data['fetched']=Announcement::find($request->id);
-        return view( 'Announcement/eventadd', $data);
+        $data['fetched']=DB::table('tbl_admin')->where('id','=',$request->id)->first();
+          $data['role']= DB::table('tbl_roles')->get();
+        return view( 'admin.announcement.announcementadd', $data);
 
     }
 
     public function create(){
 
         $data['title']="Announcement Create";
-
-        return view( 'Announcement/eventadd',$data);
+        $data['role']= DB::table('tbl_roles')->get();
+        return view( 'admin.announcement.announcementadd',$data);
     }
 
 
-    public function Announcementsave(Request $request){
+    public function announcementsave(Request $request){
         
 
         if ($request->input('id') != "") {
            
-            $res=Announcement::find($request->input('id'));
-
-            $res->event_title=$request->input('event_title');
-            $res->status=$request->input('status');
+            DB::table('tbl_announcement')
+            ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
+            ->update([
+                'message' => $request->input('message'),
+                    'start_date' => $request->input('start_date'),
+                    'end_date' => $request->input('end_date'),
+                    'status' =>$request->input('status')
+            ]);
     
-            $res->save();
-    
-        } else {
-    
-            $res = new Announcement();
-            $res->event_title=$request->input('event_title');
-            
-            $res->status=$request->input('status');
-            $res->created_at=date('Y-m-d h:i:s');
-    
-            $res->save();
-            
-        }
-        
-        $res=Announcement::find($request->input('id'));
-        
-
-         // Set a success message in the session
-         session()->flash('success', 'Event saved successfully');
-        
-         return redirect('eventlist/'.$res->user_id);
-
-
-    }
-
-
-    public function Announcementtatuschange(Request $request){
-        
-
-        if ($request->input('id') != "") {
-           
-            $res=Announcement::find($request->input('id'));
-            $res->status=$request->input('status');
-            $res->save();
-
-
-            if ($res) {
-                $res->status = $request->input('status');
-                $res->save();
-    
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Event status updated successfully!',
-                    'id' => $res->id,
-                    'new_status' => $res->status
-                ]);
-
-            } else {
-
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Event not found!'
-                ], 404);
-            }
-
-
     
         } else {
     
-            $res = new Announcement();
-            $res->status=$request->input('status');
-            $res->save();
-
-
-            return response()->json([
-                'success' => true,
-                'message' => 'New event created successfully!',
-                'id' => $res->id,
-                'new_status' => $res->status
+            DB::table('tbl_announcement')->insert([
+                'message' => $request->input('message'),
+                    'start_date' => $request->input('start_date'),
+                    'end_date' => $request->input('end_date'),
+                    'status' =>$request->input('status')
             ]);
             
         }
-    
          
+         session()->flash('success', 'Announcement saved successfully');
+        
+         return redirect('announcementlist');
 
 
     }
 
-    public function destroy(Announcement $announcement,Request $request)
+
+    public function userstatuschange(Request $request){
+        
+
+        if ($request->filled('id')) { // Use filled() to check for non-empty values
+            $vendor = DB::table('tbl_admin')->where('id', $request->input('id'))->first();
+        
+            if ($vendor) {
+                DB::table('tbl_admin')
+                    ->where('id', $request->input('id'))
+                    ->update(['status' => $request->input('status')]);
+        
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Users status updated successfully!',
+                    'id' => $request->input('id'),
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Users not found!',
+                ], 404);
+            }
+        } else {
+            $id = DB::table('tbl_admin')->insertGetId([
+                'status' => $request->input('status')
+            ]);
+        
+            return response()->json([
+                'success' => true,
+                'message' => 'Users created successfully!',
+                'id' => $id, // Return newly inserted ID
+            ]);
+        }
+        
+    }
+
+    public function destroy(Request $request)
     {   
 
-        $id=$request->id;
-        Announcement::destroy(array('id',$id));
+        $id = $request->id;
+        DB::table('tbl_admin')->where('id', $id)->delete();
         return;
+
     }
 
-    public function selecteddestroy(Announcement $announcement,Request $request){
+    public function selecteddestroy(Request $request){
         foreach($request->items as $item){
-            Announcement::destroy(array('id',$item));
+            // Subevent::destroy(array('id',$item));
+            DB::table('tbl_admin')->where('id', $item)->delete();
         }
         return;
     }

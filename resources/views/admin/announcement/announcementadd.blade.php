@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title',''.$title)
 
 @section('content')
@@ -39,14 +39,27 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{url('/')}}/eventsave"  enctype="multipart/form-data">
+                                <form method="post" action="{{url('/')}}/announcementsave"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="event_title" placeholder="Enter your Name" value="@if(!empty($fetched->event_title)){{$fetched->event_title}}@endif" required>
-                                                <label for="firstnamefloatingInput">Name</label>
+                                            <div class="mb-3">
+                                                <label for="VertimeassageInput" class="form-label">Message</label>
+                                                <textarea class="form-control" name="message" id="VertimeassageInput" rows="3" placeholder="Enter your message"></textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="StartleaveDate" class="form-label">Start  Date</label>
+                                                <input type="text" name="start_date" class="form-control flatpickr-input active" data-provider="flatpickr" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label for="StartleaveDate" class="form-label">End Date</label>
+                                                <input type="text" name="end_date" class="form-control flatpickr-input active" data-provider="flatpickr" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
                                             </div>
                                         </div>
                                         

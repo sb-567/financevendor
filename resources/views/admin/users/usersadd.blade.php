@@ -66,7 +66,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="password" placeholder="Enter your password" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="password" placeholder="Enter your password" >
                                                 <label for="firstnamefloatingInput">Password</label>
                                             </div>
                                         </div>

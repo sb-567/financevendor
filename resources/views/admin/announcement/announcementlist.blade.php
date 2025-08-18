@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title','Announcement List')
 
 @section('content')
@@ -28,43 +28,42 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                   
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Announcement List</h5>
 
 
-                    <div class="card-body">
-
-                        
-
-                        <div class="tab-content text-muted">
-                            <div class="tab-pane active show" id="pill-justified-home-1" role="tabpanel">
-                                
-                                <table id="announcement_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                        
-                                            <th data-ordering="false">
-                                                <div class="form-check">
-                                                    <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
-                                                </div>
-                                                SR No.
-                                            </th>
-                                            <th data-ordering="false">Name</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                        
-                                    </tbody>
-                                </table>
-
-
-                            </div>
+                        <div class="text-end">
+                             <a href="{{ route('announcementcreate') }}" class="btn btn-primary">Add Announcement</a>
+                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
+                           
                         </div>
+
                     </div>
-
-
+                    <div class="card-body">
+                        <table id="user_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                            <thead>
+                                <tr>
+                                  
+                                    <th data-ordering="false">
+                                        <div class="form-check">
+                                            <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                        </div>
+                                        SR No.
+                                    </th>
+                                    <th data-ordering="false">Name</th>
+                                    
+                                    <th>Message</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div><!--end col-->
         </div><!--end row-->
@@ -92,29 +91,29 @@
         });
 
             function categorytable(status=""){
-
-                user_id = "{{$user_id}}";
-
-                var table =  $("#announcement_list").DataTable({
+                var table =  $("#user_list").DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
-                    url: "{{ route('geteventlistdata') }}", // Server-side URL
+                    url: "{{ route('getannouncementlistdata') }}", // Server-side URL
                     data: function (d) {
                         // Add custom filters to the request data
                         d.selected_status = status;
-                        d.user_id=user_id;
                     }
                 },  // You can't use Laravel's blade syntax in JS, use route helper
                     columns: [
                         { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
-                        { data: 'event_title', name: 'event_title' },
-                        { data: 'status', name: 'status',orderable: false, searchable: false },
+                        { data: 'message', name: 'message' },
+                        
+                        { data: 'start_date', name: 'start_date' },
+                        { data: 'end_date', name: 'end_date' },
+                        { data: 'status', name: 'status', orderable: false, searchable: false },                        
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
                     ],
+                    
                 });
 
-                $('#vendor_list tbody').on('click', 'tr', function (e) {
+                $('#user_list tbody').on('click', 'tr', function (e) {
                         // Check if the clicked element is within the 'action' column
                         if (!$(e.target).closest('td').hasClass('action')) {
                             var url = $(this).data('url');
@@ -138,112 +137,138 @@
                 if(statusValue==1){
                     location.reload();
                 }else{
-                    $('#announcement_list').DataTable().destroy();
+                    $('#user_list').DataTable().destroy();
                     categorytable(statusValue);
                 }
 
             });
 
-
-            $(document).ready(function () {
-                $(document).on("change", ".toggle-switch", function () {
-                    let switchId = $(this).data("id"); // Get the unique ID of the switch
-                    let status = $(this).prop("checked") ? 1 : 0; // Get the checkbox status
-
-
-                    $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                            }
-                        });
-                        
-                    $.ajax({
-                        url: "{{ route('eventstatuschange') }}", // Change to your backend script
-                        type: "POST",
-                        data: { id: switchId, status: status },
-                        success: function (response) {
-                            console.log("Server Response:", response);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("AJAX Error:", error);
+            $(document).on('change', '.statuschange', function() {
+                var status = $(this).prop('checked') ? 1 : 0;
+                var id = $(this).data('id');
+                $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
                         }
                     });
+                $.ajax({
+                    url: "{{ route('userstatuschange') }}", // Your PHP file to update status
+                    type: 'POST',
+                    data: { id: id, status: status },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                         
+
+                            swal.fire({
+                                        // position: 'top-right',
+                                        type: 'success',
+                                        title: 'Status updated successfully!',
+                                        // showConfirmButton: false,
+                                        timer: 5000
+                                    
+                            });
+
+                        } else {
+                            
+                            swal.fire({
+                                        // position: 'top-right',
+                                        type: 'success',
+                                        title: 'Failed to update status.',
+                                        // showConfirmButton: false,
+                                        timer: 5000
+                                    
+                            });
+                        }
+                    },
+                    error: function() {
+                        alert('Error in AJAX request.');
+                    }
                 });
             });
-
-            
 
 
 
             function deleted(items) {
-                swal.fire({
-                    title: 'Are you sure?',
-                    text: "Are you sure you want to Delete Event List?",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes'
-                }).then(function(result) {
-                    if (result.value) {
-                        
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                            }
-                        });
+                    swal.fire({
+                        title: 'Are you sure?',
+                        text: "Are you sure you want to Delete User List?",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes'
+                    }).then(function(result) {
+                        if (result.value) {
 
-                        $.ajax({
-                            url: `{{ url('eventdelete') }}/${items}`, // Dynamically include 'items' in the URL
-                            type: 'DELETE', // Use DELETE HTTP method
-                            beforeSend: function() {
-                                swal.fire({
-                                    title: 'Please Wait..!',
-                                    text: 'Is working..',
-                                    onOpen: function() {
-                                        swal.showLoading();
-                                    }
-                                });
-                            },
-                            success: function(data) {
-                                swal.fire({
-                                    type: 'success',
-                                    title: 'Event Deleted Successfully',
-                                });
-                            },
-                            complete: function() {
-                                swal.hideLoading();
-                                location.reload();
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                swal.hideLoading();
-                                swal.fire("!Opps ", "Something went wrong, try again later", "error");
-                            }
-                        });
-                    }
-                });
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                                }
+                            });
+
+                            $.ajax({
+                                url: `{{ url('userdelete') }}/${items}`,
+                                type: 'DELETE',
+                                
+                            //  dataType:'json',
+                                beforeSend: function() {
+                                    swal.fire({
+                                        title: 'Please Wait..!',
+                                        text: 'Is working..',
+                                        onOpen: function() {
+                                            swal.showLoading()
+                                        }
+                                    })
+                                },
+                                success: function(data) {
+                                    swal.fire({
+                                        // position: 'top-right',
+                                        type: 'success',
+                                        title: 'User data Deleted Successfully',
+                                        // showConfirmButton: false,
+                                        // timer: 5000
+                                    
+                                    });
+                                },
+                                complete: function() {
+                                    swal.hideLoading();
+                                    location.reload();
+                                },
+                                error: function(jqXHR, textStatus, errorThrown) {
+                                    swal.hideLoading();
+                                    swal.fire("!Opps ", "Something went wrong, try again later", "error");
+                                }
+                            });
+                        }
+                    });
             }
+
 
 
 
             function deletedchecked() {
                     const selectedValues = [];
                     
-                    $('input[type="checkbox"].form-check-input:checked').each(function () {
+                   $('input[type="checkbox"].form-check-input:checked').each(function () {
                         selectedValues.push($(this).val());
                     });
 
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Event to delete", "error");
+                    swal.fire("! Opps ", "Please check User to delete", "error");
                     }
             }
+         
+         
+         
+         
          
          
          
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Event?",
+                 text: "Are you sure you want to Delete Youtube Url?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'
@@ -255,7 +280,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedevent') }}`,
+                         url: `{{ route('deleteselectedvendor') }}`,
                          type: 'POST',
                          data:{
                                 items: items
@@ -274,7 +299,7 @@
                              swal.fire({
                                  // position: 'top-right',
                                  type: 'success',
-                                 title: 'Event Deleted Successfully',
+                                 title: 'Vendor Deleted Successfully',
                                  // showConfirmButton: false,
                                  // timer: 5000
                                 
@@ -292,8 +317,7 @@
                  }
              });
          }
-
-            
+         
         
           
     </script>

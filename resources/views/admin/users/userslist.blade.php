@@ -247,7 +247,7 @@
             function deletedchecked() {
                     const selectedValues = [];
                     
-                    $('input[type="checkbox"].custom-control-input:checked').each(function () {
+                   $('input[type="checkbox"].form-check-input:checked').each(function () {
                         selectedValues.push($(this).val());
                     });
 

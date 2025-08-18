@@ -164,19 +164,11 @@ class AuthController extends Controller
                 }
                 
             })
-            ->editColumn('name', function ($row) {
-
-                
-
-                    return '<a href="' . url('eventlist/' . $row->id) . '">'.$row->name.'</a>';
-                
-                
-                
-            })
+            
             
             
             // Ensure HTML columns are rendered as raw HTML
-            ->rawColumns(['checkbox', 'name', 'status', 'action'])
+            ->rawColumns(['checkbox', 'status', 'action'])
             ->make(true);
     }
 
@@ -185,8 +177,8 @@ class AuthController extends Controller
 
         $data['title']="Users Edit";
         $data['fetched']=DB::table('tbl_admin')->where('id','=',$request->id)->first();
-        $data['events']= DB::table('tbl_admin')->get();
-        return view( 'users/usersadd', $data);
+          $data['role']= DB::table('tbl_roles')->get();
+        return view( 'admin.users.usersadd', $data);
 
     }
 
