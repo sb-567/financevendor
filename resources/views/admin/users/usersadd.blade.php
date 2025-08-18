@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title',''.$title)
 
 @section('content')
@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{url('/')}}/vendorsave"  enctype="multipart/form-data">
+                                <form method="post" action="{{url('/')}}/usersave"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-4">
@@ -51,90 +51,45 @@
                                         </div>
                                         
                                         
+                                       
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
-                                                <label for="firstnamefloatingInput">Mobile</label>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="username" placeholder="Enter your username" value="@if(!empty($fetched->username)){{$fetched->username}}@endif" required>
+                                                <label for="firstnamefloatingInput">Username</label>
                                             </div>
                                         </div>
-                                       
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" required>
+                                                <label for="firstnamefloatingInput">Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="password" placeholder="Enter your password" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
+                                                <label for="firstnamefloatingInput">Password</label>
+                                            </div>
+                                        </div>
                                     
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="event_id" aria-label="Floating label select example">
-                                                        <option value="">Select Event</option>
-                                                        @if(!empty($events))
-                                                            @foreach ($events as $evt)
-                                                                <option value="{{$evt->id}}"  @if(!empty($fetched->event_id) && $fetched->event_id==$evt->id){{"selected"}}@endif>{{ $evt->event_title}}</option>
+                                                <select class="form-select" id="floatingSelect" name="role_id" aria-label="Floating label select example">
+                                                        <option value="">Select Role</option>
+                                                        @if(!empty($role))
+                                                            @foreach ($role as $evt)
+                                                                <option value="{{$evt->id}}"  @if(!empty($fetched->role_id) && $fetched->role_id==$evt->id){{"selected"}}@endif>{{ $evt->role_name}}</option>
                                                             @endforeach
                                                         @endif
 
                                                 </select>
-                                                <label for="floatingSelect">Events</label>
+                                                <label for="floatingSelect">Role</label>
                                             </div>
                                         </div>
 
                                         
                                        
-                                        {{-- <div class="col-lg-6">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="sub_event_id" id="sub_event_id" aria-label="Floating label select example">
-                                                        <option value="">Select Sub Event</option>
-                                                        
-
-                                                </select>
-                                                <label for="floatingSelect">Events</label>
-                                            </div>
-
-                                            
-                                        </div> --}}
-
-
                                      
-
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label for="choices-multiple-remove-button" class="form-label text-muted">With remove button</label>
-                                                <select class="form-control" id="choices-multiple-remove-button" data-choices data-choices-removeItem name="choices-multiple-remove-button" multiple>
-                                                    <option value="Choice 1" selected>Choice 1</option>
-                                                    <option value="Choice 2" >Choice 2</option>
-                                                    <option value="Choice 3" >Choice 3</option>
-                                                    <option value="Choice 4" >Choice 4</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-6">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="task_id" aria-label="Floating label select example">
-                                                        <option value="">Select Task</option>
-                                                        @if(!empty($events))
-                                                            @foreach ($events as $evt)
-                                                                <option value="{{$evt->id}}"  @if(!empty($fetched->event_id) && $fetched->event_id==$evt->id){{"selected"}}@endif>{{ $evt->event_title}}</option>
-                                                            @endforeach
-                                                        @endif
-
-                                                </select>
-                                                <label for="floatingSelect">Events</label>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="amount" placeholder="Enter your Amount" value="@if(!empty($fetched->amount)){{$fetched->amount}}@endif" required>
-                                                <label for="firstnamefloatingInput">Amount</label>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="advance_amount" placeholder="Enter your Advance Amount" value="@if(!empty($fetched->advance_amount)){{$fetched->advance_amount}}@endif" required>
-                                                <label for="firstnamefloatingInput">Advance Amount</label>
-                                            </div>
-                                        </div>
-
                                         
 
                                         <div class="col-lg-4">

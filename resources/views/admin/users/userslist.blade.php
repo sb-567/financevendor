@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title','Users List')
 
 @section('content')
@@ -33,14 +33,14 @@
 
 
                         <div class="text-end">
-                            {{-- <a href="{{ route('vendorcreate') }}" class="btn btn-primary">Add Users</a>
-                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> --}}
+                             <a href="{{ route('usercreate') }}" class="btn btn-primary">Add Users</a>
+                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <table id="vendor_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                        <table id="user_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                   
@@ -52,12 +52,10 @@
                                     </th>
                                     <th data-ordering="false">Name</th>
                                     
-                                    <th>Mobile</th>
-                                    <th>State</th>
-                                    <th>District</th>
-                                    <th>Sub District</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
                                     <th>Status</th>
-                                    {{-- <th>Action</th> --}}
+                                    <th>Action</th> 
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,7 +90,7 @@
         });
 
             function categorytable(status=""){
-                var table =  $("#vendor_list").DataTable({
+                var table =  $("#user_list").DataTable({
                     processing: true,
                     serverSide: true,
                     ajax: {
@@ -106,17 +104,15 @@
                         { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
                         { data: 'name', name: 'name' },
                         
-                        { data: 'mobile', name: 'mobile' },
-                        { data: 'state_title', name: 'state_title' },
-                        { data: 'district_title', name: 'district_title' },
-                        { data: 'subdistrict_title', name: 'subdistrict_title' },
+                        { data: 'username', name: 'username' },
+                        { data: 'email', name: 'email' },
                         { data: 'status', name: 'status', orderable: false, searchable: false },                        
-                        // { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                        { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
                     ],
                     
                 });
 
-                $('#vendor_list tbody').on('click', 'tr', function (e) {
+                $('#user_list tbody').on('click', 'tr', function (e) {
                         // Check if the clicked element is within the 'action' column
                         if (!$(e.target).closest('td').hasClass('action')) {
                             var url = $(this).data('url');
@@ -140,7 +136,7 @@
                 if(statusValue==1){
                     location.reload();
                 }else{
-                    $('#vendor_list').DataTable().destroy();
+                    $('#user_list').DataTable().destroy();
                     categorytable(statusValue);
                 }
 
@@ -195,7 +191,7 @@
             function deleted(items) {
                     swal.fire({
                         title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Vendor List?",
+                        text: "Are you sure you want to Delete User List?",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes'
@@ -209,7 +205,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('vendordelete') }}/${items}`,
+                                url: `{{ url('userdelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -226,7 +222,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'youtube data Deleted Successfully',
+                                        title: 'User data Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -258,7 +254,7 @@
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Youtube Url to delete", "error");
+                    swal.fire("! Opps ", "Please check User to delete", "error");
                     }
             }
          

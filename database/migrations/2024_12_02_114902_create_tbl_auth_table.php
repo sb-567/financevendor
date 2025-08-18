@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('username',255);
             $table->string('password',255);
+            $table->string('otp',50);
+            $table->integer('role_id');
             $table->Text('fcm_token')->nullable();
             $table->timestamps();
         });

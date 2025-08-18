@@ -33,6 +33,8 @@ use App\Http\Controllers\Admin\RoleController;
 
 Route::get('/',[AuthController::class, 'index']);
 Route::post('login',[AuthController::class, 'login']);
+Route::get('verify',[AuthController::class, 'verify']);
+Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
 
 Route::middleware(['guard'])->group(function(){
@@ -42,13 +44,42 @@ Route::middleware(['guard'])->group(function(){
     
     Route::resource('roles', RoleController::class);
 
-    Route::get('rolelist',[RoleController::class, 'index'])->name(name: 'rolelist');
+    Route::get('rolelist',[RoleController::class, 'index'])->name('rolelist');
     Route::get('getrolelistdata',[RoleController::class, 'getrolelistdata'])->name('getrolelistdata');
     Route::get('rolecreate',[RoleController::class, 'create'])->name('rolecreate');
     Route::get('roleedit/{id}',[RoleController::class, 'edit']);
     Route::post('rolesave',[RoleController::class, 'store'])->name('rolesave');
 
 
+    Route::get('userlist',[AuthController::class, 'userlist'])->name('userlist');
+    Route::get('getuserlistdata',[AuthController::class, 'getuserlistdata'])->name('getuserlistdata');
+    Route::post('userstatuschange',[AuthController::class, 'userstatuschange'])->name('userstatuschange');
+    Route::delete('userdelete/{id}',[AuthController::class, 'destroy'])->name('userdelete');
+    Route::post('deleteselectedvendor',[AuthController::class, 'selecteddestroy'])->name('deleteselectedvendor');
+    Route::get('usercreate',[AuthController::class, 'create'])->name('usercreate');
+    Route::get('useredit/{id}',[AuthController::class, 'edit']);
+    Route::post('usersave',[AuthController::class, 'usersave'])->name('usersave');
+
+
+    Route::get('staffmanagement', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+    Route::get('announcement', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+    Route::get('communication', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+    Route::get('subscription', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+    Route::get('lead', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+    Route::get('vendor', function () {
+        return  "Welcome to the Admin Dashboard"; 
+    });
+ 
     // Route::get('vendorlist',[VendorsController::class, 'index'])->name('vendorlist');
     // Route::get('vendorlistbyuserid/{user_id}',[VendorsController::class, 'vendorlistbyuserid'])->name('vendorlistbyuserid');
     // Route::get('vendorlistbyeventid/{user_id}/{event_id}',[VendorsController::class, 'vendorlistbyeventid'])->name('vendorlistbyeventid');

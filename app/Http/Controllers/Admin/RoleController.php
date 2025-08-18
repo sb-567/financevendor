@@ -16,7 +16,6 @@ class RoleController extends Controller
     {   
 
            
-
         $roles = Role::all();
         return view('admin.roles.index', compact('roles'));
     }
@@ -31,9 +30,10 @@ class RoleController extends Controller
     public function getrolelistdata(Request $request)
     {
         $query = Role::query();
-
+            // $query = Role::where('id', '!=', 1);
         // Return DataTable response
         return DataTables::of($query)
+          
             // Filter by search term
             ->filter(function ($query) use ($request) {
                 if ($request->has('search') && !empty($request->input('search.value'))) {
