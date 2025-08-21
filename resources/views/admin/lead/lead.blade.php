@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Announcement List')
+@section('title',''.$title)
 
 @section('content')
 
@@ -10,12 +10,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                    <h4 class="mb-sm-0">Announcement List</h4>
+                    <h4 class="mb-sm-0">{{ $title }} List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Announcement List</li>
+                            <li class="breadcrumb-item active">{{$title}} List</li>
                         </ol>
                     </div>
 
@@ -29,13 +29,38 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Announcement List</h5>
+                        <h5 class="card-title mb-0">{{$title}} List</h5>
+                            
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                           
 
+                            <form method="post" action="{{ route('exportlead') }}">
+                                
+                                
+                                <select class="form-control" id="vendorFilter" name="vendor_id">
+                                    @if(!empty($vendors))
+                                        <option value="">Select Vendor</option>
+                                        @foreach($vendors as $vendor)
+                                            <option value="{{$vendor->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$vendor->id){{"selected"}}@endif>{{$vendor->name}}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="">No Vendor Available</option>  
+                                    @endif
 
-                        <div class="text-end">
-                             <a href="{{ route('announcementcreate') }}" class="btn btn-primary">Add Announcement</a>
+                                    
+                                </select>
+
+                               
+                            </form>
+                           
+                     
+
+                        <div class="">
+                             <button type="submit" class="btn btn-success ms-2">Export {{$title}}</button>
+                             <a href="{{ route('leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
+                        </div>
                         </div>
 
                     </div>
@@ -52,10 +77,11 @@
                                     </th>
                                     
                                     
-                                    <th>Message</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th>Status</th>
+                                    <th>Vendor</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>created</th>
                                     <th>Action</th> 
                                 </tr>
                             </thead>
@@ -90,38 +116,38 @@
 
         });
 
-            function categorytable(status=""){
-               var table = $("#user_list").DataTable({
-    processing: true,
-    serverSide: true,
-    responsive: false, // disable plus/child row feature
-    autoWidth: false,  // allow column widths
-    ajax: {
-        url: "{{ route('getannouncementlistdata') }}",
-        data: function (d) {
-            d.selected_status = status;
-        }
-    },
-    columns: [
-        { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' },
-        { data: 'message', name: 'message', width: "40%", className: "text-wrap" },
-        { data: 'start_date', name: 'start_date' },
-        { data: 'end_date', name: 'end_date' },
-        { data: 'status', name: 'status', orderable: false, searchable: false },
-        { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
-    ]
+        function categorytable(vendor_id=""){
+            var table =  $("#user_list").DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                url: "{{ route('getleadlistdata') }}", // Server-side URL
+                data: function (d) {
+                    // Add custom filters to the request data
+                    d.vendor_id = vendor_id;
+                }
+            },  // You can't use Laravel's blade syntax in JS, use route helper
+                columns: [
+                    { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
+                    { data: 'vendor_name', name: 'vendor_name' },
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'phone', name: 'phone' },
+                    { data: 'created_at', name: 'created_at' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                ],
+                
+            });
 
-                });
-
-                $('#user_list tbody').on('click', 'tr', function (e) {
-                        // Check if the clicked element is within the 'action' column
-                        if (!$(e.target).closest('td').hasClass('action')) {
-                            var url = $(this).data('url');
-                            if (url) {
-                                window.location.href = url;
-                            }
+            $('#user_list tbody').on('click', 'tr', function (e) {
+                    // Check if the clicked element is within the 'action' column
+                    if (!$(e.target).closest('td').hasClass('action')) {
+                        var url = $(this).data('url');
+                        if (url) {
+                            window.location.href = url;
                         }
-                    });
+                    }
+                });
         }
             
             // Example dynamic JavaScript for the page
@@ -129,70 +155,28 @@
                 $('.form-check-input').prop('checked', this.checked);
             });
             
-            $('.status').on('click', function() {
+            $('#vendorFilter').on('change', function() {
                 
-                var statusValue = $(this).attr('data-val');  // Get the data-val from the clicked element
+                // var statusValue = $(this).attr('data-val');  // Get the data-val from the clicked element
+                var vendor_id = $(this).val();  
                 
-
-                if(statusValue==1){
-                    location.reload();
-                }else{
+                // if(statusValue==1){
+                //     location.reload();
+                // }else{
                     $('#user_list').DataTable().destroy();
-                    categorytable(statusValue);
-                }
+                    categorytable(vendor_id);
+                // }
 
             });
 
-            $(document).on('change', '.statuschange', function() {
-                var status = $(this).prop('checked') ? 1 : 0;
-                var id = $(this).data('id');
-                $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    });
-                $.ajax({
-                    url: "{{ route('userstatuschange') }}", // Your PHP file to update status
-                    type: 'POST',
-                    data: { id: id, status: status },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                         
-
-                            swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Status updated successfully!',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
-
-                        } else {
-                            
-                            swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Failed to update status.',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
-                        }
-                    },
-                    error: function() {
-                        alert('Error in AJAX request.');
-                    }
-                });
-            });
+            
 
 
 
             function deleted(items) {
                     swal.fire({
                         title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Announcement ?",
+                        text: "Are you sure you want to Delete Lead ?",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes'
@@ -206,7 +190,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('announcementdelete') }}/${items}`,
+                                url: `{{ url('leaddelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -223,7 +207,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'Announcement data Deleted Successfully',
+                                        title: 'Lead data Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -255,7 +239,7 @@
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Announcement data to delete", "error");
+                    swal.fire("! Opps ", "Please check Lead data to delete", "error");
                     }
             }
          
@@ -268,7 +252,7 @@
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Announcement?",
+                 text: "Are you sure you want to Delete Lead?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'
@@ -280,7 +264,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedannouncement') }}`,
+                         url: `{{ route('deleteselectedlead') }}`,
                          type: 'POST',
                          data:{
                                 items: items
@@ -299,7 +283,7 @@
                              swal.fire({
                                  // position: 'top-right',
                                  type: 'success',
-                                 title: 'Announcement Deleted Successfully',
+                                 title: 'Lead Deleted Successfully',
                                  // showConfirmButton: false,
                                  // timer: 5000
                                 

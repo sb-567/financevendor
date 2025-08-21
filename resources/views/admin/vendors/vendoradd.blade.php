@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title',''.$title)
 
 @section('content')
@@ -39,13 +39,13 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{url('/')}}/vendorsave"  enctype="multipart/form-data">
+                                <form method="post" id="vendorForm" action="{{url('/')}}/vendorsave"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" >
                                                 <label for="firstnamefloatingInput">Name</label>
                                             </div>
                                         </div>
@@ -53,128 +53,57 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
+                                                <input type="email" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" >
+                                                <label for="firstnamefloatingInput">Email</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->phone)){{$fetched->phone}}@endif" >
                                                 <label for="firstnamefloatingInput">Mobile</label>
                                             </div>
                                         </div>
                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="area" placeholder="Enter your Area" value="@if(!empty($fetched->area)){{$fetched->area}}@endif" >
+                                                <label for="firstnamefloatingInput">Area</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="landmark" placeholder="Enter your Landmark" value="@if(!empty($fetched->landmark)){{$fetched->landmark}}@endif" >
+                                                <label for="firstnamefloatingInput">Landmark</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="pincode" placeholder="Enter your Pincode" value="@if(!empty($fetched->pincode)){{$fetched->pincode}}@endif" >
+                                                <label for="firstnamefloatingInput">Pincode</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="city" placeholder="Enter your City" value="@if(!empty($fetched->city)){{$fetched->city}}@endif" >
+                                                <label for="firstnamefloatingInput">City</label>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="state" placeholder="Enter your State" value="@if(!empty($fetched->state)){{$fetched->state}}@endif" >
+                                                <label for="firstnamefloatingInput">State</label>
+                                            </div>
+                                        </div>
+
+
+                                       
+                                       
                                     
-
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="event_id" name="event_id" aria-label="Floating label select example">
-                                                        <option value="">Select Event</option>
-                                                        @if(!empty($events))
-                                                            @foreach ($events as $evt)
-                                                                <option value="{{$evt->id}}"  @if(!empty($fetched->event_id) && $fetched->event_id==$evt->id){{"selected"}}@endif>{{ $evt->event_title}}</option>
-                                                            @endforeach
-                                                        @endif
-
-                                                </select>
-                                                <label for="event_id">Events</label>
-                                            </div>
-                                        </div>
-
-                                        
-                                      
-
-
-                                     
-
-                                        <div class="col-md-12">
-                                            @if(!empty($fetched->sub_event_id))
-                                                <input type="hidden" id="old_sub_event_id" value="{{$fetched->sub_event_id}}" >
-
-                                            @endif
-                                 
-                                           
-                                            <label >Sub Events</label>
-                                            <div class="scrollbar border border-1 border-primary p-2" >
-                                                <div class="row " id="sub_event_id">
-                                                  
-                                                          
-                                                        
-                                                </div>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="task_id" aria-label="Floating label select example">
-                                                        <option value="">Select Task</option>
-                                                        @if(!empty($events))
-                                                            @foreach ($events as $evt)
-                                                                <option value="{{$evt->id}}"  @if(!empty($fetched->event_id) && $fetched->event_id==$evt->id){{"selected"}}@endif>{{ $evt->event_title}}</option>
-                                                            @endforeach
-                                                        @endif
-
-                                                </select>
-                                                <label for="floatingSelect">Task</label>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <select class="form-select"  id="state_id" name="state_id"  aria-label="Floating label select example">
-                                                        <option value="">Select State</option>
-                                                        @if(!empty($states))
-                                                            @foreach ($states as $state)
-                                                                <option value="{{$state->id}}"  @if(!empty($fetched->state_id) && $fetched->state_id==$state->id){{"selected"}}@endif>{{ $state->state_title}}</option>
-                                                            @endforeach
-                                                        @endif
-
-                                                </select>
-                                                <label for="floatingSelect">State</label>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-4">
-                                                 
-                                            @if(!empty($fetched->district_id))
-                                            <input type="hidden" id="old_district_id" value="{{$fetched->district_id}}" >
-
-                                        @endif
-                                            <div class="form-floating">
-                                                <select class="form-select" id="district_id" name="district_id" aria-label="Floating label select example">
-                                                        <option value="">Select District</option>
-                                                      
-
-                                                </select>
-                                                <label for="floatingSelect">District</label>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-4">
-                                            @if(!empty($fetched->sub_district_id))
-                                            <input type="hidden" id="old_sub_district_id" value="{{$fetched->sub_district_id}}" >
-
-                                        @endif
-                                            <div class="form-floating">
-                                                <select class="form-select" id="sub_district_id" name="sub_district_id" name="sub_district_id" aria-label="Floating label select example">
-                                                        <option value="">Select Sub District</option>
-                                                      
-
-                                                </select>
-                                                <label for="floatingSelect">Sub District</label>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="amount" placeholder="Enter your Amount" value="@if(!empty($fetched->amount)){{$fetched->amount}}@endif" required>
-                                                <label for="firstnamefloatingInput">Amount</label>
-                                            </div>
-                                        </div>
-                                       
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="advance_amount" placeholder="Enter your Advance Amount" value="@if(!empty($fetched->advance_amount)){{$fetched->advance_amount}}@endif" required>
-                                                <label for="firstnamefloatingInput">Advance Amount</label>
-                                            </div>
-                                        </div>
-
-                                        
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
@@ -185,6 +114,46 @@
                                                     
                                                 </select>
                                                 <label for="floatingSelect">Status</label>
+                                            </div>
+                                        </div>
+
+
+                                         <div class="col-lg-4">
+                                            <div class="">
+                                                <label for="firstnamefloatingInput">Rera Certificate</label>
+                                                <input type="file" class="form-control" id="firstnamefloatingInput" name="rera_certificate" >
+                                            </div>
+                                            <div>
+                                                @if(!empty($fetched->rera_certificate) && file_exists(public_path('uploads/vendors/'.$fetched->rera_certificate)))
+                                                <img src="{{ asset('public/uploads/vendors/'.$fetched->rera_certificate) }}" alt="RERA Certificate" style="width: 200px; ">
+                                                
+                                                <input type="hidden" name="old_rera_certificate" value="{{$fetched->rera_certificate}}">
+                                                @endif
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-4">
+                                            <div class="">
+                                                <label for="firstnamefloatingInput">Pancard</label>
+                                                <input type="file" class="form-control" id="firstnamefloatingInput" name="pancard" >
+                                            </div>
+                                            <div>
+                                                @if(!empty($fetched->pancard) && file_exists(public_path('uploads/vendors/'.$fetched->pancard)))
+                                                    <img src="{{ asset('public/uploads/vendors/'.$fetched->pancard) }}" alt="pancard" style="width: 200px; ">
+                                                    <input type="hidden" name="old_pancard" value="{{ $fetched->pancard }}">
+                                                @endif
+                                            </div>
+                                        </div>
+                                         <div class="col-lg-4">
+                                            <div class="">
+                                                <label for="firstnamefloatingInput">Real Estate Certificate</label>
+                                                <input type="file" class="form-control" id="firstnamefloatingInput" name="real_estate_certificate" >
+                                            </div>
+                                            <div>
+                                                @if(!empty($fetched->real_estate_certificate) && file_exists(public_path('uploads/vendors/'.$fetched->real_estate_certificate)))
+                                                <img src="{{ asset('public/uploads/vendors/'.$fetched->pancard) }}" alt="RERA Certificate" style="width: 200px; ">
+                                                
+                                                <input type="hidden" name="old_real_estate_certificate" value="{{$fetched->real_estate_certificate}}">
+                                                @endif
                                             </div>
                                         </div>
 
@@ -221,95 +190,95 @@
 
 @section('customscript')
 
+ 
+
+
 <script>
-
-
-    $(document).ready(function(){
+$(document).ready(function () {
+    $("#vendorForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            mobile: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+            pincode: {
+                required: true,
+                digits: true,
+                minlength: 6,
+                maxlength: 6
+            },
       
-        $('#state_id').trigger('change');
-        $('#event_id').trigger('change');
+            email: {
+                required: true,
+                email: true
+            },
+            area: "required",
+            landmark: "required",
+            city: "required",
+            state: "required",
       
-    });
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            @if(empty($fetched->id))
+            
+             rera_certificate: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            },
+            pancard: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            },
+            real_estate_certificate: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            }
+              @endif
+        },
+        messages: {
+            name: {
+                required: "Please enter name",
+                minlength: "Name must be at least 3 characters long"
+            },
+            email: {
+                required: "Please enter email",
+                email: "Please enter a valid email"
+            },
+            mobile: {
+                required: "Please enter mobile number",
+                digits: "Only numbers allowed",
+                minlength: "Mobile must be 10 digits",
+                maxlength: "Mobile must be 10 digits"
+            },
+            area: "Please enter area",
+            landmark: "Please enter landmark",
+            pincode: {
+                required: "Please enter pincode",
+                digits: "Only numbers allowed",
+                minlength: "Pincode must be 6 digits",
+                maxlength: "Pincode must be 6 digits"
+            },
+            city: "Please enter city",
+            state: "Please enter state",
+        },
+        errorElement: "span",
+        errorClass: "text-danger",
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
         }
     });
-
-
-
-    $('#event_id').change(function(){
-        var event_id = $(this).val();
-        $('#sub_event_id').empty();
-
-        var old_sub_event_id = $('#old_sub_event_id').val();
-        //alert(state_id);
-        $.ajax({
-            url: "{{url('/')}}/getsubeventbyid",
-            type: "POST",
-            data: {
-                event_id: event_id,
-                old_sub_event_id: old_sub_event_id,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(data){
-
-                // console.log(data);
-                
-                $('#sub_event_id').html(data);
-               
-                        
-                
-                
-            }
-        });
-    });
-
-
-
-    $('#state_id').change(function(){
-        var state_id = $(this).val();
-        $('#district_id').empty();
-
-        var old_district_id = $('#old_district_id').val();
-        //alert(state_id);
-        $.ajax({
-            url: "{{url('/')}}/getdistrict",
-            type: "POST",
-            data: {
-                state_id: state_id,
-                old_district_id:old_district_id,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(data){
-                $('#district_id').html(data);
-
-                $('#district_id').trigger('change');
-            }
-        });
-    });
-    
-    $('#district_id').change(function(){
-        var district_id = $(this).val();
-        $('#sub_district_id').empty();
-
-        var old_sub_district_id = $('#old_sub_district_id').val();
-        //alert(state_id);
-        $.ajax({
-            url: "{{url('/')}}/getsubdistrict",
-            type: "POST",
-            data: {
-                district_id: district_id,
-                old_sub_district_id:old_sub_district_id,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(data){
-                $('#sub_district_id').html(data);
-            }
-        });
-    });
-
+});
 </script>
+
+
+
 
 @endsection
 

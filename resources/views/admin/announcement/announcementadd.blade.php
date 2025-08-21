@@ -46,20 +46,20 @@
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="mb-3">
                                                 <label for="VertimeassageInput" class="form-label">Message</label>
-                                                <textarea class="form-control" name="message" id="VertimeassageInput" rows="3" placeholder="Enter your message"></textarea>
+                                                <textarea class="form-control" name="message" id="VertimeassageInput" rows="3" placeholder="Enter your message">@if(!empty($fetched->message)){{$fetched->message}}@endif</textarea>
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="StartleaveDate" class="form-label">Start  Date</label>
-                                                <input type="text" name="start_date" class="form-control flatpickr-input active" data-provider="flatpickr" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
+                                                <input type="text" name="start_date" class="form-control flatpickr-input active" data-provider="flatpickr" value="@if(!empty($fetched->start_date)){{$fetched->start_date}}@endif" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="StartleaveDate" class="form-label">End Date</label>
-                                                <input type="text" name="end_date" class="form-control flatpickr-input active" data-provider="flatpickr" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
+                                                <input type="text" name="end_date" class="form-control flatpickr-input active" data-provider="flatpickr" id="StartleaveDate" value="@if(!empty($fetched->end_date)){{$fetched->end_date}}@endif" readonly="readonly" fdprocessedid="ifanho">
                                             </div>
                                         </div>
                                         

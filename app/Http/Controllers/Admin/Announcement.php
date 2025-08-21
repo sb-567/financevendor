@@ -83,19 +83,19 @@ class Announcement extends Controller
     }
 
 
-    public function useredit(Request $request){
+    public function announcementedit(Request $request){
 
         $data['title']="Announcement Edit";
-        $data['fetched']=DB::table('tbl_admin')->where('id','=',$request->id)->first();
+        $data['fetched']=DB::table('tbl_announcement')->where('id','=',$request->id)->first();
           $data['role']= DB::table('tbl_roles')->get();
-        return view( 'admin.announcement.announcementadd', $data);
+        return view('admin.announcement.announcementadd', $data);
 
     }
 
     public function create(){
 
         $data['title']="Announcement Create";
-        $data['role']= DB::table('tbl_roles')->get();
+        // $data['role']= DB::table('tbl_roles')->get();
         return view( 'admin.announcement.announcementadd',$data);
     }
 
@@ -134,14 +134,14 @@ class Announcement extends Controller
     }
 
 
-    public function userstatuschange(Request $request){
+    public function announcementstatuschange(Request $request){
         
 
         if ($request->filled('id')) { // Use filled() to check for non-empty values
-            $vendor = DB::table('tbl_admin')->where('id', $request->input('id'))->first();
+            $vendor = DB::table('tbl_announcement')->where('id', $request->input('id'))->first();
         
             if ($vendor) {
-                DB::table('tbl_admin')
+                DB::table('tbl_announcement')
                     ->where('id', $request->input('id'))
                     ->update(['status' => $request->input('status')]);
         
@@ -157,7 +157,7 @@ class Announcement extends Controller
                 ], 404);
             }
         } else {
-            $id = DB::table('tbl_admin')->insertGetId([
+            $id = DB::table('tbl_announcement')->insertGetId([
                 'status' => $request->input('status')
             ]);
         
@@ -174,7 +174,7 @@ class Announcement extends Controller
     {   
 
         $id = $request->id;
-        DB::table('tbl_admin')->where('id', $id)->delete();
+        DB::table('tbl_announcement')->where('id', $id)->delete();
         return;
 
     }
@@ -182,7 +182,7 @@ class Announcement extends Controller
     public function selecteddestroy(Request $request){
         foreach($request->items as $item){
             // Subevent::destroy(array('id',$item));
-            DB::table('tbl_admin')->where('id', $item)->delete();
+            DB::table('tbl_announcement')->where('id', $item)->delete();
         }
         return;
     }

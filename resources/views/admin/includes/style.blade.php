@@ -12,7 +12,7 @@
     <!-- custom Css-->
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
 
-
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
      <!--datatable css-->
      <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
      <!--datatable responsive css-->
@@ -25,4 +25,11 @@
             background: #fff !important;
             
         }
+        table.dataTable td.text-wrap {
+    white-space: normal !important;
+    word-break: break-word;
+}
+
      </style>
+
+     

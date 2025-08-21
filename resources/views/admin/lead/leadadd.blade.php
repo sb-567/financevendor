@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title',''.$title)
 
 @section('content')
@@ -39,41 +39,53 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{url('/')}}/districtsave"  enctype="multipart/form-data">
+                                 <form method="post" id="leadForm" action="{{url('/')}}/leadsave"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
 
-                                        <div class="col-lg-4">
+                                    <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="state_id" aria-label="Floating label select example">
-                                                    
-                                                        @if(!empty($states))
+                                                <select class="form-select"  name="vendor_id" aria-label="Floating label select example">
 
-                                                            @foreach ($states as $sat)
-                                                            <option value="{{ $sat->id }}" @if(!empty($fetched->state_id) && $fetched->state_id==$sat->id){{"selected"}}@endif>{{ $sat->state_title }}</option>
-                                                            
-                                                            @endforeach
-                                                        
-                                                        @endif
-                                                        
+                                                    @if(!empty($vendors))
+                                                        <option value="">Select Vendor</option>
+                                                        @foreach($vendors as $vendor)
+                                                            <option value="{{$vendor->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$vendor->id){{"selected"}}@endif>{{$vendor->name}}</option>
+                                                        @endforeach
+                                                    @else
+                                                        <option value="">No Vendor Available</option>  
+                                                    @endif
+
+                                                    
                                                     
                                                 </select>
-                                                <label for="floatingSelect">State</label>
+                                                <label for="floatingSelect">Vendor</label>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="district_title" placeholder="Enter your District Title" value="@if(!empty($fetched->district_title)){{$fetched->district_title}}@endif" required>
-                                                <label for="firstnamefloatingInput">District Title</label>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" >
+                                                <label for="firstnamefloatingInput">Name</label>
                                             </div>
                                         </div>
                                         
-                                       
-                                       
                                         
-
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" >
+                                                <label for="firstnamefloatingInput">Email</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" >
+                                                <label for="firstnamefloatingInput">Mobile</label>
+                                            </div>
+                                        </div>
+                                       
                                         <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect" name="status" aria-label="Floating label select example">
@@ -86,6 +98,8 @@
                                             </div>
                                         </div>
 
+
+                                        
                                         
                                         <div class="col-lg-12">
                                             <div class="text-center">
@@ -112,6 +126,58 @@
     </div>
     <!-- container-fluid -->
 </div>
+
+
+@endsection
+
+@section('customscript')
+
+ 
+
+
+<script>
+$(document).ready(function () {
+    $("#leadForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            mobile: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            },
+          
+        },
+        messages: {
+            name: {
+                required: "Please enter name",
+                minlength: "Name must be at least 3 characters long"
+            },
+       
+            mobile: {
+                required: "Please enter mobile number",
+                digits: "Only numbers allowed",
+                minlength: "Mobile must be 10 digits",
+                maxlength: "Mobile must be 10 digits"
+            },
+            
+        },
+        errorElement: "span",
+        errorClass: "text-danger",
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        }
+    });
+});
+</script>
+
+
 
 
 @endsection

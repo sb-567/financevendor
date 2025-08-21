@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 @section('title','Vendors List')
 
 @section('content')
@@ -46,13 +46,13 @@
                                   
                                     <th data-ordering="false">
                                         <div class="form-check">
-                                            <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
+                                            <input class="form-check-input fs-15" type="checkbox" id="checkAll" >
                                         </div>
                                         SR No.
                                     </th>
                                     <th data-ordering="false">Name</th>
-                                    <th>Mobile</th>
-                                    <th>Event</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -102,8 +102,8 @@
                     columns: [
                         { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
                         { data: 'name', name: 'name' },
-                        { data: 'mobile', name: 'mobile' },
-                        { data: 'event_title', name: 'event_title' },
+                        { data: 'email', name: 'email' },
+                        { data: 'phone', name: 'mobile' },
                         { data: 'status', name: 'status',orderable: false, searchable: false },
                         { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
                     ],
@@ -121,8 +121,8 @@
         }
             
             // Example dynamic JavaScript for the page
-            $('#checkAllvendor').on('click', function() {
-                $('.checkbox').prop('checked', this.checked);
+            $('#checkAll').on('click', function() {
+                $('.form-check-input').prop('checked', this.checked);
             });
             
             $('.status').on('click', function() {
@@ -139,6 +139,50 @@
 
             });
 
+
+             $(document).on('change', '.statuschange', function() {
+                var status = $(this).prop('checked') ? 1 : 0;
+                var id = $(this).data('id');
+                $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        }
+                    });
+                $.ajax({
+                    url: "{{ route('vendorstatuschange') }}", // Your PHP file to update status
+                    type: 'POST',
+                    data: { id: id, status: status },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                         
+
+                            swal.fire({
+                                        // position: 'top-right',
+                                        type: 'success',
+                                        title: 'Status updated successfully!',
+                                        // showConfirmButton: false,
+                                        timer: 5000
+                                    
+                            });
+
+                        } else {
+                            
+                            swal.fire({
+                                        // position: 'top-right',
+                                        type: 'success',
+                                        title: 'Failed to update status.',
+                                        // showConfirmButton: false,
+                                        timer: 5000
+                                    
+                            });
+                        }
+                    },
+                    error: function() {
+                        alert('Error in AJAX request.');
+                    }
+                });
+            });
 
             function deleted(items) {
                     swal.fire({
@@ -174,7 +218,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'youtube data Deleted Successfully',
+                                        title: 'Vendor data Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -199,14 +243,14 @@
             function deletedchecked() {
                     const selectedValues = [];
                     
-                    $('input[type="checkbox"].custom-control-input:checked').each(function () {
+                    $('input[type="checkbox"].form-check-input:checked').each(function () {
                         selectedValues.push($(this).val());
                     });
 
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Youtube Url to delete", "error");
+                    swal.fire("! Opps ", "Please check vendor to delete", "error");
                     }
             }
          
@@ -219,7 +263,7 @@
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Youtube Url?",
+                 text: "Are you sure you want to Delete Vendor?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'

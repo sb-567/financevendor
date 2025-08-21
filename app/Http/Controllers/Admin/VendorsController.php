@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class VendorsController extends Controller
 {
     public function index(){
         $data['title']="Vendor";
-        return view( 'vendors/vendorslist',$data);
+        return view('admin/vendors/vendorslist',$data);
     }
 
 
@@ -58,18 +58,14 @@ class VendorsController extends Controller
 
         $query = DB::table('tbl_vendors');
 
-        $query->select('tbl_vendors.*', 'tbl_events.event_title');
+        // $query->select('tbl_vendors.*');
         
         // Apply ordering
         $query->orderBy('id', 'desc');
-        $query->leftjoin('tbl_events', 'tbl_vendors.event_id', '=', 'tbl_events.id');
+        // $query->leftjoin('tbl_events', 'tbl_vendors.event_id', '=', 'tbl_events.id');
 
         if($request->user_id){
             $query->where('tbl_vendors.user_id', '=',$request->user_id);
-        }
-
-        if($request->event_id){
-            $query->where('tbl_vendors.event_id', '=',$request->event_id);
         }
 
 
@@ -80,7 +76,7 @@ class VendorsController extends Controller
                 if ($request->has('search') && !empty($request->input('search.value'))) {
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
-                        $q->where('vendor_title', 'like', "%{$keyword}%");
+                        $q->where('name', 'like', "%{$keyword}%");
                     });
                 }
             })
@@ -105,13 +101,13 @@ class VendorsController extends Controller
 
                 if($row->status==1){
                     return '<div class="form-check form-switch">
-                            <input class="form-check-input toggle-switch" type="checkbox" role="switch" data-id="' . $row->id.'" checked>
+                            <input class="form-check-input toggle-switch statuschange" type="checkbox" role="switch" data-id="' . $row->id.'" checked>
 
                         </div>';
                 }else{
 
                     return '<div class="form-check form-switch">
-                        <input class="form-check-input toggle-switch" type="checkbox" role="switch" data-id="' . $row->id.'" >
+                        <input class="form-check-input toggle-switch statuschange" type="checkbox" role="switch" data-id="' . $row->id.'" >
 
                     </div>';
 
@@ -127,24 +123,26 @@ class VendorsController extends Controller
 
     }
 
+    
+
 
     public function vendoredit(Request $request){
 
         $data['title']="vendor Edit";
         $data['fetched']=DB::table('tbl_vendors')->where('id','=',$request->id)->first();
-        $data['events'] =$events= DB::table('tbl_events')->get();
+        // $data['events'] =$events= DB::table('tbl_events')->get();
         
      
-        $data['states']= DB::table('tbl_states')->get();
-        return view( 'vendors/vendoradd', $data);
+        // $data['states']= DB::table('tbl_states')->get();
+        return view( 'admin/vendors/vendoradd', $data);
 
     }
 
     public function create(){
 
         $data['title']="vendor Create";
-        $data['events']= DB::table('tbl_events')->get();
-        return view( 'vendors/vendoradd',$data);
+        // $data['events']= DB::table('tbl_events')->get();
+        return view('admin/vendors/vendoradd',$data);
     }
 
 
@@ -153,21 +151,67 @@ class VendorsController extends Controller
         // echo Session::get('redirectionurl');
         // die;
 
+        // Handle file uploads for rera_certificate, real_estate_certificate, pancard
+        $rera_certificate = null;
+        $real_estate_certificate = null;
+        $pancard = null;
+
+        if ($request->hasFile('rera_certificate')) {
+            $file = $request->file('rera_certificate');
+            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+
+            $rera_certificate = time() . '_rera.webp';
+            $path = public_path('uploads/vendors/' . $rera_certificate);
+
+            // Convert and save to webp
+            imagewebp($image, $path, 80); // 80 = quality
+            imagedestroy($image);
+        } else {
+            $rera_certificate = $request->input('rera_certificate_old');
+        }
+
+        if ($request->hasFile('real_estate_certificate')) {
+            $file = $request->file('real_estate_certificate');
+            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+
+            $real_estate_certificate = time() . '_realestate.webp';
+            $path = public_path('uploads/vendors/' . $real_estate_certificate);
+
+            imagewebp($image, $path, 80);
+            imagedestroy($image);
+        } else {
+            $real_estate_certificate = $request->input('real_estate_certificate_old');
+        }
+
+        if ($request->hasFile('pancard')) {
+            $file = $request->file('pancard');
+            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+
+            $pancard = time() . '_pancard.webp';
+            $path = public_path('uploads/vendors/' . $pancard);
+
+            imagewebp($image, $path, 80);
+            imagedestroy($image);
+        } else {
+            $pancard = $request->input('pancard_old');
+        }
+
         if ($request->input('id') != "") {
            
             DB::table('tbl_vendors')
             ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
             ->update([
                 'name' => $request->input('name'),
-                'mobile' => $request->input('mobile'),
-                'event_id' => $request->input('event_id'),
-                'sub_event_id' => json_encode($request->input('sub_event_id')),
-                'task_id' => $request->input('task_id'),
-                'state_id' => $request->input('state_id'),
-                'district_id' => $request->input('district_id'),
-                'sub_district_id' => $request->input('sub_district_id'),
-                'amount' => $request->input('amount'),
-                'advance_amount' => $request->input('advance_amount'),
+                'phone' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'area' => $request->input('area'),
+                'pincode' => $request->input('pincode'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'landmark' => $request->input('landmark'),
+                'rera_certificate' => $rera_certificate,
+                'pancard' => $pancard,
+                'real_estate_certificate' => $real_estate_certificate,
                 'status' =>$request->input('status')
             ]);
     
@@ -175,16 +219,17 @@ class VendorsController extends Controller
         } else {
     
             DB::table('tbl_vendors')->insert([
-                'name' => $request->input('name'),
-                'mobile' => $request->input('mobile'),
-                'event_id' => $request->input('event_id'),
-                'sub_event_id' => json_encode($request->input('sub_event_id')),
-                'task_id' => $request->input('task_id'),
-                'state_id' => $request->input('state_id'),
-                'district_id' => $request->input('district_id'),
-                'sub_district_id' => $request->input('sub_district_id'),
-                'amount' => $request->input('amount'),
-                'advance_amount' => $request->input('advance_amount'),
+                 'name' => $request->input('name'),
+                'phone' => $request->input('mobile'),
+                'email' => $request->input('email'),
+                'area' => $request->input('area'),
+                'pincode' => $request->input('pincode'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'landmark' => $request->input('landmark'),
+                 'rera_certificate' => $rera_certificate,
+                'pancard' => $pancard,
+                'real_estate_certificate' => $real_estate_certificate,
                 'status' =>$request->input('status')
             ]);
             
@@ -192,16 +237,8 @@ class VendorsController extends Controller
          
          session()->flash('success', 'vendor saved successfully');
         
-        //  return redirect('vendorlist');
-
-       
         
-        $redirectUrl = Session::get('redirectionurl');
-
-        // Forget session before redirection
-        Session::forget('redirectionurl');
-
-        return redirect($redirectUrl);
+         return redirect('vendorlist');
 
 
 

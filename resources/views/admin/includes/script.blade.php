@@ -39,9 +39,14 @@
  <script src="{{asset('assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
  <script src="{{asset('assets/js/plugins.js')}}"></script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js" integrity="sha512-KFHXdr2oObHKI9w4Hv1XPKc898mE4kgYx58oqsc/JqqdLMDI4YjOLzom+EMlW8HFUd0QfjfAvxSL6sEq/a42fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
  <script type="text/javascript" src="{{asset("assets/libs/choices.js/public/choices.min.js")}}"></script>
  <script type="text/javascript" src="{{asset("assets/libs/flatpickr/flatpickr.min.js")}}"></script>
 
+ <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+ 
+    <script src="{{asset('assets/js/pages/select2.init.js')}}"></script>
  <!-- apexcharts -->
  <script src="{{asset('assets/libs/apexcharts/apexcharts.min.js')}}"></script>
 
