@@ -108,7 +108,7 @@ class Announcement extends Controller
             DB::table('tbl_announcement')
             ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
             ->update([
-                'message' => $request->input('message'),
+                    'message' => $request->input('message'),
                     'start_date' => $request->input('start_date'),
                     'end_date' => $request->input('end_date'),
                     'status' =>$request->input('status')
@@ -149,6 +149,7 @@ class Announcement extends Controller
                     'success' => true,
                     'message' => 'Users status updated successfully!',
                     'id' => $request->input('id'),
+                    'status' => $request->input('status')
                 ]);
             } else {
                 return response()->json([

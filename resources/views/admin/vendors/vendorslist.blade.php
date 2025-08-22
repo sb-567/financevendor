@@ -156,19 +156,32 @@
                     success: function(response) {
                         if (response.success) {
                          
+                            if(response.status == 1){
+                                
+                                swal.fire({
+                                            // position: 'top-right',
+                                            type: 'success',
+                                            title: 'Status Activated successfully!',
+                                            // showConfirmButton: false,
+                                            timer: 5000
+                                        
+                                });
 
-                            swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Status updated successfully!',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
+                            }else{
+                                swal.fire({
+                                            // position: 'top-right',
+                                            type: 'success',
+                                            title: 'Status Inactivated successfully!',
+                                            // showConfirmButton: false,
+                                            timer: 5000
+                                        
+                                });
+                            }
 
-                        } else {
-                            
-                            swal.fire({
+                        } 
+                    },
+                    error: function() {
+                        swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
                                         title: 'Failed to update status.',
@@ -176,10 +189,6 @@
                                         timer: 5000
                                     
                             });
-                        }
-                    },
-                    error: function() {
-                        alert('Error in AJAX request.');
                     }
                 });
             });
