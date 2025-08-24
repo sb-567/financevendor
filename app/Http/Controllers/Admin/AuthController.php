@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -101,7 +102,7 @@ class AuthController extends Controller
 
     public function userlist()
     {
-        $data['title'] = "User List";
+        $data['title'] = "Staff List";
         return view('admin.users.userslist', $data);
     }
 
@@ -184,7 +185,7 @@ class AuthController extends Controller
 
     public function create(){
 
-        $data['title']="Users Create";
+        $data['title']="Staff Create";
         $data['role']= DB::table('tbl_roles')->get();
         return view( 'admin.users.usersadd',$data);
     }
@@ -192,6 +193,14 @@ class AuthController extends Controller
 
     public function usersave(Request $request){
         
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:tbl_admin,email',
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('error', $validator->errors()->first('email'));
+            return redirect()->back()->withInput();
+        }
 
         if ($request->input('id') != "") {
            
@@ -243,6 +252,7 @@ class AuthController extends Controller
                     'success' => true,
                     'message' => 'Users status updated successfully!',
                     'id' => $request->input('id'),
+                    'status' => $request->input('status')
                 ]);
             } else {
                 return response()->json([

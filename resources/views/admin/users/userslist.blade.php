@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Users List')
+@section('title','Staff List')
 
 @section('content')
 
@@ -10,12 +10,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                    <h4 class="mb-sm-0">Users List</h4>
+                    <h4 class="mb-sm-0">Staff List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Users List</li>
+                            <li class="breadcrumb-item active">Staff List</li>
                         </ol>
                     </div>
 
@@ -29,11 +29,11 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Users List</h5>
+                        <h5 class="card-title mb-0">Staff List</h5>
 
 
                         <div class="text-end">
-                             <a href="{{ route('usercreate') }}" class="btn btn-primary">Add Users</a>
+                             <a href="{{ route('usercreate') }}" class="btn btn-primary">Add Staff</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         </div>
@@ -158,19 +158,36 @@
                     success: function(response) {
                         if (response.success) {
                          
-
-                            swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Status updated successfully!',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
-
-                        } else {
+                            if(response.status == 1){
+                                
                             
-                            swal.fire({
+                                swal.fire({
+                                            // position: 'top-right',
+                                            type: 'success',
+                                            title: 'Status Activated successfully!',
+                                            // showConfirmButton: false,
+                                            timer: 5000
+                                        
+                                });
+
+                            }else{
+
+                                
+                                swal.fire({
+                                            // position: 'top-right',
+                                            type: 'success',
+                                            title: 'Status Inactivated successfully!',
+                                            // showConfirmButton: false,
+                                            timer: 5000
+                                        
+                                });
+
+                            }
+
+                        } 
+                    },
+                    error: function() {
+                        swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
                                         title: 'Failed to update status.',
@@ -178,10 +195,6 @@
                                         timer: 5000
                                     
                             });
-                        }
-                    },
-                    error: function() {
-                        alert('Error in AJAX request.');
                     }
                 });
             });

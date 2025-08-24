@@ -260,6 +260,9 @@ class VendorsController extends Controller
                     'success' => true,
                     'message' => 'vendor status updated successfully!',
                     'id' => $request->input('id'),
+                    'status' => $request->input('status')
+
+                    
                 ]);
             } else {
                 return response()->json([

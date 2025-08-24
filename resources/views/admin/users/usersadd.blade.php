@@ -26,7 +26,7 @@
 
 
         <div class="row">
-         
+            
 
 
             <div class="row">
@@ -37,6 +37,12 @@
                             
                         </div><!-- end card header -->
                         <div class="card-body">
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
+
                             
                             
                                 <form method="post" action="{{url('/')}}/usersave"  enctype="multipart/form-data">
