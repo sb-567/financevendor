@@ -8,6 +8,9 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session; 
 
+use App\Exports\LeadExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class Leadcontroller extends Controller
 {
@@ -44,6 +47,9 @@ class Leadcontroller extends Controller
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
                         $q->where('tbl_leads.name', 'like', "%{$keyword}%");
+
+                        $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
+                        $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
                     });
                 }
             })
@@ -64,11 +70,14 @@ class Leadcontroller extends Controller
                                 </div>';
             })
             // Status column with badge
+            ->editColumn('created_at', function ($row) {
+                return date('d-m-Y h:i a', strtotime($row->created_at));
+            })
     
             
             
             // Ensure HTML columns are rendered as raw HTML
-            ->rawColumns(['checkbox', 'action'])
+            ->rawColumns(['checkbox','created_at', 'action'])
             ->make(true);
 
 
@@ -201,16 +210,22 @@ class Leadcontroller extends Controller
 
     public function exportlead(Request $request)
     {
-        $vendor_id = $request->input('vendor_id');
         
-        // Fetch leads based on vendor_id
-        $leads = DB::table('tbl_leads')
-            ->where('vendor_id', $vendor_id)
-            ->get();
+        //  echo $request->input('vendor_id');
+        
+      $filters = [
+            'vendor_id' => $request->input('vendor_id')
+        ];
 
-        // Export logic here (e.g., generate CSV, Excel, etc.)
-        // For demonstration, we'll just return the leads as JSON
-        return response()->json($leads);
+
+         return Excel::download(new LeadExport($filters), 'leads.xlsx');
+   
+        
     }
 
+
+    // public function export()
+    // {
+    //     return Excel::download(new LeadExport, 'leads.xlsx');
+    // }
 }

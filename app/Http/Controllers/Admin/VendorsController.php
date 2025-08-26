@@ -167,7 +167,7 @@ class VendorsController extends Controller
             imagewebp($image, $path, 80); // 80 = quality
             imagedestroy($image);
         } else {
-            $rera_certificate = $request->input('rera_certificate_old');
+            $rera_certificate = $request->input('old_rera_certificate');
         }
 
         if ($request->hasFile('real_estate_certificate')) {
@@ -180,7 +180,7 @@ class VendorsController extends Controller
             imagewebp($image, $path, 80);
             imagedestroy($image);
         } else {
-            $real_estate_certificate = $request->input('real_estate_certificate_old');
+            $real_estate_certificate = $request->input('old_real_estate_certificate');
         }
 
         if ($request->hasFile('pancard')) {
@@ -193,7 +193,7 @@ class VendorsController extends Controller
             imagewebp($image, $path, 80);
             imagedestroy($image);
         } else {
-            $pancard = $request->input('pancard_old');
+            $pancard = $request->input('old_pancard');
         }
 
         if ($request->input('id') != "") {

@@ -34,8 +34,8 @@
                         <div class="d-flex justify-content-between align-items-center mt-4">
                            
 
-                            <form method="post" action="{{ route('exportlead') }}">
-                                
+                            <form method="post" action="{{url('/')}}/exportlead" id="filterForm" enctype="multipart/form-data">
+                                @csrf
                                 
                                 <select class="form-control" id="vendorFilter" name="vendor_id">
                                     @if(!empty($vendors))
@@ -56,7 +56,7 @@
                      
 
                         <div class="">
-                             <button type="submit" class="btn btn-success ms-2">Export {{$title}}</button>
+                             <button type="submit" form="filterForm" class="btn btn-success ms-2">Export {{$title}}</button>
                              <a href="{{ route('leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
