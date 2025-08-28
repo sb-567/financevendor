@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('cross_price',255)->nullable();
             $table->string('offer_text',255)->nullable();
             $table->text('plan_ids')->nullable();
+            $table->integer('status')->default(1)->comment('1=active,0=inactive');
             $table->timestamps();
         });
     }

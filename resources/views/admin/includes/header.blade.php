@@ -521,13 +521,46 @@
 
                     @foreach(getMenus() as $menu)
 
+                    @php
+
+                    $submenu = getSubMenus($menu->id);
+
+                    @endphp
+
                     @if(getMenusWithPermissions($menu->id,'can_view'))
+
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ url($menu->route_name) }}" >
+                            <a class="nav-link menu-link " 
+                            @if($submenu->count() > 0)
+                            href="#sidebarApps{{ $menu->id }}" 
+                             data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps"
+                             @else
+                             href="{{ url($menu->route_name) }}" 
+                            @endif
+                            >
                                 <i class="{{ $menu->icon }}"></i> <span data-key="t-dashboards">{{ $menu->menu_name }}</span>
                             </a>
+
+                            @if($submenu->count() > 0)
+                                <div class="collapse menu-dropdown" id="sidebarApps{{ $menu->id }}">
+                                    <ul class="nav nav-sm flex-column">
+                                        @foreach($submenu as $child)
+                                         
+                                                <li class="nav-item">
+                                                    <a href="{{ url($child->route_name) }}" class="nav-link">
+                                                        {{ $child->menu_name }}
+                                                    </a>
+                                                </li>
+                                    
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                         </li> 
+
+                        
                     @endif
+
 
                     @endforeach
 

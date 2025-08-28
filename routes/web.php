@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\Leadcontroller;
+use App\Http\Controllers\Admin\SubscribeController;
 use App\Http\Controllers\Admin\RoleController;
 
 /*
@@ -73,24 +74,14 @@ Route::middleware(['guard'])->group(function(){
     Route::post('announcementsave',[Announcement::class, 'announcementsave'])->name('announcementsave');
 
 
-    Route::get('staffmanagement', function () {
-        return  "Welcome to the Admin Dashboard"; 
-    });
-    // Route::get('announcement', function () {
-    //     return  "Welcome to the Admin Dashboard"; 
-    // });
+  
     Route::get('communication', function () {
         return  "Welcome to the Admin Dashboard"; 
     });
     Route::get('subscription', function () {
         return  "Welcome to the Admin Dashboard"; 
     });
-    Route::get('lead', function () {
-        return  "Welcome to the Admin Dashboard"; 
-    });
-    Route::get('vendor', function () {
-        return  "Welcome to the Admin Dashboard"; 
-    });
+ 
  
     Route::get('vendorlist',[VendorsController::class, 'index'])->name('vendorlist');
     Route::get('getvendorlistdata',[VendorsController::class, 'getvendorlistdata'])->name('getvendorlistdata');
@@ -111,6 +102,25 @@ Route::middleware(['guard'])->group(function(){
     Route::post('leadstatuschange',[Leadcontroller::class, 'leadstatuschange'])->name('leadstatuschange');
     Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
     Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
+
+    Route::get('plandescriptionlist',[SubscribeController::class, 'plandescriptionlist'])->name('plandescriptionlist');
+    Route::get('getplandescriptiondata',[SubscribeController::class, 'getplandescriptiondata'])->name('getplandescriptiondata');
+    Route::get('plandescriptioncreate',[SubscribeController::class, 'plandescriptioncreate'])->name('plandescriptioncreate');
+    Route::post('plandescriptionsave',[SubscribeController::class, 'plandescriptionsave'])->name('plandescriptionsave');
+    Route::get('plandescriptionedit/{id}',[SubscribeController::class, 'plandescriptionedit']);
+    Route::post('plandescriptionstatuschange',[SubscribeController::class, 'plandescriptionstatuschange'])->name('plandescriptionstatuschange');
+    Route::delete('/plandescriptiondelete/{id}', [SubscribeController::class, 'plandescriptiondelete'])->name('plandescriptiondelete');
+    Route::post('deleteselectedplandescription',[SubscribeController::class, 'deleteselectedplandescription'])->name('deleteselectedplandescription');
+    
+    
+    Route::get('subscriptionplanlist',[SubscribeController::class, 'subscriptionplanlist'])->name('subscriptionplanlist');
+    Route::get('getsubscriptionplandata',[SubscribeController::class, 'getsubscriptionplandata'])->name('getsubscriptionplandata');
+    Route::get('subscriptionplancreate',[SubscribeController::class, 'subscriptionplancreate'])->name('subscriptionplancreate');
+    Route::post('subscriptionplansave',[SubscribeController::class, 'subscriptionplansave'])->name('subscriptionplansave');
+    Route::get('subscriptionplanedit/{id}',[SubscribeController::class, 'subscriptionplanedit']);
+    Route::post('subscriptionplanstatuschange',[SubscribeController::class, 'subscriptionplanstatuschange'])->name('subscriptionplanstatuschange');
+    Route::delete('/subscriptionplandelete/{id}', [SubscribeController::class, 'subscriptionplandelete'])->name('subscriptionplandelete');
+    Route::post('deleteselectedsubscriptionplan',[SubscribeController::class, 'deleteselectedsubscriptionplan'])->name('deleteselectedsubscriptionplan');
 
 
 
