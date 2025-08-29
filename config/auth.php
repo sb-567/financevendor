@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'vendor' => [ // 👈 new guard
+            'driver' => 'session',
+            'provider' => 'vendors',
+        ],
     ],
 
     /*
@@ -63,6 +68,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'vendors' => [ // 👈 new provider
+            'driver' => 'eloquent',
+            'model' => App\Models\Vendors::class,
         ],
 
         // 'users' => [
