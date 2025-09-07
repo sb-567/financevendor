@@ -295,8 +295,8 @@ class SubscribeController extends Controller
     public function subscriptionplanedit(Request $request){
 
         $data['title']="Subscription Plan Edit";
-        $data['fetched']=DB::table('tbl_plans')->where('id','=',$request->id)->first();
-        
+        $data['fetched']=DB::table('tbl_subscription')->where('id','=',$request->id)->first();
+        $data['plans']= DB::table('tbl_plans')->get();
         
     //  $data['vendors']= DB::table('tbl_vendors')->get();
         // $data['states']= DB::table('tbl_states')->get();
@@ -307,7 +307,7 @@ class SubscribeController extends Controller
     public function subscriptionplancreate(){
 
         $data['title']="Subscription Plan Create";
-        // $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['plans']= DB::table('tbl_plans')->get();
         return view('admin/subscription/subscriptionadd',$data);
     }
 
@@ -320,10 +320,14 @@ class SubscribeController extends Controller
 
         if ($request->input('id') != "") {
            
-            DB::table('tbl_plans')
+            DB::table('tbl_subscription')
             ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
             ->update([
                 'title' => $request->input('title'),
+                'price' =>$request->input('price'),
+                'cross_price' =>$request->input('cross_price'),
+                'offer_text' =>$request->input('offer_text'),
+                'plan_ids' =>json_encode($request->input('plans_id')),
                 'status' =>$request->input('status'),
                 'updated_at' => now() 
             ]);
@@ -331,15 +335,19 @@ class SubscribeController extends Controller
     
         } else {
     
-            DB::table('tbl_plans')->insert([
+            DB::table('tbl_subscription')->insert([
                 'title' => $request->input('title'),
+                'price' =>$request->input('price'),
+                'cross_price' =>$request->input('cross_price'),
+                'offer_text' =>$request->input('offer_text'),
+                'plan_ids' =>json_encode($request->input('plans_id')),
                 'status' =>$request->input('status'),
                 'created_at' => now(),
             ]);
             
         }
          
-         session()->flash('success', 'Plan saved successfully');
+         session()->flash('success', 'Subscription Plan saved successfully');
         
         
          return redirect('subscriptionplanlist');
@@ -353,10 +361,10 @@ class SubscribeController extends Controller
         
 
         if ($request->filled('id')) { // Use filled() to check for non-empty values
-            $vendor = DB::table('tbl_plans')->where('id', $request->input('id'))->first();
+            $vendor = DB::table('tbl_subscription')->where('id', $request->input('id'))->first();
         
             if ($vendor) {
-                DB::table('tbl_plans')
+                DB::table('tbl_subscription')
                     ->where('id', $request->input('id'))
                     ->update(['status' => $request->input('status')]);
         
@@ -372,7 +380,7 @@ class SubscribeController extends Controller
                 ], 404);
             }
         } else {
-            $id = DB::table('tbl_plans')->insertGetId([
+            $id = DB::table('tbl_subscription')->insertGetId([
                 'status' => $request->input('status')
             ]);
         
@@ -389,7 +397,7 @@ class SubscribeController extends Controller
     {   
 
         $id = $request->id;
-        DB::table('tbl_plans')->where('id', $id)->delete();
+        DB::table('tbl_subscription')->where('id', $id)->delete();
         return;
 
     }
@@ -397,7 +405,7 @@ class SubscribeController extends Controller
     public function deleteselectedsubscriptionplan(Request $request){
         foreach($request->items as $item){
             // Subevent::destroy(array('id',$item));
-            DB::table('tbl_plans')->where('id', $item)->delete();
+            DB::table('tbl_subscription')->where('id', $item)->delete();
         }
         return;
     }

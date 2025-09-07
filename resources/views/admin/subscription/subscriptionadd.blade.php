@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                 <form method="post" id="leadForm" action="{{url('/')}}/plandescriptionsave"  enctype="multipart/form-data">
+                                 <form method="post" id="leadForm" action="{{url('/')}}/subscriptionplansave"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-2">
                                     
@@ -97,48 +97,41 @@
 
                                     <div class="col-lg-5">
                                         <div data-simplebar style="max-height: 300px;"> 
-                                            <div class="list-group">
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Declined Payment
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="" checked>
-                                                    Delivery Error
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="" checked>
-                                                    Wrong Amount
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong Address
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                                <label class="list-group-item">
-                                                    <input class="form-check-input me-1" type="checkbox" value="">
-                                                    Wrong UX/UI Solution
-                                                </label>
-                                            </div>
+                                       @php
+    $selectedPlans = [];
+
+    if (!empty($fetched->plan_ids)) {
+        // Try to decode as JSON
+        $decoded = json_decode($fetched->plan_ids, true);
+
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            $selectedPlans = $decoded;
+        } else {
+            // If not JSON, assume comma-separated string
+            $selectedPlans = explode(',', $fetched->plan_ids);
+        }
+    }
+@endphp
+
+<div class="list-group">
+    @if(!empty($plans))
+        @foreach($plans as $plan)
+            <label class="list-group-item">
+                <input 
+                    class="form-check-input me-1" 
+                    name="plans_id[]" 
+                    type="checkbox" 
+                    value="{{ $plan->id }}"
+                    {{ in_array($plan->id, $selectedPlans ?? []) ? 'checked' : '' }}
+                >
+                {{ $plan->title }}
+            </label>
+        @endforeach
+    @endif
+</div>
+
+
+
                                         </div>
                                     </div>
 
