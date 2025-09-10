@@ -51,7 +51,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form action="{{url('/')}}/login" method="post">
+                                            <form action="{{ route('vendors.vlogin') }}" method="post">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>

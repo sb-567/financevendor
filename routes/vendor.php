@@ -20,7 +20,7 @@ use App\Http\Controllers\Vendor\DashboardController;
 Route::prefix('vendors')->name('vendors.')->group(function () {
 
 Route::get('/',[AuthController::class, 'index']);
-Route::post('login',[AuthController::class, 'login']);
+Route::post('vlogin',[AuthController::class, 'vlogin'])->name('vlogin');
 Route::get('verify',[AuthController::class, 'verify']);
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
@@ -28,7 +28,7 @@ Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp')
 Route::middleware(['guard'])->group(function(){
     
     Route::get('logout',[AuthController::class, 'logout'])->name('logout');
-    // Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
 
 
     

@@ -26,13 +26,15 @@ class AuthController extends Controller
 
     }
 
-    public function login(Request $request)
-    {
+    public function vlogin(Request $request)
+    {   
+
+
          $username = $request->username;
          $password = $request->password;
    
         $user = Vendors::where(function($query) use ($username) {
-            $query->where('username', $username)
+            $query->where('name', $username)
               ->orWhere('email', $username);
         })->first();
 
