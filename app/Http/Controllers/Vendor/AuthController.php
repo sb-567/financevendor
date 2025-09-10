@@ -49,11 +49,13 @@ class AuthController extends Controller
             
 
             // $request->session()->put('role_id', $user->role_id);
-            return redirect('verify');
+            return redirect()->route('vendors.verify');
+            
         } else {
             
             session()->flash('error', 'Username or password does not match');
             return redirect('/');
+            
         }
     }
     

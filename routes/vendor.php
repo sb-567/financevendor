@@ -21,7 +21,7 @@ Route::prefix('vendors')->name('vendors.')->group(function () {
 
 Route::get('/',[AuthController::class, 'index']);
 Route::post('vlogin',[AuthController::class, 'vlogin'])->name('vlogin');
-Route::get('verify',[AuthController::class, 'verify']);
+Route::get('verify',[AuthController::class, 'verify'])->name('verify');
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
 
