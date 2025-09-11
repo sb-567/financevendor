@@ -14,6 +14,13 @@ if (!function_exists('getMenus')) {
     }
 }
 
+if (!function_exists('getSubMenus')) {
+    function getSubMenus($menu_id)
+    {
+        return Menu::where('parent_id', $menu_id)->get();
+    }
+}
+
 if (!function_exists('getMenusWithPermissions')) {
     function getMenusWithPermissions($menu_id,$action)
     {
