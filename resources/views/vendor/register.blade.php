@@ -34,7 +34,7 @@
         <div class="auth-page-content overflow-hidden pt-lg-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-5">
+                    <div class="col-lg-6">
                         <div class="text-center ">
                             <img src="{{asset('assets/images/localagent.png')}}" width="250px" class="auth-logo img-fluid">
                         </div>

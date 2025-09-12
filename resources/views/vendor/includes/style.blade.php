@@ -30,6 +30,12 @@
     word-break: break-word;
 }
 
+   .swal2-container .swal2-title {
+    padding: 0px 24px 0;
+    font-size: 15px;
+    font-weight: var(--vz-font-weight-medium);
+}
+
      </style>
 
      

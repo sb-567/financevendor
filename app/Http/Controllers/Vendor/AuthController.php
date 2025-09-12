@@ -40,7 +40,7 @@ class AuthController extends Controller
 
         if ($user && Hash::check($password, $user->password)) {
             
-            $request->session()->put('user_id', $user->id);
+            $request->session()->put('vendor_id', $user->id);
 
             $otp = 1234; // Generate a random 4-digit OTP
             // $otp = rand(1000, 9999); // Generate a random 4-digit OTP
@@ -54,7 +54,7 @@ class AuthController extends Controller
         } else {
             
             session()->flash('error', 'Username or password does not match');
-            return redirect('/');
+            return redirect()->route('vendors.login');
             
         }
     }
@@ -62,8 +62,8 @@ class AuthController extends Controller
     public function verify(Request $request)
     {
         
-         if (!$request->session()->has('user_id')) {
-            return redirect('/');
+         if (!$request->session()->has('vendor_id')) {
+             return redirect()->route('vendors.login');
         }
 
         return view('vendor.verify');
@@ -73,35 +73,40 @@ class AuthController extends Controller
     {   
         // echo "ef";
         // die;
-        if (!$request->session()->has('user_id')) {
-            return redirect('/');
+        if (!$request->session()->has('vendor_id')) {
+            return redirect()->route('vendors.login');
         }
 
-         $uid = session('user_id');
+         $uid = session('vendor_id');
          $otp = $request->otp1. $request->otp2 . $request->otp3 . $request->otp4;
    
         $user = Vendors::where('id', $uid)->first();
 
         if ($user->otp==$otp) {
             
-            $request->session()->put('uid', $user->id);
-            $request->session()->put('role_id', $user->role_id);
+            $request->session()->put('vid', $user->id);
+            // $request->session()->put('role_id', $user->role_id);
 
-            $request->session()->forget('user_id');
-            return redirect('dashboard');
+            $request->session()->forget('vendor_id');
+            
+             return redirect()->route('vendors.dashboard');
         } else {
             
             session()->flash('error', 'OTP does not match');
-            return redirect('/');
+            return redirect()->route('vendors.verify');
         }
     }
 
     
     public function logout(Request $request)
     {
-        $request->session()->forget('uid');
-        $request->session()->forget('role_id');
-        return redirect('/');
+        $request->session()->forget('vid');
+        // $request->session()->forget('role_id');
+        return redirect()->route('vendors.login');
+    }
+
+    public function vregister(Request $request){
+        return view('vendor.register');
     }
 
 }

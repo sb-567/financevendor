@@ -19,13 +19,14 @@ use App\Http\Controllers\Vendor\DashboardController;
 
 Route::prefix('vendors')->name('vendors.')->group(function () {
 
-Route::get('/',[AuthController::class, 'index']);
+Route::get('/',[AuthController::class, 'index'])->name('login');
 Route::post('vlogin',[AuthController::class, 'vlogin'])->name('vlogin');
 Route::get('verify',[AuthController::class, 'verify'])->name('verify');
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
+Route::get('vregister',[AuthController::class, 'vregister'])->name('vregister');
 
-Route::middleware(['guard'])->group(function(){
+Route::middleware(['vendor'])->group(function(){
     
     Route::get('logout',[AuthController::class, 'logout'])->name('logout');
     Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');

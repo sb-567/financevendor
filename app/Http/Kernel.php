@@ -46,7 +46,11 @@ class Kernel extends HttpKernel
 
         'guard' => [
             \App\Http\Middleware\WebGuard::class
+        ],
+        'vendor' => [
+            \App\Http\Middleware\VendorGuard::class,
         ]
+        
     ];
 
     /**

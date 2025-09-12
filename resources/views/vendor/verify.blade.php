@@ -21,7 +21,13 @@
     <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-
+     <style>
+        .swal2-container .swal2-title {
+    padding: 0px 24px 0;
+    font-size: 15px;
+    font-weight: var(--vz-font-weight-medium);
+}
+    </style>
 </head>
 
 <body>
@@ -148,6 +154,50 @@
     <script src="{{asset('assets/js/pages/particles.app.js')}}"></script>
     <!-- two-step-verification js -->
     <script src="{{asset('assets/js/pages/two-step-verification.init.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+     
+@if(session('success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: '{{ session('success') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
+
+
+@if(session('error'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
 </body>
 
 </html>
