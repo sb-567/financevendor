@@ -1,5 +1,6 @@
-@extends('admin.master')
+@extends('vendor.master')
 @section('title','Dashboard')
+
 
 @section('content')
 

@@ -6,11 +6,11 @@
 <head>
 
     <meta charset="utf-8" />
-    <title>Finance Vendor Listing Platform</title>
+    {{-- <title>Finance Vendor Listing Platform</title> --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}">
+    {{-- <link rel="shortcut icon" href="{{asset('assets/images/favicon.ico')}}"> --}}
 
     <!-- Layout config Js -->
     <script src="{{asset('assets/js/layout.js')}}"></script>
@@ -23,6 +23,24 @@
     <!-- custom Css-->
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
 
+    <style>
+        body{
+            background: url('{{asset("assets/images/loginbg.jpg")}}');
+            background-size: cover;
+    backdrop-filter: blur(1.1px);
+        }
+        .card{
+            border-right: 2px solid #fe7b67;
+            border-left: 2px solid #0ca27b;
+            border-top: 2px solid #0ca27b;
+            border-bottom: 2px solid #fe7b67;
+        }
+        .swal2-container .swal2-title {
+    padding: 0px 24px 0;
+    font-size: 15px;
+    font-weight: var(--vz-font-weight-medium);
+}
+    </style>
 </head>
 
 <body>
@@ -51,7 +69,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form action="{{url('/')}}/login" method="post">
+                                            <form action="{{ route('vendors.vlogin') }}" method="post">
                                                 @csrf
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>
@@ -96,6 +114,10 @@
                             <!-- end row -->
                         </div>
                         <!-- end card -->
+
+                        <div class="mt-4 text-center">
+                            <p class="mb-0">Don't have an account ? <a href="{{ route('vendors.vregister') }}" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
+                        </div>
                     </div>
                     <!-- end col -->
 
@@ -121,13 +143,55 @@
 
     <!-- password-addon init -->
     <script src="{{asset('assets/js/pages/password-addon.init.js')}}"></script>
-
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.querySelector('input[name="otp"]').addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, '').slice(0, 4);
         });
 
     </script>
+
+    
+@if(session('success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: '{{ session('success') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
+
+
+@if(session('error'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
 </body>
 
 
