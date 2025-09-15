@@ -24,6 +24,17 @@
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
 
     <style>
+        body{
+            background: url('{{asset("assets/images/loginbg.jpg")}}');
+            background-size: cover;
+    backdrop-filter: blur(1.1px);
+        }
+        .card{
+            border-right: 2px solid #fe7b67;
+            border-left: 2px solid #0ca27b;
+            border-top: 2px solid #0ca27b;
+            border-bottom: 2px solid #fe7b67;
+        }
         .swal2-container .swal2-title {
     padding: 0px 24px 0;
     font-size: 15px;

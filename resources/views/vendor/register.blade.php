@@ -22,6 +22,20 @@
     <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+    <style>
+        body{
+            background: url('{{asset("assets/images/loginbg.jpg")}}');
+            background-size: cover;
+    backdrop-filter: blur(1.1px);
+        }
+        .card{
+            border-right: 2px solid #fe7b67;
+            border-left: 2px solid #0ca27b;
+            border-top: 2px solid #0ca27b;
+            border-bottom: 2px solid #fe7b67;
+        }
+        
+        </style>
 
 </head>
 
@@ -51,7 +65,7 @@
                                         </div>
 
                                         <div class="mt-4">
-                                            <form id="vendorForm" action="{{ route('vendors.vlogin') }}" method="post">
+                                            <form id="vendorForm" action="{{ route('vendors.vregistersave') }}" method="post">
                                                 @csrf
 
                                                 <div class="row">
@@ -71,8 +85,8 @@
 
                                                     <div class="col-md-4">
                                                         <div class="mb-3">
-                                                            <label for="username" class="form-label">Phone</label>
-                                                            <input type="text" class="form-control" name="phone" placeholder="Enter Phone">
+                                                            <label for="username" class="form-label">Mobile No</label>
+                                                            <input type="text" pattern="\d{10}" maxlength="10" minlength="10" class="form-control" name="mobile" placeholder="Enter Mobile No" title="Please enter a 10 digit mobile number">
                                                         </div>
                                                    </div>
 
@@ -204,7 +218,7 @@
         <!-- end Footer -->
     </div>
     <!-- end auth-page-wrapper -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- JAVASCRIPT -->
     <script src="{{asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('assets/libs/simplebar/simplebar.min.js')}}"></script>
@@ -281,19 +295,19 @@ $(document).ready(function () {
             state: "required",
       
                         
-             rera_certificate: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
-            },
-            pancard: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
-            },
-            real_estate_certificate: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
-            }
-                      },
+            //  rera_certificate: {
+            //      required: true,
+            //     extension: "jpg|jpeg|png|webp|pdf"
+            // },
+            // pancard: {
+            //      required: true,
+            //     extension: "jpg|jpeg|png|webp|pdf"
+            // },
+            // real_estate_certificate: {
+            //      required: true,
+            //     extension: "jpg|jpeg|png|webp|pdf"
+            // }
+        },
         messages: {
             name: {
                 required: "Please enter name",

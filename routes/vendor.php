@@ -25,6 +25,7 @@ Route::get('verify',[AuthController::class, 'verify'])->name('verify');
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
 Route::get('vregister',[AuthController::class, 'vregister'])->name('vregister');
+Route::post('vregistersave',[AuthController::class, 'vregistersave'])->name('vregistersave');
 
 Route::middleware(['vendor'])->group(function(){
     

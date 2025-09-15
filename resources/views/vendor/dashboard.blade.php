@@ -1,6 +1,7 @@
 @extends('vendor.master')
 @section('title','Dashboard')
 
+
 @section('content')
 
 <div class="page-content">
