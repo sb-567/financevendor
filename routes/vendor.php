@@ -35,13 +35,12 @@ Route::middleware(['vendor'])->group(function(){
     
 
     
-    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('vendorlist');
+    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('agentlist');
     Route::get('getleadlistdata',[Leadcontroller::class, 'getleadlistdata'])->name('getleadlistdata');
     Route::get('leadcreate',[Leadcontroller::class, 'create'])->name('leadcreate');
     Route::post('leadsave',[Leadcontroller::class, 'leadsave'])->name('leadsave');
-    Route::post('exportlead',[Leadcontroller::class, 'exportlead'])->name('exportlead');
-    Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit']);
-    Route::post('leadstatuschange',[Leadcontroller::class, 'leadstatuschange'])->name('leadstatuschange');
+    Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit'])->name('leadedit');
+    
     Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
     Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
 

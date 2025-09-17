@@ -18,7 +18,8 @@ class Leadcontroller extends Controller
     public function index(){
         $data['title']="Lead";
         $data['vendors']= DB::table('tbl_vendors')->get();
-        return view('admin/lead/lead',$data);
+         
+        return view('vendor/lead/lead',$data);
     }
 
 
@@ -27,16 +28,16 @@ class Leadcontroller extends Controller
     public function getleadlistdata(Request $request){
 
     
-        
+         $vendor_id = session('vid');
 
         $query = DB::table('tbl_leads')
             ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
             ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
             ->orderBy('tbl_leads.id', 'desc');
 
-        if ($request->vendor_id) {
-            $query->where('tbl_leads.vendor_id', $request->vendor_id);
-        }
+        // if ($request->vendor_id) {
+            $query->where('tbl_leads.vendor_id', $vendor_id);
+        // }
 
 
         // Return DataTable response
@@ -64,7 +65,8 @@ class Leadcontroller extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                        <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
+                                    <a href="' . route('vendors.leadedit', ['id' => $row->id]) . '" class="btn btn-sm btn-primary me-2"> Edit </a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';
@@ -86,33 +88,33 @@ class Leadcontroller extends Controller
     
 
 
-    public function vendoredit(Request $request){
+    public function leadedit(Request $request){
 
         $data['title']="Lead Edit";
         $data['fetched']=DB::table('tbl_leads')->where('id','=',$request->id)->first();
         
         
-     $data['vendors']= DB::table('tbl_vendors')->get();
+    //  $data['vendors']= DB::table('tbl_vendors')->get();
         // $data['states']= DB::table('tbl_states')->get();
-        return view( 'admin/lead/leadadd', $data);
+        return view( 'vendor/lead/leadadd', $data);
 
     }
 
     public function create(){
 
         $data['title']="Lead Create";
-        $data['vendors']= DB::table('tbl_vendors')->get();
-        return view('admin/lead/leadadd',$data);
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        return view('vendor/lead/leadadd',$data);
     }
 
 
     public function leadsave(Request $request){
-        
+        $vendor_id = session('vid');
         $request->validate([
             'name' => 'required',
             'mobile' => 'required',
             'email' => 'required|email',
-            'vendor_id' => 'required',
+         
             'status' => 'required',
         ]);
 
@@ -124,7 +126,7 @@ class Leadcontroller extends Controller
                 'name' => $request->input('name'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
-                'vendor_id' => $request->input('vendor_id'),
+                'vendor_id' => $vendor_id,
                 'status' =>$request->input('status'),
                 'created_at' => now(),
                 'updated_at' => now() 
@@ -137,7 +139,7 @@ class Leadcontroller extends Controller
                   'name' => $request->input('name'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
-                'vendor_id' => $request->input('vendor_id'),
+                'vendor_id' => $vendor_id,
                 'status' =>$request->input('status'),
                 'created_at' => now(),
             ]);
@@ -146,8 +148,8 @@ class Leadcontroller extends Controller
          
          session()->flash('success', 'Lead saved successfully');
         
-        
-         return redirect('leadlist');
+         return redirect()->route('vendors.agentlist');
+         
 
 
 
@@ -208,20 +210,7 @@ class Leadcontroller extends Controller
     }
 
 
-    public function exportlead(Request $request)
-    {
-        
-        //  echo $request->input('vendor_id');
-        
-      $filters = [
-            'vendor_id' => $request->input('vendor_id')
-        ];
-
-
-         return Excel::download(new LeadExport($filters), 'leads.xlsx');
-   
-        
-    }
+    
 
 
     // public function export()
