@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Vendor\AuthController;
 use App\Http\Controllers\Vendor\DashboardController;
+use App\Http\Controllers\Vendor\Leadcontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,20 @@ Route::middleware(['vendor'])->group(function(){
     
     Route::get('logout',[AuthController::class, 'logout'])->name('logout');
     Route::get('dashboard',[DashboardController::class, 'index'])->name('dashboard');
+    
+
+    
+    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('vendorlist');
+    Route::get('getleadlistdata',[Leadcontroller::class, 'getleadlistdata'])->name('getleadlistdata');
+    Route::get('leadcreate',[Leadcontroller::class, 'create'])->name('leadcreate');
+    Route::post('leadsave',[Leadcontroller::class, 'leadsave'])->name('leadsave');
+    Route::post('exportlead',[Leadcontroller::class, 'exportlead'])->name('exportlead');
+    Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit']);
+    Route::post('leadstatuschange',[Leadcontroller::class, 'leadstatuschange'])->name('leadstatuschange');
+    Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
+    Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
+
+
 
 
     

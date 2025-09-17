@@ -514,55 +514,39 @@
                 <ul class="navbar-nav" id="navbar-nav">
                     <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                    
-                    @php
-                    $menus = getMenus();
-
-                    @endphp
-
-                    @foreach(getMenus() as $menu)
-
-                    @php
-
-                    $submenu = getSubMenus($menu->id);
-
-                    @endphp
-
-                    @if(getMenusWithPermissions($menu->id,'can_view'))
+                   
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link " 
-                            @if($submenu->count() > 0)
-                            href="#sidebarApps{{ $menu->id }}" 
-                             data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps"
-                             @else
-                             href="{{ url($menu->route_name) }}" 
-                            @endif
-                            >
-                                <i class="{{ $menu->icon }}"></i> <span data-key="t-dashboards">{{ $menu->menu_name }}</span>
+                            <a class="nav-link menu-link " href="#sidebarApps" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Dashboard</span>
                             </a>
-
-                            @if($submenu->count() > 0)
-                                <div class="collapse menu-dropdown" id="sidebarApps{{ $menu->id }}">
-                                    <ul class="nav nav-sm flex-column">
-                                        @foreach($submenu as $child)
-                                         
-                                                <li class="nav-item">
-                                                    <a href="{{ url($child->route_name) }}" class="nav-link">
-                                                        {{ $child->menu_name }}
-                                                    </a>
-                                                </li>
-                                    
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                        </li> 
+                        
+                        <li class="nav-item">
+                            <a class="nav-link menu-link " href="#sidebarApps" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Property Listing</span>
+                            </a>
                         </li> 
 
-                        
-                    @endif
+                        <li class="nav-item">
+                            <a class="nav-link menu-link " href="#sidebarApps" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Lead Management</span>
+                            </a>
+                        </li> 
 
+                         <li class="nav-item">
+                            <a class="nav-link menu-link " href="#sidebarApps" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Subscription Plan</span>
+                            </a>
+                        </li> 
 
-                    @endforeach
+                        <li class="nav-item">
+                            <a class="nav-link menu-link " href="#sidebarApps" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Profile</span>
+                            </a>
+                        </li> 
+
+            
 
                 
                     
