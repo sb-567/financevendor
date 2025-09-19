@@ -118,7 +118,7 @@
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
                                                             <label for="rera_certificate" class="form-label">Pan Card</label>
-                                                            <input type="file" class="form-control" name="pan_card" id="pan_card" >
+                                                            <input type="file" class="form-control" name="pancard" id="pancard" >
                                                             
                                                               @if(!empty($fetched->pancard) && file_exists(public_path('uploads/vendors/'.$fetched->pancard)))
                                                     <img id="preview2" class="preview img-fluid pt-2" src="{{ asset('public/uploads/vendors/'.$fetched->pancard) }}" alt="pancard" style="width: 200px; ">
@@ -273,21 +273,28 @@ $(document).ready(function () {
             area: "required",
             landmark: "required",
             city: "required",
-            state: "required",
-      
-                        
-            //  rera_certificate: {
-            //      required: true,
-            //     extension: "jpg|jpeg|png|webp|pdf"
-            // },
-            // pancard: {
-            //      required: true,
-            //     extension: "jpg|jpeg|png|webp|pdf"
-            // },
-            // real_estate_certificate: {
-            //      required: true,
-            //     extension: "jpg|jpeg|png|webp|pdf"
-            // }
+            state: "required"
+            
+            @if(empty($fetched->real_estate_certificate))) 
+            ,
+             rera_certificate: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            },
+            @endif
+            @if(empty($fetched->pancard))
+            pancard: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            },
+            @endif
+
+            @if(empty($fetched->real_estate_certificate))
+            real_estate_certificate: {
+                 required: true,
+                extension: "jpg|jpeg|png|webp|pdf"
+            }
+            @endif
         },
         messages: {
             name: {

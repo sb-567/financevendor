@@ -35,3 +35,21 @@ if (!function_exists('getMenusWithPermissions')) {
         return $hasPermission;
     }
 }
+
+if (!function_exists('checkvendorverify')) {
+    function checkvendorverify()
+    {
+        
+        $vid=session('vid');
+
+        $vendors=DB::table('tbl_vendors')->where('id', $vid)->first();
+
+       if($vendors->is_rera_certificate_verified==0 || $vendors->is_pancard_verified==0 || $vendors->is_real_estate_certificate_verified==0){
+                       
+                       return false;
+                   }
+
+
+        // return $vendors;
+    }
+}
