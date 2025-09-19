@@ -93,7 +93,15 @@ class AuthController extends Controller
             // $request->session()->put('role_id', $user->role_id);
 
             $request->session()->forget('vendor_id');
-            
+
+            $vid=session('vid');
+
+            $vendors=DB::table('tbl_vendors')->where('id', $vid)->first();
+
+            if($vendors->is_rera_certificate_verified==0 || $vendors->is_pancard_verified==0 || $vendors->is_real_estate_certificate_verified==0){
+                session()->flash('error', 'Please update your profile documents for verification.');
+                return redirect()->route('vendors.profile');
+            }            
              return redirect()->route('vendors.dashboard');
         } else {
             

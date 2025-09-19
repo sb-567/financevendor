@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Vendor\AuthController;
 use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\Leadcontroller;
+use App\Http\Controllers\Vendor\CommonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +44,9 @@ Route::middleware(['vendor'])->group(function(){
     
     Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
     Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
-
+    
+    Route::get('profile',[CommonController::class, 'profile'])->name('profile');
+    Route::post('updateprofile',[CommonController::class, 'updateprofile'])->name('updateprofile');
 
 
 
