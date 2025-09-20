@@ -17,7 +17,33 @@ class CommonController extends Controller
         return view('vendor/profile/profile',$data);
     }
 
-    public function changepassword(){
+    public function changepassword(Request $request){
+
+        
+            $vendor_id = session('vid');
+            $old_password = request('old_password');
+            $new_password = request('new_password');
+            $confirm_password = request('confirm_password');
+
+            $vendor = DB::table('tbl_vendors')->where('id', $vendor_id)->first();
+
+            if (!$vendor || $vendor->password !== $old_password) {
+            session()->flash('error', 'Old password is incorrect.');
+            return redirect()->back();
+            }
+
+            if ($new_password !== $confirm_password) {
+            session()->flash('error', 'New password and confirm password do not match.');
+            return redirect()->back();
+            }
+
+            DB::table('tbl_vendors')->where('id', $vendor_id)->update([
+            'password' => $new_password
+            ]);
+
+            session()->flash('success', 'Password changed successfully.');
+            return redirect()->back();
+        
 
     }
 

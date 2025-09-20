@@ -47,6 +47,7 @@ Route::middleware(['vendor'])->group(function(){
     
     Route::get('profile',[CommonController::class, 'profile'])->name('profile');
     Route::post('updateprofile',[CommonController::class, 'updateprofile'])->name('updateprofile');
+    Route::post('changepassword',[CommonController::class, 'changepassword'])->name('changepassword');
 
 
 

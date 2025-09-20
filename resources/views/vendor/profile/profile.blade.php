@@ -117,7 +117,7 @@
                                                     
                                                     <div class="col-lg-4">
                                                         <div class="mb-3">
-                                                            <label for="rera_certificate" class="form-label">Pan Card</label>
+                                                            <label for="pancard" class="form-label">Pan Card</label>
                                                             <input type="file" class="form-control" name="pancard" id="pancard" >
                                                             
                                                               @if(!empty($fetched->pancard) && file_exists(public_path('uploads/vendors/'.$fetched->pancard)))
@@ -135,10 +135,10 @@
                                                             <input type="file" class="form-control" name="real_estate_certificate" id="real_estate_certificate" >
 
                                                             @if(!empty($fetched->real_estate_certificate) && file_exists(public_path('uploads/vendors/'.$fetched->real_estate_certificate)))
-                                                <img id="preview3"   class="preview img-fluid pt-2"src="{{ asset('public/uploads/vendors/'.$fetched->real_estate_certificate) }}" alt="RERA Certificate" style="width: 200px; ">
-                                                
-                                                <input type="hidden" name="old_real_estate_certificate" value="{{$fetched->real_estate_certificate}}">
-                                                @endif
+                                                            <img id="preview3"   class="preview img-fluid pt-2"src="{{ asset('public/uploads/vendors/'.$fetched->real_estate_certificate) }}" alt="RERA Certificate" style="width: 200px; ">
+                                                            
+                                                            <input type="hidden" name="old_real_estate_certificate" value="{{$fetched->real_estate_certificate}}">
+                                                            @endif
                                                             
                                                         </div>
                                                     </div>
@@ -161,26 +161,27 @@
                                         </div>
                                         <!--end tab-pane-->
                                         <div class="tab-pane" id="changePassword" role="tabpanel">
-                                            <form action="javascript:void(0);">
+                                            <form action="{{ route('vendors.changepassword') }}" id="vendorForm" enctype="multipart/form-data" method="post">                                                   
+                                                @csrf
                                                 <div class="row g-2">
                                                     <div class="col-lg-4">
                                                         <div>
                                                             <label for="oldpasswordInput" class="form-label">Old Password*</label>
-                                                            <input type="password" class="form-control" id="oldpasswordInput" placeholder="Enter current password">
+                                                            <input type="password" class="form-control" name="old_password" id="oldpasswordInput" placeholder="Enter current password">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-4">
                                                         <div>
                                                             <label for="newpasswordInput" class="form-label">New Password*</label>
-                                                            <input type="password" class="form-control" id="newpasswordInput" placeholder="Enter new password">
+                                                            <input type="password" class="form-control" name="new_password" id="newpasswordInput" placeholder="Enter new password">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-lg-4">
                                                         <div>
                                                             <label for="confirmpasswordInput" class="form-label">Confirm Password*</label>
-                                                            <input type="password" class="form-control" id="confirmpasswordInput" placeholder="Confirm password">
+                                                            <input type="password" class="form-control" name="confirm_password" id="confirmpasswordInput" placeholder="Confirm password">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -250,51 +251,48 @@ $(document).ready(function () {
     $("#vendorForm").validate({
         rules: {
             name: {
-                required: true,
-                minlength: 3
+            required: true,
+            minlength: 3
             },
             mobile: {
-                required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 10
+            required: true,
+            digits: true,
+            minlength: 10,
+            maxlength: 10
             },
             pincode: {
-                required: true,
-                digits: true,
-                minlength: 6,
-                maxlength: 6
+            required: true,
+            digits: true,
+            minlength: 6,
+            maxlength: 6
             },
-      
             email: {
-                required: true,
-                email: true
+            required: true,
+            email: true
             },
             area: "required",
             landmark: "required",
             city: "required",
-            state: "required"
-            
-            @if(empty($fetched->real_estate_certificate))) 
-            ,
-             rera_certificate: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
+            state: "required",
+            @if(empty($fetched->rera_certificate))
+            rera_certificate: {
+            required: true,
+            extension: "jpg|jpeg|png|webp|pdf"
             },
             @endif
             @if(empty($fetched->pancard))
             pancard: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
+            required: true,
+            extension: "jpg|jpeg|png|webp|pdf"
             },
             @endif
-
             @if(empty($fetched->real_estate_certificate))
             real_estate_certificate: {
-                 required: true,
-                extension: "jpg|jpeg|png|webp|pdf"
+            required: true,
+            extension: "jpg|jpeg|png|webp|pdf"
             }
             @endif
+        
         },
         messages: {
             name: {

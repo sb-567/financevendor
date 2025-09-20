@@ -46,7 +46,7 @@ if (!function_exists('checkvendorverify')) {
 
        if($vendors->is_rera_certificate_verified==0 || $vendors->is_pancard_verified==0 || $vendors->is_real_estate_certificate_verified==0){
                        
-                       return false;
+                       return true;
                    }
 
 

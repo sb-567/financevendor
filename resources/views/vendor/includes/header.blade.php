@@ -1,4 +1,4 @@
- <header id="page-topbar" class="page-topbar">
+ <header id="page-topbar" class="@if (checkvendorverify()) page-topbar @endif">
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex">
@@ -458,7 +458,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- ========== App Menu ========== -->
-    <div class="app-menu navbar-menu overlay-active">
+    <div class="app-menu navbar-menu @if (checkvendorverify()) overlay-active @endif">
         <!-- LOGO -->
         <div class="navbar-brand-box">
             <!-- Dark Logo-->

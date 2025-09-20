@@ -75,7 +75,7 @@
     
 <script>
 
-@if (!checkvendorverify())
+@if (checkvendorverify())
    
    
    function enforceOverlays() {
@@ -92,10 +92,10 @@
     });
 }
 
-
 // Reapply every 500ms so user can’t remove via inspect
 setInterval(enforceOverlays, 500);
 @endif
+
     </script>
 @if(session('success'))
 <script>
@@ -103,6 +103,25 @@ setInterval(enforceOverlays, 500);
         Swal.fire({
             icon: 'success',
             title: '{{ session('success') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
+@if(session('error'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
