@@ -247,7 +247,7 @@ class PropertyController extends Controller
     {   
 
         $id = $request->id;
-        DB::table('tbl_leads')->where('id', $id)->delete();
+        DB::table('tbl_properties')->where('id', $id)->delete();
         return;
 
     }
@@ -255,7 +255,7 @@ class PropertyController extends Controller
     public function selecteddestroy(Request $request){
         foreach($request->items as $item){
             // Subevent::destroy(array('id',$item));
-            DB::table('tbl_leads')->where('id', $item)->delete();
+            DB::table('tbl_properties')->where('id', $item)->delete();
         }
         return;
     }

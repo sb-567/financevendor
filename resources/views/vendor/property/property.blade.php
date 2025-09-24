@@ -156,7 +156,7 @@
             function deleted(items) {
                     swal.fire({
                         title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Lead ?",
+                        text: "Are you sure you want to Delete Property ?",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes'
@@ -170,7 +170,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ route('vendors.leaddelete', '') }}/${items}`,
+                                url: `{{ route('vendors.propertiesdelete', '') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -187,7 +187,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'Lead data Deleted Successfully',
+                                        title: 'Property data Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -232,7 +232,7 @@
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Lead?",
+                 text: "Are you sure you want to Delete Property?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'
@@ -244,7 +244,7 @@
                         }
                     });
                      $.ajax({
-                        url: "{{ route('deleteselectedlead') }}",
+                        url: "{{ route('vendors.deleteselectedproperties', '') }}",
                          type: 'POST',
                          data:{
                                 items: items
@@ -263,7 +263,7 @@
                              swal.fire({
                                  // position: 'top-right',
                                  type: 'success',
-                                 title: 'Lead Deleted Successfully',
+                                 title: 'Property Deleted Successfully',
                                  // showConfirmButton: false,
                                  // timer: 5000
                                 
