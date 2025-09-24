@@ -6,6 +6,7 @@ use App\Http\Controllers\Vendor\AuthController;
 use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\Leadcontroller;
 use App\Http\Controllers\Vendor\CommonController;
+use App\Http\Controllers\Vendor\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,17 @@ Route::middleware(['vendor'])->group(function(){
     Route::post('updateprofile',[CommonController::class, 'updateprofile'])->name('updateprofile');
     Route::post('changepassword',[CommonController::class, 'changepassword'])->name('changepassword');
 
+
+    
+    Route::get('propertieslist',[PropertyController::class, 'index'])->name('propertieslist');
+    Route::get('getpropertylistdata',[PropertyController::class, 'getpropertylistdata'])->name('getpropertylistdata');
+    Route::get('propertiescreate',[PropertyController::class, 'create'])->name('propertiescreate');
+    Route::post('propertiessave',[PropertyController::class, 'propertiessave'])->name('propertiessave');
+    Route::get('propertiesedit/{id}',[PropertyController::class, 'propertiesedit'])->name('propertiesedit');
+    
+    Route::delete('/propertiesdelete/{id}', [PropertyController::class, 'destroy'])->name('propertiesdelete');
+    Route::post('deleteselectedproperties',[PropertyController::class, 'selecteddestroy'])->name('deleteselectedproperties');
+    
 
 
     

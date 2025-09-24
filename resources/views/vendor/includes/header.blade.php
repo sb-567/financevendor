@@ -523,8 +523,8 @@
                         </li> 
                         
                         <li class="nav-item">
-                            <a class="nav-link menu-link " href="#sidebarApps" >
-                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Property Listing</span>
+                            <a class="nav-link menu-link " href="{{ route('vendors.propertieslist') }}" >
+                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Properties Listing</span>
                             </a>
                         </li> 
 
