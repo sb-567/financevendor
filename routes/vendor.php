@@ -7,6 +7,7 @@ use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\Leadcontroller;
 use App\Http\Controllers\Vendor\CommonController;
 use App\Http\Controllers\Vendor\PropertyController;
+use App\Http\Controllers\Vendor\SubscribeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,7 @@ Route::middleware(['vendor'])->group(function(){
     Route::post('deleteselectedproperties',[PropertyController::class, 'selecteddestroy'])->name('deleteselectedproperties');
     
 
+    Route::get('subcribtionplan',[SubscribeController::class, 'index'])->name('subcribtionplan');
 
     
 });
