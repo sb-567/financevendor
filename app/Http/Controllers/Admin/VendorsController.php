@@ -212,7 +212,8 @@ class VendorsController extends Controller
                 'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
                 'real_estate_certificate' => $real_estate_certificate,
-                'status' =>$request->input('status')
+                'status' =>$request->input('status'),
+                'admin_description' =>$request->input('admin_description')
             ]);
     
     
@@ -230,7 +231,8 @@ class VendorsController extends Controller
                  'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
                 'real_estate_certificate' => $real_estate_certificate,
-                'status' =>$request->input('status')
+                'status' =>$request->input('status'),
+                  'admin_description' =>$request->input('admin_description')
             ]);
             
         }

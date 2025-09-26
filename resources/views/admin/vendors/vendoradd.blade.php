@@ -157,6 +157,15 @@
                                             </div>
                                         </div>
 
+
+                                         <div class="col-lg-12">
+                                            <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
+                                            <div class="mb-3">
+                                                <label for="VertimeassageInput" class="form-label">Message</label>
+                                                <textarea class="form-control" name="admin_description" id="VertimeassageInput" rows="3" placeholder="Enter your message">@if(!empty($fetched->admin_description)){{$fetched->admin_description}}@endif</textarea>
+                                            </div>
+                                        </div>
+
                                         
                                         <div class="col-lg-12">
                                             <div class="text-center">
