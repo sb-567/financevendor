@@ -35,6 +35,12 @@
                                             </a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#description" role="tab">
+                                                <i class="far fa-user"></i> Description
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#changePassword" role="tab">
                                                 <i class="far fa-user"></i> Change Password
                                             </a>
@@ -160,6 +166,14 @@
                                             </form>
                                         </div>
                                         <!--end tab-pane-->
+
+                                        <div class="tab-pane" id="description" role="tabpanel">
+                                            
+                                        <p> @if(!empty($fetched->description)){{$fetched->description}}@endif </p>
+                                            
+                                        </div>
+
+
                                         <div class="tab-pane" id="changePassword" role="tabpanel">
                                             <form action="{{ route('vendors.changepassword') }}" id="vendorForm" enctype="multipart/form-data" method="post">                                                   
                                                 @csrf

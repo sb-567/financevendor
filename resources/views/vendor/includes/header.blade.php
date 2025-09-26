@@ -517,7 +517,7 @@
                    
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link " href="#sidebarApps" >
+                            <a class="nav-link menu-link " href="{{ route('vendors.dashboard') }}" >
                                 <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Dashboard</span>
                             </a>
                         </li> 
