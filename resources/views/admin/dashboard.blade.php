@@ -25,6 +25,8 @@
         <!-- end page title -->
 
         <div class="row">
+
+                <!-- {{  $role_id = Session::get('role_id'); }} -->
         
         </div><!-- end row -->
 

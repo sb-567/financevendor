@@ -12,44 +12,44 @@ use Nette\Utils\Json;
 class VendorsController extends Controller
 {
     public function index(){
-        $data['title']="Vendor";
+        $data['title']="Agent";
         return view('admin/vendors/vendorslist',$data);
     }
 
 
-    public function vendorlistbyeventid(Request $request){
+    // public function vendorlistbyeventid(Request $request){
 
-        $data['title']="Vendor List";
-        $data['user_id'] = $request->user_id;
-        $data['event_id'] = $request->event_id ?? "";
-        $data['page'] = "vendor";
-        $data['pageroute']="1";
+    //     $data['title']="Agent List";
+    //     $data['user_id'] = $request->user_id;
+    //     $data['event_id'] = $request->event_id ?? "";
+    //     $data['page'] = "agent";
+    //     $data['pageroute']="1";
 
-        $url = request()->fullUrl();
+    //     $url = request()->fullUrl();
 
-        Session::put('redirectionurl', $url);
+    //     Session::put('redirectionurl', $url);
 
-        return view( 'events/vendorlist',$data);
-    }
+    //     return view( 'events/vendorlist',$data);
+    // }
 
-    public function vendorlistbyuserid(Request $request){
+    // public function vendorlistbyuserid(Request $request){
 
-        $data['title']="Vendor List";
-        $data['user_id'] = $request->user_id;
-        $data['event_id'] = $request->event_id ?? "";
-        $data['page'] = "vendor";
-        $data['pageroute']="vendorlistbyuserid";
+    //     $data['title']="Vendor List";
+    //     $data['user_id'] = $request->user_id;
+    //     $data['event_id'] = $request->event_id ?? "";
+    //     $data['page'] = "vendor";
+    //     $data['pageroute']="vendorlistbyuserid";
 
-        $url = request()->fullUrl();
+    //     $url = request()->fullUrl();
 
-        Session::put('redirectionurl', $url);
+    //     Session::put('redirectionurl', $url);
 
         
 
        
 
-        return view( 'events/vendorlist',$data);
-    }
+    //     return view( 'events/vendorlist',$data);
+    // }
 
     public function getvendorlistdata(Request $request){
 
@@ -128,19 +128,19 @@ class VendorsController extends Controller
 
     public function vendoredit(Request $request){
 
-        $data['title']="vendor Edit";
+        $data['title']="Agent Edit";
         $data['fetched']=DB::table('tbl_vendors')->where('id','=',$request->id)->first();
         // $data['events'] =$events= DB::table('tbl_events')->get();
         
      
         // $data['states']= DB::table('tbl_states')->get();
-        return view( 'admin/vendors/vendoradd', $data);
+        return view('admin/vendors/vendoradd', $data);
 
     }
 
     public function create(){
 
-        $data['title']="vendor Create";
+        $data['title']="Agent Create";
         // $data['events']= DB::table('tbl_events')->get();
         return view('admin/vendors/vendoradd',$data);
     }

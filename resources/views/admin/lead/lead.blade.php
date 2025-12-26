@@ -36,19 +36,28 @@
 
                             <form method="post" action="{{url('/')}}/exportlead" id="filterForm" enctype="multipart/form-data">
                                 @csrf
-                                
+                                                
+                        @php
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                        @endphp
+
+                         
+                             @if(getMenusWithPermissions($slugdata->id,'can_add'))
+
                                 <select class="form-control" id="vendorFilter" name="vendor_id">
                                     @if(!empty($vendors))
-                                        <option value="">Select Vendor</option>
+                                        <option value="">Select Agent</option>
+                                       
                                         @foreach($vendors as $vendor)
                                             <option value="{{$vendor->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$vendor->id){{"selected"}}@endif>{{$vendor->name}}</option>
                                         @endforeach
                                     @else
-                                        <option value="">No Vendor Available</option>  
+                                        <option value="">No Agent Available</option>  
                                     @endif
 
                                     
                                 </select>
+                                @endif
 
                                
                             </form>
@@ -56,16 +65,31 @@
                      
 
                         <div class="">
+                            
+                        @php
+
+                         $role_id = Session::get('role_id');
+
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                         
+                        @endphp
+
+                         
+                             @if(getMenusWithPermissions($slugdata->id,'can_add') || getMenusWithPermissions($slugdata->id,'can_edit'))
+
+                             @if($role_id==1)
                              <button type="submit" form="filterForm" class="btn btn-success ms-2">Export {{$title}}</button>
+                             @endif
                              <a href="{{ route('leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
-                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
-                           
+                            <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
+                            @endif
                         </div>
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <table id="user_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                        <div class="table-responsive">
+                        <table id="user_list" class="table table-bordered  nowrap table-striped align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                   
@@ -77,11 +101,14 @@
                                     </th>
                                     
                                     
-                                    <th>Vendor</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>created</th>
+                                    <th>Agent Name</th>
+                                    <th>Lead Name</th>
+                                    <th>Lead Email</th>
+                                    <th>Lead Mobile Number</th>
+                                    <th>Area Name</th>
+                                    <th>City Name</th>
+                                    <th>Local Area Name</th>
+                                    <th>Created</th>
                                     <th>Action</th> 
                                 </tr>
                             </thead>
@@ -89,6 +116,7 @@
                                 
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div><!--end col-->
@@ -133,6 +161,9 @@
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
                     { data: 'phone', name: 'phone' },
+                    { data: 'area_name', name: 'area_name' },
+                    { data: 'city_name', name: 'city_name' },
+                    { data: 'local_area_name', name: 'local_area_name' },
                     { data: 'created_at', name: 'created_at' },
                     { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
                 ],

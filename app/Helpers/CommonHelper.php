@@ -20,6 +20,13 @@ if (!function_exists('getSubMenus')) {
     }
 }
 
+if (!function_exists('getSubMenusbyslug')) {
+    function getSubMenusbyslug($menu_id)
+    {
+        return Menu::where('route_name', $menu_id)->first();
+    }
+}
+
 if (!function_exists('getMenusWithPermissions')) {
     function getMenusWithPermissions($menu_id,$action)
     {

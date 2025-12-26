@@ -10,12 +10,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                    <h4 class="mb-sm-0">Vendors List</h4>
+                    <h4 class="mb-sm-0">{{ $title }} List</h4>
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                            <li class="breadcrumb-item active">Vendors List</li>
+                            <li class="breadcrumb-item active">{{ $title }} List</li>
                         </ol>
                     </div>
 
@@ -29,13 +29,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">Vendors List</h5>
+                        <h5 class="card-title mb-0">{{ $title }} List</h5>
 
 
                         <div class="text-end">
-                            <a href="{{ route('vendorcreate') }}" class="btn btn-primary">Add Vendors</a>
-                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
-                           
+
+                         @php
+
+                         $role_id = Session::get('role_id');
+
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                         
+                        @endphp
+
+                         
+                             @if(getMenusWithPermissions($slugdata->id,'can_add') || getMenusWithPermissions($slugdata->id,'can_edit'))
+
+                            <a href="{{ route('agentcreate') }}" class="btn btn-primary">Add {{ $title }}</a>
+                            <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
+                           @endif
                         </div>
 
                     </div>

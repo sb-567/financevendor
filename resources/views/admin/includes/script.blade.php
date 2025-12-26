@@ -91,3 +91,23 @@
     });
 </script>
 @endif
+
+@if(session('error'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            // toast: true,
+            // position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer);
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer);
+            // }
+        });
+    });
+</script>
+@endif

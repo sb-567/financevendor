@@ -66,7 +66,7 @@
                                         <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" >
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" readonly>
                                                 <label for="firstnamefloatingInput">Lead Name</label>
                                             </div>
                                         </div>
@@ -74,38 +74,43 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="email" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" >
+                                                <input type="email" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" readonly>
                                                 <label for="firstnamefloatingInput">Email</label>
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" >
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" readonly>
                                                 <label for="firstnamefloatingInput">Mobile</label>
                                             </div>
                                         </div>
-                                       
+                                        
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="status" aria-label="Floating label select example">
-                                                
-                                                        <option value="1"  @if(!empty($fetched->status) && $fetched->status==1){{"selected"}}@endif>Active</option>
-                                                        <option value="2"  @if(!empty($fetched->status) && $fetched->status==2){{"selected"}}@endif>Inactive</option>
-                                                    
-                                                </select>
-                                                <label for="floatingSelect">Status</label>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="area_name" placeholder="Enter your Area" value="@if(!empty($fetched->area_name)){{$fetched->area_name}}@endif" readonly>
+                                                <label for="firstnamefloatingInput">Area</label>
                                             </div>
                                         </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="city_name" placeholder="Enter your City" value="@if(!empty($fetched->city_name)){{$fetched->city_name}}@endif" readonly>
+                                                <label for="firstnamefloatingInput">City</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="local_area_name" placeholder="Enter your Area" value="@if(!empty($fetched->local_area_name)){{$fetched->local_area_name}}@endif" readonly>
+                                                <label for="firstnamefloatingInput">Local Area Name</label>
+                                            </div>
+                                        </div>
+                                       
+                                        
 
 
                                         
                                         
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
                                 </form>
                         
