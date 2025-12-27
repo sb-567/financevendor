@@ -31,8 +31,26 @@
                     <div class="card-header">
                         <h5 class="card-title mb-0">{{ $title }} List</h5>
 
+                          <div class="d-flex justify-content-between align-items-center mt-4">
+                           
+                                               
+                        @php
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                        @endphp
 
-                        <div class="text-end">
+                         
+                            
+                                <select class="form-control" id="vendorFilter" name="vendor_id">
+                                    
+                                <option value="" selected disabled>-- Select verification Status --</option>
+                                <option value="1" class="status" data-val="1">All</option>
+                                <option value="2" class="status" data-val="2">Active</option>
+                                <option value="3" class="status" data-val="3">Inactive</option>
+                                    
+                                </select>
+
+
+                        <!-- <div class="text-end"> -->
 
                          @php
 

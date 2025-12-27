@@ -62,12 +62,11 @@
                                         <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect" name="business_type" aria-label="Floating label select example">
-                                                
+
                                                         <option value="1"  @if(!empty($fetched->business_type) && $fetched->business_type==1){{"selected"}}@endif>Individual </option>
                                                         <option value="2"  @if(!empty($fetched->business_type) && $fetched->business_type==2){{"selected"}}@endif>Firm  </option>
                                                         <option value="3"  @if(!empty($fetched->business_type) && $fetched->business_type==3){{"selected"}}@endif>Company </option>
                                                         
-                                                    
                                                 </select>
                                                 <label for="floatingSelect">Business Type</label>
                                             </div>
@@ -96,6 +95,59 @@
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="sidezone" placeholder="Enter your Side Zone" value="@if(!empty($fetched->sidezone)){{$fetched->sidezone}}@endif" >
+                                                <label for="firstnamefloatingInput">Side Zone</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="parentarea" placeholder="Enter your Parent Area" value="@if(!empty($fetched->parentarea)){{$fetched->parentarea}}@endif" >
+                                                <label for="firstnamefloatingInput">Parent Area</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="micro_area_galli" placeholder="Enter your Micro Area / Galli" value="@if(!empty($fetched->micro_area_galli)){{$fetched->micro_area_galli}}@endif" >
+                                                <label for="firstnamefloatingInput">Micro Area / Galli</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="service_area_covered" placeholder="Enter your Service Area Covered" value="@if(!empty($fetched->service_area_covered)){{$fetched->service_area_covered}}@endif" >
+                                                <label for="firstnamefloatingInput">Service Area Covered</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                               <select class="form-select" id="floatingSelect" name="property_type" aria-label="Floating label select example">
+
+                                                        <option value="1"  @if(!empty($fetched->property_type) && $fetched->property_type==1){{"selected"}}@endif>Residential </option>
+                                                        <option value="2"  @if(!empty($fetched->property_type) && $fetched->property_type==2){{"selected"}}@endif>Commercial  </option>
+                                                        <option value="3"  @if(!empty($fetched->property_type) && $fetched->property_type==3){{"selected"}}@endif>Both </option>
+                                                        
+                                                </select>
+                                                <label for="floatingSelect">Property Type</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                               <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
+
+                                                        <option value="1"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==1){{"selected"}}@endif>Residential </option>
+                                                        <option value="2"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==2){{"selected"}}@endif>Commercial  </option>
+                                                        <option value="3"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==3){{"selected"}}@endif>Both </option>
+                                                        
+                                                </select>
+                                                <label for="floatingSelect">Transaction Type</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
                                                 <input type="text" class="form-control" id="firstnamefloatingInput" name="landmark" placeholder="Enter your Landmark" value="@if(!empty($fetched->landmark)){{$fetched->landmark}}@endif" >
                                                 <label for="firstnamefloatingInput">Landmark</label>
                                             </div>
@@ -115,6 +167,8 @@
                                             </div>
                                         </div>
                                        
+                                        
+                                      
                                         <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="firstnamefloatingInput" name="state" placeholder="Enter your State" value="@if(!empty($fetched->state)){{$fetched->state}}@endif" >
@@ -123,7 +177,12 @@
                                         </div>
 
 
-                                       
+                                       <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="admin_notes" placeholder="Enter your Admin Notes" value="@if(!empty($fetched->admin_notes)){{$fetched->admin_notes}}@endif" >
+                                                <label for="firstnamefloatingInput">Admin Notes</label>
+                                            </div>
+                                        </div>
                                        
                                     
 
@@ -136,6 +195,32 @@
                                                     
                                                 </select>
                                                 <label for="floatingSelect">Status</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
+                                                
+                                                        <option value="1"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==1){{"selected"}}@endif>Rent  </option>
+                                                        <option value="2"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==2){{"selected"}}@endif>Sale </option>
+                                                        <option value="3"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==3){{"selected"}}@endif>Both</option>
+                                                    
+                                                </select>
+                                                <label for="floatingSelect">Transaction Type</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect" name="subscription_type" aria-label="Floating label select example">
+                                                
+                                                        <option value="1"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==1){{"selected"}}@endif>Free </option>
+                                                        <option value="2"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==2){{"selected"}}@endif>Day Wise </option>
+                                                        <option value="3"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==3){{"selected"}}@endif>Lead Wise</option>
+                                                    
+                                                </select>
+                                                <label for="floatingSelect">Subscription Plan</label>
                                             </div>
                                         </div>
 
