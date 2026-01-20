@@ -95,14 +95,14 @@
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="sidezone" placeholder="Enter your Side Zone" value="@if(!empty($fetched->sidezone)){{$fetched->sidezone}}@endif" >
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="sidezone" placeholder="Enter your Side Zone" value="@if(!empty($fetched->zone_side)){{$fetched->zone_side}}@endif" >
                                                 <label for="firstnamefloatingInput">Side Zone</label>
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="parentarea" placeholder="Enter your Parent Area" value="@if(!empty($fetched->parentarea)){{$fetched->parentarea}}@endif" >
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="parentarea" placeholder="Enter your Parent Area" value="@if(!empty($fetched->parent_area)){{$fetched->parent_area}}@endif" >
                                                 <label for="firstnamefloatingInput">Parent Area</label>
                                             </div>
                                         </div>
@@ -133,18 +133,20 @@
                                                 <label for="floatingSelect">Property Type</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                               <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
 
-                                                        <option value="1"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==1){{"selected"}}@endif>Residential </option>
-                                                        <option value="2"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==2){{"selected"}}@endif>Commercial  </option>
-                                                        <option value="3"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==3){{"selected"}}@endif>Both </option>
-                                                        
+                                         <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
+                                                
+                                                        <option value="1"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==1){{"selected"}}@endif>Rent  </option>
+                                                        <option value="2"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==2){{"selected"}}@endif>Sale </option>
+                                                        <option value="3"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==3){{"selected"}}@endif>Both</option>
+                                                    
                                                 </select>
                                                 <label for="floatingSelect">Transaction Type</label>
                                             </div>
                                         </div>
+                                        
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
@@ -186,7 +188,7 @@
                                        
                                     
 
-                                        <div class="col-lg-4">
+                                        <!-- <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect" name="status" aria-label="Floating label select example">
                                                 
@@ -196,31 +198,23 @@
                                                 </select>
                                                 <label for="floatingSelect">Status</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="transaction_type" aria-label="Floating label select example">
-                                                
-                                                        <option value="1"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==1){{"selected"}}@endif>Rent  </option>
-                                                        <option value="2"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==2){{"selected"}}@endif>Sale </option>
-                                                        <option value="3"  @if(!empty($fetched->transaction_type) && $fetched->transaction_type==3){{"selected"}}@endif>Both</option>
-                                                    
-                                                </select>
-                                                <label for="floatingSelect">Transaction Type</label>
-                                            </div>
-                                        </div>
+                                       
+
+                  
 
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <select class="form-select" id="floatingSelect" name="subscription_type" aria-label="Floating label select example">
+                                                <select class="form-select" id="floatingSelect" name="signup_source" aria-label="Floating label select example">
                                                 
-                                                        <option value="1"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==1){{"selected"}}@endif>Free </option>
-                                                        <option value="2"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==2){{"selected"}}@endif>Day Wise </option>
-                                                        <option value="3"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==3){{"selected"}}@endif>Lead Wise</option>
+                                                        <option value="1"  @if(!empty($fetched->signup_source) && $fetched->signup_source==1){{"selected"}}@endif>Admin </option>
+                                                        <option value="2"  @if(!empty($fetched->signup_source) && $fetched->signup_source==2){{"selected"}}@endif>Field Executive </option>
+                                                        <option value="3"  @if(!empty($fetched->signup_source) && $fetched->signup_source==3){{"selected"}}@endif>Website </option>
+                                                        <option value="4"  @if(!empty($fetched->signup_source) && $fetched->signup_source==4){{"selected"}}@endif>Filed Executive</option>
                                                     
                                                 </select>
-                                                <label for="floatingSelect">Subscription Plan</label>
+                                                <label for="floatingSelect">Signup Source</label>
                                             </div>
                                         </div>
 

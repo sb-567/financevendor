@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Vendors List')
+@section('title','Agent List')
 
 @section('content')
 
@@ -39,15 +39,55 @@
                         @endphp
 
                          
-                            
-                                <select class="form-control" id="vendorFilter" name="vendor_id">
+                            <div class="d-flex">
+                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
                                     
-                                <option value="" selected disabled>-- Select verification Status --</option>
+                                    <option value="" selected disabled>-- Select verification Status --</option>
+                                    <option value="1" class="status" data-val="1">All</option>
+                                    <option value="2" class="status" data-val="2">Active</option>
+                                    <option value="3" class="status" data-val="3">Inactive</option>
+                                    
+                                </select>
+
+
+                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
+                                    
+                                <option value="" selected disabled>-- Select Subscription Type --</option>
                                 <option value="1" class="status" data-val="1">All</option>
                                 <option value="2" class="status" data-val="2">Active</option>
                                 <option value="3" class="status" data-val="3">Inactive</option>
                                     
                                 </select>
+
+
+                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
+                                    
+                                <option value="" selected disabled>-- Select Subscription State --</option>
+                                <option value="1" class="status" data-val="1">All</option>
+                                <option value="2" class="status" data-val="2">Active</option>
+                                <option value="3" class="status" data-val="3">Inactive</option>
+                                    
+                                </select>
+                                
+                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
+                                    
+                                <option value="" selected disabled>-- Select City --</option>
+                                <option value="1" class="status" data-val="1">All</option>
+                                <option value="2" class="status" data-val="2">Active</option>
+                                <option value="3" class="status" data-val="3">Inactive</option>
+                                    
+                                </select>
+                                
+                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
+                                    
+                                <option value="" selected disabled>-- Select Area --</option>
+                                <option value="1" class="status" data-val="1">All</option>
+                                <option value="2" class="status" data-val="2">Active</option>
+                                <option value="3" class="status" data-val="3">Inactive</option>
+                                    
+                                </select>
+
+                                </div>
 
 
                         <!-- <div class="text-end"> -->

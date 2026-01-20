@@ -327,7 +327,10 @@ class SubscribeController extends Controller
                 'price' =>$request->input('price'),
                 'cross_price' =>$request->input('cross_price'),
                 'offer_text' =>$request->input('offer_text'),
-                'plan_ids' =>json_encode($request->input('plans_id')),
+                'subscription_type' =>$request->input('subscription_type'),
+                'no_of_leads' =>$request->input('no_of_leads'),
+                'time_duration' =>$request->input('time_duration'),
+                // 'plan_ids' =>json_encode($request->input('plans_id')),
                 'status' =>$request->input('status'),
                 'updated_at' => now() 
             ]);
@@ -340,7 +343,10 @@ class SubscribeController extends Controller
                 'price' =>$request->input('price'),
                 'cross_price' =>$request->input('cross_price'),
                 'offer_text' =>$request->input('offer_text'),
-                'plan_ids' =>json_encode($request->input('plans_id')),
+                'subscription_type' =>$request->input('subscription_type'),
+                'no_of_leads' =>$request->input('no_of_leads'),
+                'time_duration' =>$request->input('time_duration'),
+                // 'plan_ids' =>json_encode($request->input('plans_id')),
                 'status' =>$request->input('status'),
                 'created_at' => now(),
             ]);

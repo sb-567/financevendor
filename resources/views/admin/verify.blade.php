@@ -148,6 +148,53 @@
     <script src="assets/js/pages/particles.app.js"></script>
     <!-- two-step-verification js -->
     <script src="assets/js/pages/two-step-verification.init.js"></script>
+
+    
+
+@if(session('success'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'success',
+            title: '{{ session('success') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+    });
+</script>
+@endif
+
+@if(session('error'))
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer);
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer);
+            // },
+            customClass: {
+                title: 'swal-small-text',
+                popup: 'swal-small-popup'
+            }
+        });
+    });
+</script>
+@endif
+
 </body>
 
 </html>

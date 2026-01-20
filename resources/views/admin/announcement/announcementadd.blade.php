@@ -46,7 +46,7 @@
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="mb-3">
                                                 <label for="VertimeassageInput" class="form-label">Message</label>
-                                                <textarea class="form-control" name="message" id="VertimeassageInput" rows="3" placeholder="Enter your message">@if(!empty($fetched->message)){{$fetched->message}}@endif</textarea>
+                                                <textarea class="form-control tinymce" name="message" id="VertimeassageInput" rows="3" placeholder="Enter your message">@if(!empty($fetched->message)){{$fetched->message}}@endif</textarea>
                                             </div>
                                         </div>
                                         
@@ -107,3 +107,39 @@
 
 @endsection
 
+
+@section('customscript')
+<script>
+ 
+
+//      document.querySelectorAll('.ckeditor').forEach(function (el) {
+//     CKEDITOR.replace(el, {
+//         allowedContent: true,   // allow all HTML
+//         height: 200,
+//           versionCheck: false
+//     });
+// });
+
+tinymce.init({
+    selector: '.tinymce',
+    height: 300,
+
+    plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image',
+        'charmap', 'preview', 'searchreplace',
+        'code', 'fullscreen', 'media', 'table',
+        'emoticons', 'wordcount'
+    ],
+
+    toolbar:
+        'undo redo | blocks | bold italic underline | ' +
+        'alignleft aligncenter alignright | bullist numlist | ' +
+        'emoticons | image media table | code fullscreen',
+
+    menubar: false,
+
+    emoticons_database: 'emojis',   // full emoji set 😀
+});
+
+</script>
+@endsection

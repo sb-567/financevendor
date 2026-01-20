@@ -19,6 +19,8 @@ class Leadcontroller extends Controller
     public function index(){
         $data['title']="Lead";
         $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['slugdata']=getSubMenusbyslug('leadlist');
+
         return view('admin/lead/lead',$data);
     }
 
@@ -27,6 +29,7 @@ class Leadcontroller extends Controller
 
     public function getleadlistdata(Request $request){
 
+       
     
         
 
@@ -85,11 +88,14 @@ class Leadcontroller extends Controller
             // Action column
              $dataTable->addColumn('action', function ($row) {
             
+                   $slugdata=getSubMenusbyslug('leadlist');
+
+                 if(getMenusWithPermissions($slugdata->id,'can_view')){
                         return '<div class="d-flex">
-                                    <a href="' . url('leadview/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> View</a>
-                                    
-                                  
+                                    <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
+                                 
                                 </div>';
+                 }
 
                                 // <div class="d-flex">
                                 //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
@@ -129,13 +135,67 @@ class Leadcontroller extends Controller
     public function leadview(Request $request){
 
         $data['title']="Lead View";
-        $data['fetched']=DB::table('tbl_leads')->where('id','=',$request->id)->first();
-        
-        
-        $data['vendors']= DB::table('tbl_vendors')->get();
-        // $data['states']= DB::table('tbl_states')->get();
-        return view( 'admin/lead/leadview', $data);
+        $lead=DB::table('tbl_leads')->where('id','=',$request->id)->first();
 
+        if (!$lead) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead not found'
+            ]);
+        }
+
+        if(Session::get('role_id')!=1){
+
+       // Apply masking
+        $lead->name   = $this->maskName($lead->name);
+        $lead->email  = $this->maskEmail($lead->email);
+        $lead->phone = $this->maskPhone($lead->phone);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $lead
+        ]);
+    }
+
+    private function maskName($name)
+    {
+        $name = trim($name);
+
+        if (strlen($name) <= 2) {
+            return $name;
+        }
+
+        return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+    }
+
+    private function maskPhone($phone)
+    {
+        $phone = preg_replace('/\D/', '', $phone);
+
+        if (strlen($phone) < 6) {
+            return $phone;
+        }
+
+        return substr($phone, 0, 2)
+            . str_repeat('*', strlen($phone) - 4)
+            . substr($phone, -2);
+    }
+
+    private function maskEmail($email)
+    {
+        if (!str_contains($email, '@')) {
+            return $email;
+        }
+
+        [$user, $domain] = explode('@', $email);
+
+        if (strlen($user) <= 2) {
+            return $user . '@' . $domain;
+        }
+
+        return substr($user, 0, 2)
+            . str_repeat('*', strlen($user) - 2)
+            . '@' . $domain;
     }
 
     public function create(){
@@ -250,7 +310,12 @@ class Leadcontroller extends Controller
 
     public function exportlead(Request $request)
     {
-        
+        if (!$request->isMethod('post')) {
+            return redirect()->route('leadlist')
+                ->with('error', 'Invalid request method.');
+        }
+
+
         //  echo $request->input('vendor_id');
         if(Session::get('role_id')==1){
             $filters = [

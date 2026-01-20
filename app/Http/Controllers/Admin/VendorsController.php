@@ -204,44 +204,57 @@ class VendorsController extends Controller
                 'name' => $request->input('name'),
                 'agent_business_name' => $request->input('agent_business_name'),
                 'business_type' => $request->input('business_type'),
-                'business_type' => $request->input('business_type'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
                 'area' => $request->input('area'),
-                'sidezone' => $request->input('sidezone'),
-                'parentarea' => $request->input('parentarea'),
+                'zone_side' => $request->input('sidezone'),
+                'parent_area' => $request->input('parentarea'),
                 'micro_area_galli' => $request->input('micro_area_galli'),
                 'service_area_covered' => $request->input('service_area_covered'),
                 'property_type' => $request->input('property_type'),
                 'transaction_type' => $request->input('transaction_type'),
+                'landmark' => $request->input('landmark'),
                 'pincode' => $request->input('pincode'),
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
                 'admin_notes' => $request->input('admin_notes'),
+                'status' =>$request->input('status'),
+                'subscription_plan' =>$request->input('subscription_type'),
+                'signup_source' =>$request->input('signup_source'),
+                'admin_description' =>$request->input('admin_description'),
                 'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
-                'real_estate_certificate' => $real_estate_certificate,
-                'status' =>$request->input('status'),
-                'admin_description' =>$request->input('admin_description')
+                'real_estate_certificate' => $real_estate_certificate
             ]);
     
     
         } else {
     
             DB::table('tbl_vendors')->insert([
-                 'name' => $request->input('name'),
+                'name' => $request->input('name'),
+                'agent_business_name' => $request->input('agent_business_name'),
+                'business_type' => $request->input('business_type'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
                 'area' => $request->input('area'),
+                'zone_side' => $request->input('sidezone'),
+                'parent_area' => $request->input('parentarea'),
+                'micro_area_galli' => $request->input('micro_area_galli'),
+                'service_area_covered' => $request->input('service_area_covered'),
+                'property_type' => $request->input('property_type'),
+                'transaction_type' => $request->input('transaction_type'),
+                'landmark' => $request->input('landmark'),
                 'pincode' => $request->input('pincode'),
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
-                'landmark' => $request->input('landmark'),
-                 'rera_certificate' => $rera_certificate,
-                'pancard' => $pancard,
-                'real_estate_certificate' => $real_estate_certificate,
+                'admin_notes' => $request->input('admin_notes'),
                 'status' =>$request->input('status'),
-                  'admin_description' =>$request->input('admin_description')
+                'subscription_plan' =>$request->input('subscription_type'),
+                'signup_source' =>$request->input('signup_source'),
+                'admin_description' =>$request->input('admin_description'),
+                'rera_certificate' => $rera_certificate,
+                'pancard' => $pancard,
+                'real_estate_certificate' => $real_estate_certificate
             ]);
             
         }
@@ -249,7 +262,7 @@ class VendorsController extends Controller
          session()->flash('success', 'vendor saved successfully');
         
         
-         return redirect('vendorlist');
+         return redirect('agentlist');
 
 
 

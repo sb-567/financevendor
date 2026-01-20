@@ -43,9 +43,7 @@
                                     @csrf
                                     <div class="row g-2">
                                     
-                                    <div class="col-lg-7">
-
-                                        <div class="row g-2">
+                                    
 
                                         
                                             <div class="col-lg-6">
@@ -55,7 +53,42 @@
                                                     <label for="firstnamefloatingInput">Title</label>
                                                 </div>
                                             </div>
+
+                                               <div class="col-lg-6">
+                                                <div class="form-floating">
+                                                    <select class="form-select" id="subscription_type" name="subscription_type" aria-label="Floating label select example">
+                                                            <option value="1"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==1){{"selected"}}@endif>Day Wise</option>
+                                                            <option value="2"  @if(!empty($fetched->subscription_type) && $fetched->subscription_type==2){{"selected"}}@endif>Lead Wsie</option>
+                                                    </select>
+                                                    <label for="subscription_type">Subscription Type</label>
+                                                </div>
+                                            </div>
                                             
+                                            <div class="col-lg-6 no_of_leads_div" >
+                                                
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="no_of_leads" name="no_of_leads" placeholder="Enter No Of Leads" value="@if(!empty($fetched->no_of_leads)){{$fetched->no_of_leads}}@endif" >
+                                                    <label for="no_of_leads">No Of Leads</label>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="col-lg-6 time_duration_div">
+                                                
+                                           
+
+                                                <div class="form-floating">
+                                                    <select class="form-select" id="time_duration" name="time_duration" aria-label="Floating label select example">
+                                                            <option value="15"  @if(!empty($fetched->time_duration) && $fetched->time_duration=='15'){{"selected"}}@endif>15 Days</option>
+                                                            <option value="1 Months"  @if(!empty($fetched->time_duration) && $fetched->time_duration=='1 Months'){{"selected"}}@endif>1 Months</option>
+                                                            <option value="1 Year"  @if(!empty($fetched->time_duration) && $fetched->time_duration=='1 Year'){{"selected"}}@endif>1 Year</option>
+                                                    </select>
+                                                    <label for="time_duration">Time Duration</label>
+                                                </div>
+
+
+                                            </div>
                                             <div class="col-lg-6">
                                                 
                                                 <div class="form-floating">
@@ -90,50 +123,13 @@
                                                     <label for="floatingSelect">Status</label>
                                                 </div>
                                             </div>
+                                         
 
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-lg-5">
-                                        <div data-simplebar style="max-height: 300px;"> 
-                                       @php
-    $selectedPlans = [];
-
-    if (!empty($fetched->plan_ids)) {
-        // Try to decode as JSON
-        $decoded = json_decode($fetched->plan_ids, true);
-
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-            $selectedPlans = $decoded;
-        } else {
-            // If not JSON, assume comma-separated string
-            $selectedPlans = explode(',', $fetched->plan_ids);
-        }
-    }
-@endphp
-
-<div class="list-group">
-    @if(!empty($plans))
-        @foreach($plans as $plan)
-            <label class="list-group-item">
-                <input 
-                    class="form-check-input me-1" 
-                    name="plans_id[]" 
-                    type="checkbox" 
-                    value="{{ $plan->id }}"
-                    {{ in_array($plan->id, $selectedPlans ?? []) ? 'checked' : '' }}
-                >
-                {{ $plan->title }}
-            </label>
-        @endforeach
-    @endif
-</div>
+                                        
+                                  
 
 
-
-                                        </div>
-                                    </div>
+                                    
 
                                         <div class="col-lg-12">
                                             <div class="text-center">
@@ -170,6 +166,8 @@
 
 
 <script>
+
+
 $(document).ready(function () {
     $("#leadForm").validate({
         rules: {
@@ -208,7 +206,31 @@ $(document).ready(function () {
             $(element).removeClass("is-invalid");
         }
     });
+
+
+
 });
+
+    $('#subscription_type').on('change', function () {
+
+    var type = $(this).val();
+        console.log(type);
+    if (type == 1) {
+        $('.no_of_leads_div').hide();
+        $('.time_duration_div').show();
+    } 
+    else if (type == 2) {
+        $('.no_of_leads_div').show();
+        $('.time_duration_div').hide();
+    }
+});
+    // Trigger change event on page load to set the initial state
+    $(document).ready(function() {
+        $('#subscription_type').trigger('change');
+    });
+
+
+
 </script>
 
 

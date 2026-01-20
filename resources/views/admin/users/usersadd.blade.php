@@ -72,10 +72,11 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="password" placeholder="Enter your password" >
-                                                <label for="firstnamefloatingInput">Password</label>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
+                                                <label for="firstnamefloatingInput">Mobile</label>
                                             </div>
                                         </div>
+                                        
                                     
 
                                         <div class="col-lg-4">
@@ -110,6 +111,30 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-4">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control"  id="passwordInput"  name="password" placeholder="Enter your password" >
+                                                <label for="passwordInput">Password</label>
+
+
+                                                                            
+                                            </div>
+
+                                            <div class="mt-2 d-flex gap-2">
+                                                <button type="button"
+                                                        class="btn btn-sm btn-primary"
+                                                        onclick="generatePassword()">
+                                                    🔑 Generate
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn btn-sm btn-danger"
+                                                        onclick="clearPassword()">
+                                                    🧹 Clear
+                                                </button>
+                                            </div>
+                                        </div>
+
                                         
                                         <div class="col-lg-12">
                                             <div class="text-center">
@@ -140,3 +165,31 @@
 
 @endsection
 
+
+@section('customscript')
+
+<script>
+ function generatePassword() {
+    const length = 12;
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +   // A-Z
+        "abcdefghijklmnopqrstuvwxyz" +   // a-z
+        "0123456789" +                   // 0-9
+        "!@#$%^&*()_+{}[]<>?";            // symbols
+
+    let password = "";
+
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        password += chars[randomIndex];
+    }
+
+    document.getElementById("passwordInput").value = password;
+}
+
+function clearPassword() {
+    document.getElementById("passwordInput").value = "";
+}
+
+</script>
+@endsection

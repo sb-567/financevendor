@@ -109,7 +109,10 @@
                                     <th>City Name</th>
                                     <th>Local Area Name</th>
                                     <th>Created</th>
-                                    <th>Action</th> 
+                                   
+                                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
+                                        <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -126,6 +129,37 @@
 
     </div>
     <!-- container-fluid -->
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="leadmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Lead Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" >
+
+       <div class="row g-3">
+  <div class="col-md-6"><strong>Agent Name:</strong> <span id="agent_name"></span></div>
+  <div class="col-md-6"><strong>Lead Name:</strong> <span id="lead_name"></span></div>
+  <div class="col-md-6"><strong>Lead Email:</strong> <span id="lead_email"></span></div>
+  <div class="col-md-6"><strong>Lead Mobile:</strong> <span id="lead_mobile"></span></div>
+
+  <div class="col-md-6"><strong>Area Name:</strong> <span id="area_name"></span></div>
+  <div class="col-md-6"><strong>City Name:</strong> <span id="city_name"></span></div>
+  <div class="col-md-6"><strong>Local Area:</strong> <span id="local_area"></span></div>
+  <div class="col-md-6"><strong>Created:</strong> <span id="created_at"></span></div>
+</div>
+
+
+        
+      </div>
+      
+    </div>
+  </div>
 </div>
 
 
@@ -165,7 +199,9 @@
                     { data: 'city_name', name: 'city_name' },
                     { data: 'local_area_name', name: 'local_area_name' },
                     { data: 'created_at', name: 'created_at' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' },
+                    @endif
                 ],
                 
             });
@@ -202,7 +238,44 @@
 
             
 
+            function viewdata(id){
 
+                // $('#leadmodal').modal('show'); 
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+
+                $.ajax({
+                    url: `{{ url('leadview') }}`,
+                    type: 'POST',
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            $('#agent_name').text(res.data.agent_name);
+                            $('#lead_name').text(res.data.name);
+                            $('#lead_email').text(res.data.email);
+                            $('#lead_mobile').text(res.data.phone);
+                            $('#area_name').text(res.data.area_name);
+                            $('#city_name').text(res.data.city_name);
+                            $('#local_area').text(res.data.local_area);
+                            $('#created_at').text(res.data.created_at);
+
+                            $('#leadmodal').modal('show'); // Show the modal
+                         }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        swal.fire("!Opps ", "Something went wrong, try again later", "error");
+                    }
+                });
+
+
+
+
+            }
 
             function deleted(items) {
                     swal.fire({
