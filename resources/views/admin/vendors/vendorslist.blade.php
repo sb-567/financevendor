@@ -40,35 +40,43 @@
 
                          
                             <div class="d-flex">
+
+                                <div class="me-3">
+                                <label for="vendorFilter" class="form-label me-2">Filter by Status:</label>
                                 <select class="form-control me-3" id="vendorFilter" name="vendor_id">
                                     
-                                    <option value="" selected disabled>-- Select verification Status --</option>
-                                    <option value="1" class="status" data-val="1">All</option>
-                                    <option value="2" class="status" data-val="2">Active</option>
-                                    <option value="3" class="status" data-val="3">Inactive</option>
+                                    <option value=""  disabled>-- Select verification Status --</option>
+                                    <option value="2" selected>All</option>
+                                    <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactive</option>
                                     
                                 </select>
+                                </div>
 
-
-                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
+                                <div class="me-3">
+                                <label for="subscriptionFilter" class="form-label me-2">Filter by Subscription Type:</label>
+                                <select class="form-control me-3" id="subscriptionFilter" name="vendor_id">
                                     
-                                <option value="" selected disabled>-- Select Subscription Type --</option>
-                                <option value="1" class="status" data-val="1">All</option>
-                                <option value="2" class="status" data-val="2">Active</option>
-                                <option value="3" class="status" data-val="3">Inactive</option>
-                                    
-                                </select>
-
-
-                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
-                                    
-                                <option value="" selected disabled>-- Select Subscription State --</option>
-                                <option value="1" class="status" data-val="1">All</option>
-                                <option value="2" class="status" data-val="2">Active</option>
-                                <option value="3" class="status" data-val="3">Inactive</option>
+                                <option value=""  disabled>-- Select Subscription Type --</option>
+                                <option value="0" selected>All</option>
+                                <option value="1" >Day wise</option>
+                                <option value="2" >Lead wise</option>
                                     
                                 </select>
-                                
+                                </div>
+
+                                <div class="me-3">
+                                <label for="subscriptionstateFilter" class="form-label me-2">Filter by Subscription State:</label>
+                                <select class="form-control me-3" id="subscriptionstateFilter" name="vendor_id">
+                                    
+                                <option value=""  disabled>-- Select Subscription State --</option>
+                                <option value="0" selected>All</option>
+                                <option value="1" >Active</option>
+                                <option value="2" >Inactive</option>
+                                    
+                                </select>
+                                </div>
+<!--                                 
                                 <select class="form-control me-3" id="vendorFilter" name="vendor_id">
                                     
                                 <option value="" selected disabled>-- Select City --</option>
@@ -85,7 +93,7 @@
                                 <option value="2" class="status" data-val="2">Active</option>
                                 <option value="3" class="status" data-val="3">Inactive</option>
                                     
-                                </select>
+                                </select> -->
 
                                 </div>
 
@@ -151,67 +159,67 @@
     <script>
 
         
-        $(document).ready(function() {
-            
-            categorytable();
+       $(document).ready(function () {
 
+    var table = $('#vendor_list').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('getvendorlistdata') }}",
+            data: function (d) {
+                // Always fetch latest filter value
+                d.selected_status = $('#vendorFilter').val();
+            }
+        },
+        columns: [
+            { data: 'checkbox', orderable: false, searchable: false, className: 'action' },
+            { data: 'name', name: 'name' },
+            { data: 'email', name: 'email' },
+            { data: 'phone', name: 'mobile' },
+            { data: 'status', orderable: false, searchable: false },
+            { data: 'action', orderable: false, searchable: false, className: 'action' }
+        ]
+    });
 
-        });
-
-            function categorytable(status=""){
-                var table =  $("#vendor_list").DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                    url: "{{ route('getvendorlistdata') }}", // Server-side URL
-                    data: function (d) {
-                        // Add custom filters to the request data
-                        d.selected_status = status;
-                    }
-                },  // You can't use Laravel's blade syntax in JS, use route helper
-                    columns: [
-                        { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
-                        { data: 'name', name: 'name' },
-                        { data: 'email', name: 'email' },
-                        { data: 'phone', name: 'mobile' },
-                        { data: 'status', name: 'status',orderable: false, searchable: false },
-                        { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
-                    ],
-                });
-
-                $('#vendor_list tbody').on('click', 'tr', function (e) {
-                        // Check if the clicked element is within the 'action' column
-                        if (!$(e.target).closest('td').hasClass('action')) {
-                            var url = $(this).data('url');
-                            if (url) {
-                                window.location.href = url;
-                            }
-                        }
-                    });
+    /* Row click navigation (except action column) */
+    $('#vendor_list tbody').on('click', 'tr', function (e) {
+        if (!$(e.target).closest('td').hasClass('action')) {
+            var url = $(this).data('url');
+            if (url) {
+                window.location.href = url;
+            }
         }
-            
-            // Example dynamic JavaScript for the page
-            $('#checkAll').on('click', function() {
-                $('.form-check-input').prop('checked', this.checked);
-            });
-            
-            $('.status').on('click', function() {
-                
-                var statusValue = $(this).attr('data-val');  // Get the data-val from the clicked element
-                
+    });
 
-                if(statusValue==1){
-                    location.reload();
-                }else{
-                    $('#vendor_list').DataTable().destroy();
-                    categorytable(statusValue);
-                }
+    /* Check all checkbox */
+    $('#checkAll').on('click', function () {
+        $('.form-check-input').prop('checked', this.checked);
+    });
 
-            });
+    /* Filter change → reload table */
+    $('#vendorFilter').on('change', function () {
+
+     let status = $(this).val();
+        let url = new URL(window.location.href);
+
+        if (status !== '') {
+            url.searchParams.set('status', status);
+        } else {
+            url.searchParams.delete('status');
+        }
+
+        // Update URL without page reload
+        window.history.pushState({}, '', url);
+
+        table.ajax.reload();
+    });
+
+});
+
 
 
              $(document).on('change', '.statuschange', function() {
-                var status = $(this).prop('checked') ? 1 : 0;
+                var status = $(this).prop('checked') ? 1 : 2;
                 var id = $(this).data('id');
                 $.ajaxSetup({
                         headers: {

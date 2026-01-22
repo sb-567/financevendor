@@ -13,6 +13,7 @@ class VendorsController extends Controller
 {
     public function index(){
         $data['title']="Agent";
+        
         return view('admin/vendors/vendorslist',$data);
     }
 
@@ -67,6 +68,10 @@ class VendorsController extends Controller
         if($request->user_id){
             $query->where('tbl_vendors.user_id', '=',$request->user_id);
         }
+
+        if ($request->has('selected_status')!= null && $request->selected_status != '2') {
+            $query->where('tbl_vendors.status',$request->selected_status);
+        }   
 
 
         // Return DataTable response

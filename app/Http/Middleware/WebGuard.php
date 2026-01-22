@@ -24,26 +24,29 @@ class WebGuard
         // }
 
 
-        if (!session()->has('uid')) {
+        if (session()->has('uid')) {
             return $next($request);
+        }else{
+             return redirect('/')->with('error', 'Please login again. Session expired.');
         }
 
-        $userId = session('uid');
+        
+            $userId = session('uid');
 
-        $user = Auth::select('id', 'is_password_reset')
-                    ->where('id', $userId)
-                    ->first();
+            $user = Auth::select('id', 'is_password_reset')
+                        ->where('id', $userId)
+                        ->first();
 
-        // If user not found or password reset flag = 1
-        if (!$user || (int)$user->is_password_reset == 1) {
+            // If user not found or password reset flag = 1
+            if (!$user || (int)$user->is_password_reset == 1) {
 
-            session()->flush(); // destroy session
+                session()->flush(); // destroy session
 
-            return redirect('/')
-                ->with('error', 'Your password was reset. Please login again.');
-        }
+                return redirect('/')->with('error', 'Your password was reset. Please login again.');
+            }
 
-        return $next($request);
+       
+
 
 
     }
