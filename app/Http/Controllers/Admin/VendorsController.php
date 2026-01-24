@@ -264,7 +264,7 @@ class VendorsController extends Controller
             
         }
          
-         session()->flash('success', 'vendor saved successfully');
+         session()->flash('success', 'Agent saved successfully');
         
         
          return redirect('agentlist');
@@ -287,7 +287,7 @@ class VendorsController extends Controller
         
                 return response()->json([
                     'success' => true,
-                    'message' => 'vendor status updated successfully!',
+                    'message' => 'Agent status updated successfully!',
                     'id' => $request->input('id'),
                     'status' => $request->input('status')
 
@@ -296,7 +296,7 @@ class VendorsController extends Controller
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'vendor not found!',
+                    'message' => 'Agent not found!',
                 ], 404);
             }
         } else {
@@ -306,7 +306,7 @@ class VendorsController extends Controller
         
             return response()->json([
                 'success' => true,
-                'message' => 'Vendor created successfully!',
+                'message' => 'Agent created successfully!',
                 'id' => $id, // Return newly inserted ID
             ]);
         }

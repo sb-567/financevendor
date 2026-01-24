@@ -35,16 +35,16 @@
                                                     </div>
                                                     <div class="flex-shrink-0">
                                                         @if($percentageChange >= 0)
-    <h5 class="text-success fs-14 mb-0">
-        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-        +{{ number_format($percentageChange, 2) }} %
-    </h5>
-@else
-    <h5 class="text-danger fs-14 mb-0">
-        <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-        {{ number_format($percentageChange, 2) }} %
-    </h5>
-@endif
+                                                            <h5 class="text-success fs-14 mb-0">
+                                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                                                +{{ number_format($percentageChange, 2) }} %
+                                                            </h5>
+                                                        @else
+                                                            <h5 class="text-danger fs-14 mb-0">
+                                                                <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
+                                                                {{ number_format($percentageChange, 2) }} %
+                                                            </h5>
+                                                        @endif
 
                                                     </div>
                                                 </div>
@@ -72,9 +72,17 @@
                                                      <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Verified Agent</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-danger fs-14 mb-0">
-                                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                        </h5>
+                                                        @if($verifiedPercentageCount >= 0)
+    <h5 class="text-success fs-14 mb-0">
+        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+        +{{ number_format($verifiedPercentageCount, 2) }} %
+    </h5>
+@else
+    <h5 class="text-danger fs-14 mb-0">
+        <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
+        {{ number_format($verifiedPercentageCount, 2) }} %
+    </h5>
+@endif
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
@@ -101,9 +109,17 @@
                                                         <p class="text-uppercase fw-medium text-muted text-truncate mb-0">New signup Request</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
-                                                        </h5>
+                                                        @if($newSignupPercentageCount >= 0)
+                                                            <h5 class="text-success fs-14 mb-0">
+                                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
+                                                                +{{ number_format($newSignupPercentageCount, 2) }} %
+                                                            </h5>
+                                                        @else
+                                                            <h5 class="text-danger fs-14 mb-0">
+                                                                <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
+                                                                {{ number_format($newSignupPercentageCount, 2) }} %
+                                                            </h5>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
@@ -136,14 +152,16 @@
                                                         <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Total Leads</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                                        </h5>
+                                                       <h5 class="{{ $totalPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
+                                                        <i class="ri-arrow-right-{{ $totalPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
+                                                        {{ $totalPercentage >= 0 ? '+' : '' }}{{ number_format(abs($totalPercentage), 2) }} %
+                                                    </h5>
+
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="55">0</span> </h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $totalleads }}">0</span> </h4>
                                                         <a href="" class="text-decoration-underline">View all</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -165,14 +183,16 @@
                                                      <p class="text-uppercase fw-medium text-muted text-truncate mb-0">This Month</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-danger fs-14 mb-0">
-                                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
+                                                        <h5 class="{{ $monthPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
+                                                            <i class="ri-arrow-right-{{ $monthPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
+                                                            {{ $monthPercentage >= 0 ? '+' : '' }}{{ number_format(abs($monthPercentage), 2) }} %
                                                         </h5>
+
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36">0</span></h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $thismonthlead }}">0</span></h4>
                                                         <a href="" class="text-decoration-underline">View all </a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -194,14 +214,16 @@
                                                         <p class="text-uppercase fw-medium text-muted text-truncate mb-0">This Week</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
+                                                        <h5 class="{{ $weekPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
+                                                            <i class="ri-arrow-right-{{ $weekPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
+                                                            {{ $weekPercentage >= 0 ? '+' : '' }}{{ number_format(abs($weekPercentage), 2) }} %
                                                         </h5>
+
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183">0</span> </h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $thisweeklead }}">0</span> </h4>
                                                         <a href="" class="text-decoration-underline">View all</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -222,14 +244,16 @@
                                                         <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Today</p>
                                                     </div>
                                                     <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +29.08 %
+                                                        <h5 class="{{ $todayPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
+                                                            <i class="ri-arrow-right-{{ $todayPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
+                                                            {{ $todayPercentage >= 0 ? '+' : '' }}{{ number_format(abs($todayPercentage), 2) }} %
                                                         </h5>
+
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="183">0</span> </h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $todaylead }}">0</span> </h4>
                                                         <a href="" class="text-decoration-underline">View all</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
