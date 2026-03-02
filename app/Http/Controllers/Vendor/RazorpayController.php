@@ -14,10 +14,7 @@ class RazorpayController extends Controller
     {   
 
        
-         $api = new Api(
-            config('services.razorpay.key'),
-            config('services.razorpay.secret')
-        );
+        $api = new Api('rzp_test_S6thv6wjP1pgdq', 'Yrx4LZyGVqy31MJfsHjc0Eca');
 
         $order = $api->order->create([
             'receipt'         => time(),

@@ -46,7 +46,6 @@ class VendorsController extends Controller
 
         
 
-       
 
         return view( 'events/vendorlist',$data);
     }

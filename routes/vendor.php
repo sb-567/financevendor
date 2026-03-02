@@ -66,6 +66,9 @@ Route::middleware(['vendor'])->group(function(){
 
     Route::get('subcribtionplan',[SubscribeController::class, 'index'])->name('subcribtionplan');
 
+    Route::post('getsubcriptiondetail', [SubscribeController::class, 'getsubcriptiondetail'])->name('getsubcriptiondetail');
+    Route::post('createOrder', [SubscribeController::class, 'createOrder'])->name('createOrder');
+
     
 });
 

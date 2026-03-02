@@ -4,14 +4,14 @@
     <footer class="footer">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
+                {{-- <div class="col-sm-6">
                     <script>document.write(new Date().getFullYear())</script> © Finance Vendor.
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end d-none d-sm-block">
                         Design & Develop by Gospeedweb
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </footer>

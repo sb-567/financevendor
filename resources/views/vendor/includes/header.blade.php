@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="{{ route('dashboard') }}" class="logo logo-dark">
+                    {{-- <a href="{{ route('dashboard') }}" class="logo logo-dark">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                              
@@ -21,7 +21,7 @@
                         <span class="logo-lg">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="17"> 
                         </span>
-                    </a>
+                    </a> --}}
                 </div>
 
                 <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger material-shadow-none" id="topnav-hamburger-icon">
@@ -463,25 +463,25 @@
         <div class="navbar-brand-box">
             <!-- Dark Logo-->
             <a href="{{ route('dashboard') }}" class="logo logo-dark">
-                <span class="logo-sm">
+                {{-- <span class="logo-sm">
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                     <h2 class="text-white"></h2>
                 </span>
                 <span class="logo-lg">
                     <h2 class="text-white"></h2>
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100"> 
-                </span>
+                </span> --}}
             </a>
             <!-- Light Logo-->
             <a href="{{ route('dashboard') }}" class="logo logo-light">
-                <span class="logo-sm">
+                {{-- <span class="logo-sm">
                     <h2 class="text-white"></h2>
                     <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                 </span>
                 <span class="logo-lg">
                     <h2 class="text-white"></h2>
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100"> 
-                </span>
+                </span> --}}
             </a>
             <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
                 <i class="ri-record-circle-line"></i>

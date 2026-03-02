@@ -131,6 +131,8 @@
                         <form action="{{ url('payment-success') }}" id="subscribeForm" method="post">
 
                                     @csrf
+
+                                    <input type="hidden" name="subid" id="razorpay_payment_id">
                                     <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
                                     <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
                                     <input type="hidden" name="razorpay_signature" id="razorpay_signature">
@@ -150,13 +152,16 @@
 
 @section('customscript')
 
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 
-    function buynow(id){
-        
+    function buynow(id) {
 
-        fetch("{{ url('create-razorpay-order') }}", {
+        const data = {
+            subscription_id: id
+        };
+
+        fetch("{{ route('vendors.getsubcriptiondetail') }}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -166,39 +171,120 @@
         })
         .then(async response => {
 
-               const result = await response.json();
+            const result = await response.json();
 
-               
-               if (response.status === 422) {
-                showServerErrors(result.errors,JSON.stringify(data));
+            if (response.status === 422) {
+                showServerErrors(result.errors, JSON.stringify(data));
                 return Promise.reject("validation_error");
-               }
+            }
 
-               
-               if (!response.ok) {
-                  return Promise.reject("server_error");
-               }
+            if (!response.ok) {
+                return Promise.reject("server_error");
+            }
 
-               
-               return result;
-            })
-            .then(orderData => {
-               
-               openRazorpay(orderData);
-            })
-            .catch(err => {
-               
-               if (err === "validation_error") {
-                  console.warn("Validation failed – Razorpay blocked");
-                  return;
-               }
+            return result;
+        })
+        .then(orderData => {
+            create_razorpayorder(orderData);
+        })
+        .catch(err => {
 
-               console.error("Unexpected error:", err);
-            });
-         });
+            if (err === "validation_error") {
+                console.warn("Validation failed – Razorpay blocked");
+                return;
+            }
+
+            console.error("Unexpected error:", err);
+        });
+    }
+
+    function create_razorpayorder(orderData){
 
         
+  console.log('openrzy111', orderData);
+         fetch("{{ route('vendors.createOrder') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(async response => {
+
+            const result = await response.json();
+
+            if (response.status === 422) {
+                showServerErrors(result.errors, JSON.stringify(data));
+                return Promise.reject("validation_error");
+            }
+
+            if (!response.ok) {
+                return Promise.reject("server_error");
+            }
+
+            return result;
+        })
+        .then(orderData => {
+            openRazorpay(orderData);
+        })
+        .catch(err => {
+
+            if (err === "validation_error") {
+                console.warn("Validation failed – Razorpay blocked");
+                return;
+            }
+
+            console.error("Unexpected error:", err);
+        });
+
+
     }
+
+    function openRazorpay(orderData) {
+
+   
+//    const data = JSON.parse(pendingOrderData);
+   console.log('openrzy', orderData);
+   // console.log('openrzy', data.id);
+
+    var options = {
+        key: "rzp_test_S6thv6wjP1pgdq",
+        amount: orderData.amount,
+        currency: "INR",
+        name: "LMS",
+        description: "Test transaction",
+        order_id: orderData.id,
+        handler: function (response) {
+
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+
+            document.getElementById('checkoutForm').submit();
+        },
+        prefill: {
+            name: "{{ $users->name ?? '' }}",
+            email: "{{ $users->email ?? '' }}",
+            contact: orderData.mobile ?? "{{ $users->mobile ?? '' }}" 
+        },
+         modal: {
+            ondismiss: function () {
+                // 🔄 Refresh page when Razorpay is closed
+                window.location.reload();
+            }
+        },
+        theme: {
+            color: "#F37254"
+        }
+    };
+
+    new Razorpay(options).open();
+}
+
+
+
+
 </script>
 
 
