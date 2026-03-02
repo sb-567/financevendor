@@ -12,7 +12,7 @@ use App\Exports\LeadExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class Leadcontroller extends Controller
+class LeadController extends Controller
 {
 
     public function index(){
@@ -41,7 +41,7 @@ class Leadcontroller extends Controller
 
 
         // Return DataTable response
-        return DataTables::of($query)
+        $dataTable = DataTables::of($query)
             // Filter by search term
             ->filter(function ($query) use ($request) {
                 if ($request->has('search') && !empty($request->input('search.value'))) {
@@ -53,34 +53,61 @@ class Leadcontroller extends Controller
                         $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
                     });
                 }
-            })
+            });
+
+            if(Session::get('role_id')!=1){
+                
+                $dataTable->editColumn('name', function ($row) {
+                    $name = trim($row->name);
+
+                    if (strlen($name) <= 2) {
+                        return $name;
+                    }
+
+                    return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+                });
+                $dataTable->editColumn('phone', function ($row) {
+                    $phone = $row->phone;
+                    return substr($phone, 0, 2) . '******' . substr($phone, -2);
+                });
+                $dataTable->editColumn('email', function ($row) {
+                    $email = $row->email;
+                    $parts = explode('@', $email);
+                    return substr($parts[0], 0, 2) . '****@' . $parts[1];
+                });
+            }
+            
             // Checkbox column
-            ->addColumn('checkbox', function ($row) {
+            $dataTable->addColumn('checkbox', function ($row) {
                 return '<div class="form-check">
                             <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
                             <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
                         </div>';
-            })
+            });
             // Action column
-            ->addColumn('action', function ($row) {
+            $dataTable->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                        <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
-                                    <a href="' . route('vendors.leadedit', ['id' => $row->id]) . '" class="btn btn-sm btn-primary me-2"> Edit </a>
-                                    <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
-                                  
+                                    <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
+                        
+                       
+                                    <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
+                                 
                                 </div>';
-            })
+                        // <a href="' . route('vendors.leadedit', ['id' => $row->id]) . '" class="btn btn-sm btn-primary me-2"> Edit </a>
+                                    // <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
+            });
             // Status column with badge
-            ->editColumn('created_at', function ($row) {
+            $dataTable->editColumn('created_at', function ($row) {
                 return date('d-m-Y h:i a', strtotime($row->created_at));
-            })
+            });
     
             
-            
-            // Ensure HTML columns are rendered as raw HTML
-            ->rawColumns(['checkbox','created_at', 'action'])
-            ->make(true);
+         
+
+            $dataTable->rawColumns(['checkbox','created_at', 'action']);
+            return $dataTable->make(true);
+
 
 
     }
@@ -209,6 +236,72 @@ class Leadcontroller extends Controller
         return;
     }
 
+
+     public function leadview(Request $request){
+
+        $data['title']="Lead View";
+        $lead=DB::table('tbl_leads')->where('id','=',$request->id)->first();
+
+        if (!$lead) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead not found'
+            ]);
+        }
+
+        if(Session::get('role_id')!=1){
+
+       // Apply masking
+        $lead->name   = $this->maskName($lead->name);
+        $lead->email  = $this->maskEmail($lead->email);
+        $lead->phone = $this->maskPhone($lead->phone);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $lead
+        ]);
+    }
+
+    private function maskName($name)
+    {
+        $name = trim($name);
+
+        if (strlen($name) <= 2) {
+            return $name;
+        }
+
+        return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+    }
+
+    private function maskPhone($phone)
+    {
+        $phone = preg_replace('/\D/', '', $phone);
+
+        if (strlen($phone) < 6) {
+            return $phone;
+        }
+
+        return substr($phone, 0, 2)
+            . str_repeat('*', strlen($phone) - 4)
+            . substr($phone, -2);
+    }
+
+    private function maskEmail($email)
+    {
+        if (!str_contains($email, '@')) {
+            return $email;
+        }
+
+        [$user, $domain] = explode('@', $email);
+
+        if (strlen($user) <= 2) {
+            return $user . '@' . $domain;
+        }
+
+        return substr($user, 0, 2)
+            . str_repeat('*', strlen($user) - 2)
+            . '@' . $domain;
+    }
 
     
 

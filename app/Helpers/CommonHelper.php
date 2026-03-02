@@ -40,7 +40,11 @@ if (!function_exists('checkvendorverify')) {
     function checkvendorverify()
     {
         
-        $vid=session('vid');
+        // if(session()->get('vid')==""){
+        //     return false;
+        // }
+
+        $vid=session()->get('vid');
 
         $vendors=DB::table('tbl_vendors')->where('id', $vid)->first();
 
@@ -53,3 +57,33 @@ if (!function_exists('checkvendorverify')) {
         // return $vendors;
     }
 }
+
+if (!function_exists('checkvendorverify2')) {
+    function checkvendorverify2()
+    {
+        $vid = session('vid');
+
+        if (!$vid) {
+            return null;
+        }
+
+        $vendor = DB::table('tbl_vendors')->where('id', $vid)->first();
+
+        if (
+            $vendor &&
+            (
+                $vendor->is_rera_certificate_verified == 0 ||
+                $vendor->is_pancard_verified == 0 ||
+                $vendor->is_real_estate_certificate_verified == 0
+            )
+        ) {
+            // prevent redirect loop
+            if (!request()->routeIs('vendors.profile')) {
+                return redirect()->route('vendors.profile');
+            }
+        }
+
+        return null;
+    }
+}
+

@@ -72,8 +72,8 @@
                                             <form action="{{ route('vendors.vlogin') }}" method="post">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" name="username" placeholder="Enter username">
+                                                    <label for="username" class="form-label">Mobile Number</label>
+                                                    <input type="text" class="form-control" name="username" placeholder="Enter mobile number">
                                                 </div>
 
                                                 <div class="mb-3">

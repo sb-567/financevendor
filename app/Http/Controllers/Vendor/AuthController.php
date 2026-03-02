@@ -18,10 +18,16 @@ class AuthController extends Controller
 {
     public function index(Request $request){
         // Check if the user is already logged in
-        if ($request->session()->has('uid')) {
-            return redirect('dashboard'); // Redirect to dashboard if session is set
+
+        // if(checkvendorverify()){
+        //     session()->flash('error', 'Please update your profile documents for verification.');
+        //     return redirect()->route('vendors.profile');
+        // }else{
+        if ($request->session()->has('vid')) {
+            return redirect('vendors/dashboard'); // Redirect to dashboard if session is set
         }
 
+        // echo $request->session()->get('vendor_id');
         return view('vendor.auth');
 
     }
@@ -34,7 +40,7 @@ class AuthController extends Controller
          $password = $request->password;
    
         $user = Vendors::where(function($query) use ($username) {
-            $query->where('name', $username)
+            $query->where('phone', $username)
               ->orWhere('email', $username);
         })->first();
 

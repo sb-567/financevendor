@@ -31,11 +31,17 @@
 }
 
    .swal2-container .swal2-title {
-    padding: 0px 24px 0;
-    font-size: 15px;
-    font-weight: var(--vz-font-weight-medium);
-}
+        padding: 0px 24px 0;
+        font-size: 15px;
+        font-weight: var(--vz-font-weight-medium);
+    }
 
+    .pricing-box h2{
+        text-decoration: line-through;
+    }
+     .pricing-box h2 span{
+        text-decoration: line-through;
+    }
      </style>
 
      

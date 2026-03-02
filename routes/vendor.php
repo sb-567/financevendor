@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Vendor\AuthController;
 use App\Http\Controllers\Vendor\DashboardController;
-use App\Http\Controllers\Vendor\Leadcontroller;
+use App\Http\Controllers\Vendor\LeadController;
 use App\Http\Controllers\Vendor\CommonController;
 use App\Http\Controllers\Vendor\PropertyController;
 use App\Http\Controllers\Vendor\SubscribeController;
@@ -38,14 +38,15 @@ Route::middleware(['vendor'])->group(function(){
     
 
     
-    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('agentlist');
-    Route::get('getleadlistdata',[Leadcontroller::class, 'getleadlistdata'])->name('getleadlistdata');
-    Route::get('leadcreate',[Leadcontroller::class, 'create'])->name('leadcreate');
-    Route::post('leadsave',[Leadcontroller::class, 'leadsave'])->name('leadsave');
-    Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit'])->name('leadedit');
+    Route::get('leadlist',[LeadController::class, 'index'])->name('agentlist');
+    Route::post('leadview',[Leadcontroller::class, 'leadview'])->name('leadview');
+    Route::get('getleadlistdata',[LeadController::class, 'getleadlistdata'])->name('getleadlistdata');
+    Route::get('leadcreate',[LeadController::class, 'create'])->name('leadcreate');
+    Route::post('leadsave',[LeadController::class, 'leadsave'])->name('leadsave');
+    Route::get('leadedit/{id}',[LeadController::class, 'leadedit'])->name('leadedit');
     
-    Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
-    Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
+    Route::delete('/leaddelete/{id}', [LeadController::class, 'destroy'])->name('leaddelete');
+    Route::post('deleteselectedlead',[LeadController::class, 'selecteddestroy'])->name('deleteselectedlead');
     
     Route::get('profile',[CommonController::class, 'profile'])->name('profile');
     Route::post('updateprofile',[CommonController::class, 'updateprofile'])->name('updateprofile');

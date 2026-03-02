@@ -10,6 +10,8 @@ class CommonController extends Controller
 {
       public function profile(){
         $data['title']="Profile";
+        // echo session()->get('vid');
+        // die;
         
           $vendor_id = session('vid');
         $data['fetched']=DB::table('tbl_vendors')->where('id',$vendor_id)->first();
@@ -98,14 +100,36 @@ class CommonController extends Controller
     
             $vendor_id = session('vid');
             $updateData = [
+                // 'name' => $request->input('name'),
+                // 'phone' => $request->input('mobile'),
+                // 'email' => $request->input('email'),
+                // 'area' => $request->input('area'),
+                // 'pincode' => $request->input('pincode'),
+                // 'city' => $request->input('city'),
+                // 'state' => $request->input('state'),
+                // 'landmark' => $request->input('landmark'),
+
+
                 'name' => $request->input('name'),
+                'agent_business_name' => $request->input('agent_business_name'),
+                'business_type' => $request->input('business_type'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
                 'area' => $request->input('area'),
+                'zone_side' => $request->input('sidezone'),
+                'parent_area' => $request->input('parentarea'),
+                'micro_area_galli' => $request->input('micro_area_galli'),
+                'service_area_covered' => $request->input('service_area_covered'),
+                'property_type' => $request->input('property_type'),
+                'transaction_type' => $request->input('transaction_type'),
+                'landmark' => $request->input('landmark'),
                 'pincode' => $request->input('pincode'),
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
-                'landmark' => $request->input('landmark'),
+                'signup_source' =>$request->input('signup_source'),
+                
+
+
                 'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
                 'real_estate_certificate' => $real_estate_certificate,
