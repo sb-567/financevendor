@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    {{-- <a href="{{ route('dashboard') }}" class="logo logo-dark">
+                     <a href="{{ route('dashboard') }}" class="logo logo-dark">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                              
@@ -21,7 +21,7 @@
                         <span class="logo-lg">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="17"> 
                         </span>
-                    </a> --}}
+                    </a> 
                 </div>
 
                 <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger material-shadow-none" id="topnav-hamburger-icon">
@@ -412,16 +412,16 @@
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn material-shadow-none" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                            <!-- <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar"> -->
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna Adame</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ getagentprofiledata()->name  }}</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Welcome Anna!</h6>
+                        <h6 class="dropdown-header">Welcome {{ getagentprofiledata()->name  }}!</h6>
                         <a class="dropdown-item" href="{{ route('vendors.logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
                         
                     </div>
@@ -463,25 +463,25 @@
         <div class="navbar-brand-box">
             <!-- Dark Logo-->
             <a href="{{ route('dashboard') }}" class="logo logo-dark">
-                {{-- <span class="logo-sm">
+                 <span class="logo-sm">
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                     <h2 class="text-white"></h2>
                 </span>
                 <span class="logo-lg">
                     <h2 class="text-white"></h2>
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100"> 
-                </span> --}}
+                </span> 
             </a>
             <!-- Light Logo-->
             <a href="{{ route('dashboard') }}" class="logo logo-light">
-                {{-- <span class="logo-sm">
+                 <span class="logo-sm">
                     <h2 class="text-white"></h2>
                     <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                 </span>
                 <span class="logo-lg">
                     <h2 class="text-white"></h2>
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100"> 
-                </span> --}}
+                </span>
             </a>
             <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
                 <i class="ri-record-circle-line"></i>
@@ -518,13 +518,13 @@
 
                         <li class="nav-item">
                             <a class="nav-link menu-link " href="{{ route('vendors.dashboard') }}" >
-                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Dashboard</span>
+                                <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboard</span>
                             </a>
                         </li> 
                         
                         <li class="nav-item">
                             <a class="nav-link menu-link " href="{{ route('vendors.propertieslist') }}" >
-                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Properties Listing</span>
+                                <i class="ri-file-list-3-line"></i> <span data-key="t-dashboards">Properties Listing</span>
                             </a>
                         </li> 
 
@@ -536,13 +536,20 @@
 
                          <li class="nav-item">
                             <a class="nav-link menu-link " href="{{ route('vendors.subcribtionplan') }}" >
-                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Subscription Plan</span>
+                                <i class="ri-rocket-line"></i> <span data-key="t-dashboards">Subscription Plan</span>
                             </a>
                         </li> 
 
                         <li class="nav-item">
                             <a class="nav-link menu-link " href="{{ route('vendors.profile') }}" >
-                                <i class="ri-apps-2-line"></i> <span data-key="t-dashboards">Profile</span>
+                                <i class="ri-account-circle-line"></i> <span data-key="t-dashboards">Profile</span>
+                            </a>
+                        </li> 
+
+
+                         <li class="nav-item">
+                            <a class="nav-link menu-link " href="{{ route('vendors.orderlist') }}" >
+                                <i class="ri-file-list-line"></i> <span data-key="t-dashboards">Order History</span>
                             </a>
                         </li> 
 
@@ -924,6 +931,49 @@
 
 
                 </ul>
+
+
+                @if(!empty(getcurrentsubcription()))
+                
+                <div class="card m-2 position-absolute bottom-0">
+                    <div class="card-body p-1">
+                            
+
+                            @php
+                              $getplandetails = getcurrentsubcription();
+                            @endphp
+
+                         
+
+                                
+                                    <div class="p-3">
+                                        <h3> <span class="fw-semibold">{{ $getplandetails->title }}</span></h3>
+
+                                        <p class="fs-13"> You Plan is Activated </p>
+                                        @if($getplandetails->subscription_type==1)
+                                        <p class="fs-15"> Your plan is valid till <br> {{date('d-m-Y',strtotime($getplandetails->end_date))}} </p>
+                                        @else
+                                        <p class="fs-15">  NO OF Leads ({{$getplandetails->no_of_lead_get}}/{{ $getplandetails->no_of_leads }}) </p>
+                                        @endif
+
+                                        <div class="mt-3">
+                                            <a href="{{ route('vendors.subcribtionplan') }}" class="btn btn-success">Upgrade plan</a>
+                                        </div>
+                                    </div>
+                                
+
+                                
+
+                            
+                    </div> 
+                </div>
+
+                @endif
+                     
+
+
+
+
             </div>
             <!-- Sidebar -->
         </div>

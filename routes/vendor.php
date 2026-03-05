@@ -7,6 +7,7 @@ use App\Http\Controllers\Vendor\DashboardController;
 use App\Http\Controllers\Vendor\LeadController;
 use App\Http\Controllers\Vendor\CommonController;
 use App\Http\Controllers\Vendor\PropertyController;
+use App\Http\Controllers\Vendor\OrderController;
 use App\Http\Controllers\Vendor\SubscribeController;
 
 /*
@@ -63,12 +64,15 @@ Route::middleware(['vendor'])->group(function(){
     Route::delete('/propertiesdelete/{id}', [PropertyController::class, 'destroy'])->name('propertiesdelete');
     Route::post('deleteselectedproperties',[PropertyController::class, 'selecteddestroy'])->name('deleteselectedproperties');
     
-
+    
     Route::get('subcribtionplan',[SubscribeController::class, 'index'])->name('subcribtionplan');
-
+    
     Route::post('getsubcriptiondetail', [SubscribeController::class, 'getsubcriptiondetail'])->name('getsubcriptiondetail');
     Route::post('createOrder', [SubscribeController::class, 'createOrder'])->name('createOrder');
-
+    Route::post('payment-success', [SubscribeController::class, 'paymentSuccess'])->name('payment-success');
+    
+    Route::get('orderlist',[OrderController::class, 'index'])->name('orderlist');
+    Route::get('getorderlistdata',[OrderController::class, 'getorderlistdata'])->name('getorderlistdata');
     
 });
 

@@ -31,7 +31,7 @@ class SubscribeController extends Controller
 
         return response()->json([
             'amount' => $subscription->cross_price,
-            'id' => $subscription->id
+            'subscription_id' => $subscription->id
         ]);
 
 
@@ -85,9 +85,9 @@ class SubscribeController extends Controller
             $api->utility->verifyPaymentSignature($attributes);
 
 
-            $this->proccessOrder($input['razorpay_order_id'], $input['razorpay_payment_id'], $input['razorpay_signature']);
+            $this->proccessOrder($input['razorpay_order_id'], $input['razorpay_payment_id'], $input['razorpay_signature'],$input['subid']);
             
-            return redirect('/')->with('success', 'Payment successful! Thank you for your order.');
+            return redirect()->route('vendors.subcribtionplan')->with('success', 'Payment successful! Thank you for your order.');
 
 
 
@@ -100,7 +100,7 @@ class SubscribeController extends Controller
             Log::error('Razorpay Signature Error: ' . $e->getMessage());
             // return response()->json(['status' => 'Payment failed', 'error' => $e->getMessage()], 400);
 
-            return redirect('/')->with('error', 'Payment verification failed.');
+            return redirect()->route('vendors.subcribtionplan')->with('error', 'Payment verification failed.');
         }
 
         // 2. Signature verification
@@ -129,27 +129,56 @@ class SubscribeController extends Controller
     }
 
 
-    public function proccessOrder($order_id, $payment_id, $signature)
+    public function proccessOrder($order_id, $payment_id, $signature,$subscription_id)
     {   
-    
-    
-    $orderData = [
-        'student_id' => $sid,
-        'order_number' => $order_id,
-        'payment_id' => $payment_id,
-        'signature' => $signature,
-        'amount' => $subtotal,
-        'coupon_type'=> $coupon ? $coupon->coupon_type : null,
-        'coupon_value'=> $coupon ? $coupon->coupon_value : null,
-        'status' => 1,
-        'vendor_id' => session()->get('refer_id') ?? null,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ];
+        
+        $subscriptiondata=DB::table('tbl_subscription')
+        ->select('tbl_plans.title as plantitle','tbl_subscription.*')
+        ->leftjoin('tbl_plans','tbl_plans.id','=','tbl_subscription.time_duration')
+        ->where('tbl_subscription.id',$subscription_id)
+        ->first();
 
-    $order_id=DB::table('tbl_orders')->insertGetId($orderData);
+        $start_date = now();
+        $end_date = now();
+
+        // Calculate end date based on subscription type
+        if ($subscriptiondata->subscription_type == 1) {
+            // Time based subscription
+            
+                $title = strtolower($subscriptiondata->plantitle);
+
+                $number = (int) filter_var($title, FILTER_SANITIZE_NUMBER_INT);
+
+                if (str_contains($title, 'day')) {
+                    $end_date = now()->addDays($number);
+                } elseif (str_contains($title, 'month')) {
+                    $end_date = now()->addMonths($number);
+                } elseif (str_contains($title, 'year')) {
+                    $end_date = now()->addYears($number);
+                }
+        } elseif ($subscriptiondata->subscription_type == 2) {
+            // Lead based subscription
+            $end_date = null; // No expiry, depends on leads
+        }
+
+        
+        $orderData = [
+            'subscription_id' => $subscription_id,
+            'agent_id' => session('vid'),
+            'order_no' => $order_id,
+            'payment_id' => $payment_id,
+            'signature' => $signature,
+            'amount' => $subscriptiondata->cross_price ?? 0,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+
+        $order_id=DB::table('tbl_orders')->insertGetId($orderData);
 
 
+        return redirect()->route('vendors.subcribtionplan')->with('success', 'payed sucessfully');
 
     }
 

@@ -26,6 +26,10 @@
 
 
         <div class="row justify-content-center">
+
+          <form action="{{ route('vendors.payment-success') }}" id="subscribeForm" method="post">
+
+                                    @csrf
                         <div class="col-xl-9">
                             <div class="row">
                                 
@@ -74,6 +78,7 @@
                                                             </div>
                                                         </li>
                                                         @if(!empty($sub->subscription_type))
+                                                        @if($sub->subscription_type=='1')
                                                             <li>
                                                                 <div class="d-flex">
                                                                     <div class="flex-shrink-0 text-success me-1">
@@ -97,11 +102,12 @@
                                                                         <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
                                                                     </div>
                                                                     <div class="flex-grow-1">
-                                                                        <span>{{ $sub->time_duration }} Days</span>
+                                                                        <span>{{ $sub->no_of_leads }} Leads</span>
                                                                     </div>
                                                                 </div>
                                                             
                                                             </li>
+                                                        @endif
                                                         @endif
                                                        
                                                     </ul>
@@ -128,11 +134,9 @@
                     </div>
 
 
-                        <form action="{{ url('payment-success') }}" id="subscribeForm" method="post">
+                      
 
-                                    @csrf
-
-                                    <input type="hidden" name="subid" id="razorpay_payment_id">
+                                    <input type="hidden" name="subid" id="subid">
                                     <input type="hidden" name="razorpay_payment_id" id="razorpay_payment_id">
                                     <input type="hidden" name="razorpay_order_id" id="razorpay_order_id">
                                     <input type="hidden" name="razorpay_signature" id="razorpay_signature">
@@ -185,6 +189,8 @@
             return result;
         })
         .then(orderData => {
+
+            document.getElementById('subid').value = id;
             create_razorpayorder(orderData);
         })
         .catch(err => {
@@ -245,7 +251,7 @@
 
    
 //    const data = JSON.parse(pendingOrderData);
-   console.log('openrzy', orderData);
+//    console.log('openrzy', orderData);
    // console.log('openrzy', data.id);
 
     var options = {
@@ -261,7 +267,7 @@
             document.getElementById('razorpay_order_id').value = response.razorpay_order_id;
             document.getElementById('razorpay_signature').value = response.razorpay_signature;
 
-            document.getElementById('checkoutForm').submit();
+            document.getElementById('subscribeForm').submit();
         },
         prefill: {
             name: "{{ $users->name ?? '' }}",

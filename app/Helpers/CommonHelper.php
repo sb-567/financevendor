@@ -87,3 +87,40 @@ if (!function_exists('checkvendorverify2')) {
     }
 }
 
+
+if (!function_exists('getcurrentsubcription')) {
+    function getcurrentsubcription()
+    {
+        $vid = session('vid');
+
+        if (!$vid) {
+            return null;
+        }
+
+       $order = DB::table('tbl_orders')
+            ->select('tbl_orders.*','tbl_subscription.title','tbl_subscription.subscription_type','tbl_subscription.no_of_leads')
+            ->leftJoin('tbl_subscription', 'tbl_subscription.id', '=', 'tbl_orders.subscription_id')
+            ->where('tbl_orders.agent_id', $vid)
+            ->first();
+
+        return $order;
+    }
+}
+
+
+
+if (!function_exists('getagentprofiledata')) {
+    function getagentprofiledata()
+    {
+        $vid = session('vid');
+
+        if (!$vid) {
+            return null;
+        }
+
+       $order = DB::table('tbl_vendors')->where('id', $vid)->first();
+
+        return $order;
+    }
+}
+
