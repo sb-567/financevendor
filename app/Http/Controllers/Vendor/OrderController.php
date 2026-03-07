@@ -12,31 +12,32 @@ use App\Exports\LeadExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 
-class LeadController extends Controller
+class OrderController extends Controller
 {
 
     public function index(){
-        $data['title']="Lead";
+
+        $data['title']="Orders History";
         $data['vendors']= DB::table('tbl_vendors')->get();
-         
-        return view('vendor/lead/lead',$data);
+        return view('vendor/order/order',$data);
     }
 
 
 
 
-    public function getleadlistdata(Request $request){
+    public function getorderlistdata(Request $request){
 
     
          $vendor_id = session('vid');
 
-        $query = DB::table('tbl_leads')
-            ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
-            ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
-            ->orderBy('tbl_leads.id', 'desc');
+        $query = DB::table('tbl_orders')
+            ->select('tbl_orders.*', 'tbl_vendors.name as agent_name','tbl_subscription.title')
+            ->leftJoin('tbl_subscription', 'tbl_subscription.id', '=', 'tbl_orders.subscription_id')
+            ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_orders.agent_id')
+            ->orderBy('tbl_orders.id', 'desc');
 
         // if ($request->vendor_id) {
-            $query->where('tbl_leads.vendor_id', $vendor_id);
+            $query->where('tbl_orders.agent_id', $vendor_id);
         // }
 
 
@@ -47,56 +48,36 @@ class LeadController extends Controller
                 if ($request->has('search') && !empty($request->input('search.value'))) {
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
-                        $q->where('tbl_leads.name', 'like', "%{$keyword}%");
+                        $q->where('tbl_orders.order_no', 'like', "%{$keyword}%");
 
-                        $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
-                        $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
+                        // $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
+                        // $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
                     });
                 }
             });
 
-            if(Session::get('role_id')!=1){
-                
-                $dataTable->editColumn('name', function ($row) {
-                    $name = trim($row->name);
-
-                    if (strlen($name) <= 2) {
-                        return $name;
-                    }
-
-                    return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
-                });
-                $dataTable->editColumn('phone', function ($row) {
-                    $phone = $row->phone;
-                    return substr($phone, 0, 2) . '******' . substr($phone, -2);
-                });
-                $dataTable->editColumn('email', function ($row) {
-                    $email = $row->email;
-                    $parts = explode('@', $email);
-                    return substr($parts[0], 0, 2) . '****@' . $parts[1];
-                });
-            }
+        
             
             // Checkbox column
-            $dataTable->addColumn('checkbox', function ($row) {
-                return '<div class="form-check">
-                            <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
-                            <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
-                        </div>';
-            });
+            // $dataTable->addColumn('checkbox', function ($row) {
+            //     return '<div class="form-check">
+            //                 <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
+            //                 <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
+            //             </div>';
+            // });
             // Action column
-            $dataTable->addColumn('action', function ($row) {
+            // $dataTable->addColumn('action', function ($row) {
             
-                        return '<div class="d-flex">
-                                    <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
+            //             return '<div class="d-flex">
+            //                         <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
                         
                        
-                                    <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
+            //                         <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
                                  
-                                </div>';
-                        // <a href="' . route('vendors.leadedit', ['id' => $row->id]) . '" class="btn btn-sm btn-primary me-2"> Edit </a>
-                                    // <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
-            });
+            //                     </div>';
+            //             // <a href="' . route('vendors.leadedit', ['id' => $row->id]) . '" class="btn btn-sm btn-primary me-2"> Edit </a>
+            //                         // <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
+            // });
             // Status column with badge
             $dataTable->editColumn('created_at', function ($row) {
                 return date('d-m-Y h:i a', strtotime($row->created_at));
@@ -105,7 +86,7 @@ class LeadController extends Controller
             
          
 
-            $dataTable->rawColumns(['checkbox','created_at', 'action']);
+            $dataTable->rawColumns(['created_at', 'action']);
             return $dataTable->make(true);
 
 

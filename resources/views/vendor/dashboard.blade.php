@@ -25,411 +25,55 @@
         </div>
         <!-- end page title -->
 
-        <div class="row">
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> All Agent</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        @if($percentageChange >= 0)
-                                                            <h5 class="text-success fs-14 mb-0">
-                                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                                +{{ number_format($percentageChange, 2) }} %
-                                                            </h5>
-                                                        @else
-                                                            <h5 class="text-danger fs-14 mb-0">
-                                                                <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                                                {{ number_format($percentageChange, 2) }} %
-                                                            </h5>
-                                                        @endif
+       <div class="row">
+                        
 
-                                                    </div>
+                                <div class="col-xl-4">
+                                    <div class="card card-animate">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm flex-shrink-0">
+                                                    <span class="avatar-title bg-warning-subtle text-warning rounded-2 fs-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-award text-warning"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                                         <!-- <i class="ri-building-line"></i> -->
+                                                    </span>
                                                 </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $allagents }}">0</span> </h4>
-                                                        <a href="{{ route('agentlist') }}" class="text-decoration-underline">View all</a>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <p class="text-uppercase fw-medium text-muted mb-3">No Of Leads</p>
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        <h4 class="fs-4 flex-grow-1 mb-0"><span class="counter-value" data-target="{{ $no_of_lead }}">{{ $no_of_lead }}</span></h4>
+                                                        <span class="badge bg-success-subtle text-success fs-12"><i class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>{{ $leadPercentage  }} %</span>
                                                     </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-success"></i>
-                                                        </span>
-                                                    </div>
+                                                    <!-- <p class="text-muted mb-0">Leads this month</p> -->
                                                 </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div>
+                                </div><!-- end col -->
 
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Verified Agent</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        @if($verifiedPercentageCount >= 0)
-    <h5 class="text-success fs-14 mb-0">
-        <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-        +{{ number_format($verifiedPercentageCount, 2) }} %
-    </h5>
-@else
-    <h5 class="text-danger fs-14 mb-0">
-        <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-        {{ number_format($verifiedPercentageCount, 2) }} %
-    </h5>
-@endif
-                                                    </div>
+                                <div class="col-xl-4">
+                                    <div class="card card-animate">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar-sm flex-shrink-0">
+                                                    <span class="avatar-title bg-info-subtle text-info rounded-2 fs-2">
+                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock text-info"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> -->
+                                                         <i class="ri-building-line"></i>
+                                                    </span>
                                                 </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $verifiedagent }}">0</span></h4>
-                                                        <a href="{{ route('agentlist', ['status' => 1]) }}" class="text-decoration-underline">View all </a>
+                                                <div class="flex-grow-1 overflow-hidden ms-3">
+                                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">No Of Property Listing</p>
+                                                    <div class="d-flex align-items-center mb-3">
+                                                        <h4 class="fs-4 flex-grow-1 mb-0"><span class="counter-value" data-target="{{ $no_of_property_listing }}">{{ $no_of_property_listing }}</span> </h4>
+                                                        <span class="badge bg-danger-subtle text-danger fs-12"><i class="ri-arrow-down-s-line fs-13 align-middle me-1"></i>{{ $propertyPercentage }} %</span>
                                                     </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                            <i class="bx bx-check-square text-info"></i>
-                                                        </span>
-                                                    </div>
+                                                    <!-- <p class="text-muted text-truncate mb-0">Listing this month</p> -->
                                                 </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0">New signup Request</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        @if($newSignupPercentageCount >= 0)
-                                                            <h5 class="text-success fs-14 mb-0">
-                                                                <i class="ri-arrow-right-up-line fs-13 align-middle"></i>
-                                                                +{{ number_format($newSignupPercentageCount, 2) }} %
-                                                            </h5>
-                                                        @else
-                                                            <h5 class="text-danger fs-14 mb-0">
-                                                                <i class="ri-arrow-right-down-line fs-13 align-middle"></i>
-                                                                {{ number_format($newSignupPercentageCount, 2) }} %
-                                                            </h5>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $newsignup }}">0</span> </h4>
-                                                        <a href="{{ route('agentlist', ['status' => 0]) }}" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-warning"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    
-                                </div> <!-- end row-->
-
-
-                                  
-        <div class="row">
-                                    <div class="col-xl-3 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Total Leads</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                       <h5 class="{{ $totalPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
-                                                        <i class="ri-arrow-right-{{ $totalPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
-                                                        {{ $totalPercentage >= 0 ? '+' : '' }}{{ number_format(abs($totalPercentage), 2) }} %
-                                                    </h5>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $totalleads }}">0</span> </h4>
-                                                        <a href="" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-success"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-3 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">This Month</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="{{ $monthPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
-                                                            <i class="ri-arrow-right-{{ $monthPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
-                                                            {{ $monthPercentage >= 0 ? '+' : '' }}{{ number_format(abs($monthPercentage), 2) }} %
-                                                        </h5>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $thismonthlead }}">0</span></h4>
-                                                        <a href="" class="text-decoration-underline">View all </a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                            <i class="bx bx-check-square text-info"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-3 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0">This Week</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="{{ $weekPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
-                                                            <i class="ri-arrow-right-{{ $weekPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
-                                                            {{ $weekPercentage >= 0 ? '+' : '' }}{{ number_format(abs($weekPercentage), 2) }} %
-                                                        </h5>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $thisweeklead }}">0</span> </h4>
-                                                        <a href="" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-warning"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-                                    <div class="col-xl-3 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Today</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="{{ $todayPercentage >= 0 ? 'text-success' : 'text-danger' }} fs-14 mb-0">
-                                                            <i class="ri-arrow-right-{{ $todayPercentage >= 0 ? 'up' : 'down' }}-line fs-13 align-middle"></i>
-                                                            {{ $todayPercentage >= 0 ? '+' : '' }}{{ number_format(abs($todayPercentage), 2) }} %
-                                                        </h5>
-
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $todaylead }}">0</span> </h4>
-                                                        <a href="" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-warning"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    
-                                </div> <!-- end row-->
-
-
-                                  <div class="row">
-                                    <div class="col-xl-6 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Pending Verification</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="55">0</span> </h4>
-                                                        <a href="" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-success"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-6 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Pending Agent Blog</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="text-danger fs-14 mb-0">
-                                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36">0</span></h4>
-                                                        <a href="" class="text-decoration-underline">View all </a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                            <i class="bx bx-check-square text-info"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                
-                                </div> <!-- end row-->
-
-
-                                   <div class="row">
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                        <p class="text-uppercase fw-medium text-muted text-truncate mb-0"> Total Paid Agents</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="text-success fs-14 mb-0">
-                                                            <i class="ri-arrow-right-up-line fs-13 align-middle"></i> +16.24 %
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="55">0</span> </h4>
-                                                        <a href="" class="text-decoration-underline">View all</a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                            <i class="bx bx-user-circle text-success"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Expiring in 7 Days</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="text-danger fs-14 mb-0">
-                                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36">0</span></h4>
-                                                        <a href="" class="text-decoration-underline">View all </a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                            <i class="bx bx-check-square text-info"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- card -->
-                                        <div class="card card-animate">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="flex-grow-1 overflow-hidden">
-                                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Expiring in 30 Days</p>
-                                                    </div>
-                                                    <div class="flex-shrink-0">
-                                                        <h5 class="text-danger fs-14 mb-0">
-                                                            <i class="ri-arrow-right-down-line fs-13 align-middle"></i> -3.57 %
-                                                        </h5>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-end justify-content-between mt-4">
-                                                    <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="36">0</span></h4>
-                                                        <a href="" class="text-decoration-underline">View all </a>
-                                                    </div>
-                                                    <div class="avatar-sm flex-shrink-0">
-                                                        <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                            <i class="bx bx-check-square text-info"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div><!-- end card body -->
-                                        </div><!-- end card -->
-                                    </div><!-- end col -->
-
-                                
-                                </div> <!-- end row-->
-
-
-                                  
-
-                                
+                                            </div>
+                                        </div><!-- end card body -->
+                                    </div>
+                                </div><!-- end col -->
+                            </div>
 
 
     </div>

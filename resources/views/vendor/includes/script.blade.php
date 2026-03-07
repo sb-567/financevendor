@@ -4,14 +4,14 @@
     <footer class="footer">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6">
+             <div class="col-sm-6">
                     <script>document.write(new Date().getFullYear())</script> © Finance Vendor.
                 </div>
                 <div class="col-sm-6">
                     <div class="text-sm-end d-none d-sm-block">
                         Design & Develop by Gospeedweb
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </footer>
@@ -55,6 +55,7 @@
 
  <!-- App js -->
  <script src="{{asset('assets/js/app.js')}}"></script>
+ <script src="{{asset('assets/js/custom.js')}}"></script>
 
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
@@ -71,7 +72,31 @@
 
     <script src="{{asset('assets/js/pages/datatables.init.js')}}"></script>
 
+    
+<script>
 
+@if (checkvendorverify())
+   
+   
+   function enforceOverlays() {
+    let selectors = [
+        'app-menu.navbar-menu',
+        '.page-topbar'
+    ];
+    
+    selectors.forEach(sel => {
+        let el = document.querySelector(sel);
+        if (el && !el.classList.contains('overlay-active')) {
+            el.classList.add('overlay-active');
+        }
+    });
+}
+
+// Reapply every 500ms so user can’t remove via inspect
+setInterval(enforceOverlays, 500);
+@endif
+
+    </script>
 @if(session('success'))
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -91,22 +116,21 @@
     });
 </script>
 @endif
-
 @if(session('error'))
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         Swal.fire({
             icon: 'error',
             title: '{{ session('error') }}',
-            // toast: true,
-            // position: 'top-end',
+            toast: true,
+            position: 'top-end',
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
-            // didOpen: (toast) => {
-            //     toast.addEventListener('mouseenter', Swal.stopTimer);
-            //     toast.addEventListener('mouseleave', Swal.resumeTimer);
-            // }
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
         });
     });
 </script>

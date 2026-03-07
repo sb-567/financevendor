@@ -136,7 +136,7 @@
                                                    <div class="col-md-4">
                                                         <div class="mb-3">
                                                             <label for="username" class="form-label">Pincode</label>
-                                                            <input type="text" class="form-control" name="pincode" placeholder="Enter Pincode">
+                                                            <input type="number" class="form-control" name="pincode" placeholder="Enter Pincode">
                                                         </div>
                                                    </div>
 

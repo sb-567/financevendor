@@ -18956,3 +18956,22 @@ span.flatpickr-weekday {
     transform: scale(1.1);
 }
 /*# sourceMappingURL=app.min.css.map */
+
+
+
+/* Apply blackout only when overlay-active is added */
+.overlay-active {
+    position: absolute;
+    pointer-events: none; /* disable clicks */
+}
+
+.overlay-active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255 255 255 / 69%); /* dark overlay */
+    z-index: 9999;
+}
