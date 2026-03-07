@@ -83,9 +83,9 @@ Route::middleware(['guard'])->group(function(){
     });
  
  
-    Route::get('vendorlist',[VendorsController::class, 'index'])->name('vendorlist');
+    Route::get('agentlist',[VendorsController::class, 'index'])->name('agentlist');
     Route::get('getvendorlistdata',[VendorsController::class, 'getvendorlistdata'])->name('getvendorlistdata');
-    Route::get('vendorcreate',[VendorsController::class, 'create'])->name('vendorcreate');
+    Route::get('agentcreate',[VendorsController::class, 'create'])->name('agentcreate');
     Route::post('vendorsave',[VendorsController::class, 'vendorsave'])->name('vendorsave');
     Route::get('vendoredit/{id}',[VendorsController::class, 'vendoredit']);
     Route::post('vendorstatuschange',[VendorsController::class, 'vendorstatuschange'])->name('vendorstatuschange');
@@ -93,12 +93,18 @@ Route::middleware(['guard'])->group(function(){
     Route::post('deleteselectedvendor',[VendorsController::class, 'selecteddestroy'])->name('deleteselectedvendor');
 
 
-    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('vendorlist');
+    Route::get('leadlist',[Leadcontroller::class, 'index'])->name('leadlist');
     Route::get('getleadlistdata',[Leadcontroller::class, 'getleadlistdata'])->name('getleadlistdata');
     Route::get('leadcreate',[Leadcontroller::class, 'create'])->name('leadcreate');
     Route::post('leadsave',[Leadcontroller::class, 'leadsave'])->name('leadsave');
     Route::post('exportlead',[Leadcontroller::class, 'exportlead'])->name('exportlead');
+
+    Route::get('exportlead', fn () =>
+    redirect()->route('leadlist')->with('error', 'Invalid request method.')
+);
+
     Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit']);
+    Route::post('leadview',[Leadcontroller::class, 'leadview'])->name('leadview');
     Route::post('leadstatuschange',[Leadcontroller::class, 'leadstatuschange'])->name('leadstatuschange');
     Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
     Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');

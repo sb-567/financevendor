@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session; 
+use Illuminate\Support\Facades\Session;
+ 
 
 use App\Exports\LeadExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,6 +19,8 @@ class Leadcontroller extends Controller
     public function index(){
         $data['title']="Lead";
         $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['slugdata']=getSubMenusbyslug('leadlist');
+
         return view('admin/lead/lead',$data);
     }
 
@@ -26,6 +29,7 @@ class Leadcontroller extends Controller
 
     public function getleadlistdata(Request $request){
 
+       
     
         
 
@@ -40,9 +44,9 @@ class Leadcontroller extends Controller
 
 
         // Return DataTable response
-        return DataTables::of($query)
+         $dataTable =  DataTables::of($query);
             // Filter by search term
-            ->filter(function ($query) use ($request) {
+             $dataTable->filter(function ($query) use ($request) {
                 if ($request->has('search') && !empty($request->input('search.value'))) {
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
@@ -52,33 +56,63 @@ class Leadcontroller extends Controller
                         $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
                     });
                 }
-            })
+            });
+            if(Session::get('role_id')!=1){
+                
+             $dataTable->editColumn('name', function ($row) {
+                $name = trim($row->name);
+
+                if (strlen($name) <= 2) {
+                    return $name;
+                }
+
+                return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+            });
+             $dataTable->editColumn('phone', function ($row) {
+                $phone = $row->phone;
+                return substr($phone, 0, 2) . '******' . substr($phone, -2);
+            });
+             $dataTable->editColumn('email', function ($row) {
+                $email = $row->email;
+                $parts = explode('@', $email);
+                return substr($parts[0], 0, 2) . '****@' . $parts[1];
+            });
+        }
             // Checkbox column
-            ->addColumn('checkbox', function ($row) {
+             $dataTable->addColumn('checkbox', function ($row) {
                 return '<div class="form-check">
                             <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
                             <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
                         </div>';
-            })
+            });
             // Action column
-            ->addColumn('action', function ($row) {
+             $dataTable->addColumn('action', function ($row) {
             
+                   $slugdata=getSubMenusbyslug('leadlist');
+
+                 if(getMenusWithPermissions($slugdata->id,'can_view')){
                         return '<div class="d-flex">
-                                    <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                    <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
-                                  
+                                    <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
+                                 
                                 </div>';
-            })
+                 }
+
+                                // <div class="d-flex">
+                                //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                //     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button
+                                  
+                                // </div>
+            });
             // Status column with badge
-            ->editColumn('created_at', function ($row) {
+             $dataTable->editColumn('created_at', function ($row) {
                 return date('d-m-Y h:i a', strtotime($row->created_at));
-            })
+            });
     
             
             
             // Ensure HTML columns are rendered as raw HTML
-            ->rawColumns(['checkbox','created_at', 'action'])
-            ->make(true);
+             $dataTable->rawColumns(['checkbox','created_at', 'action']);
+            return $dataTable->make(true);
 
 
     }
@@ -86,16 +120,82 @@ class Leadcontroller extends Controller
     
 
 
-    public function vendoredit(Request $request){
+    public function leadedit(Request $request){
 
         $data['title']="Lead Edit";
         $data['fetched']=DB::table('tbl_leads')->where('id','=',$request->id)->first();
         
         
-     $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['vendors']= DB::table('tbl_vendors')->get();
         // $data['states']= DB::table('tbl_states')->get();
         return view( 'admin/lead/leadadd', $data);
 
+    }
+
+    public function leadview(Request $request){
+
+        $data['title']="Lead View";
+        $lead=DB::table('tbl_leads')->where('id','=',$request->id)->first();
+
+        if (!$lead) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Lead not found'
+            ]);
+        }
+
+        if(Session::get('role_id')!=1){
+
+       // Apply masking
+        $lead->name   = $this->maskName($lead->name);
+        $lead->email  = $this->maskEmail($lead->email);
+        $lead->phone = $this->maskPhone($lead->phone);
+        }
+        return response()->json([
+            'success' => true,
+            'data' => $lead
+        ]);
+    }
+
+    private function maskName($name)
+    {
+        $name = trim($name);
+
+        if (strlen($name) <= 2) {
+            return $name;
+        }
+
+        return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+    }
+
+    private function maskPhone($phone)
+    {
+        $phone = preg_replace('/\D/', '', $phone);
+
+        if (strlen($phone) < 6) {
+            return $phone;
+        }
+
+        return substr($phone, 0, 2)
+            . str_repeat('*', strlen($phone) - 4)
+            . substr($phone, -2);
+    }
+
+    private function maskEmail($email)
+    {
+        if (!str_contains($email, '@')) {
+            return $email;
+        }
+
+        [$user, $domain] = explode('@', $email);
+
+        if (strlen($user) <= 2) {
+            return $user . '@' . $domain;
+        }
+
+        return substr($user, 0, 2)
+            . str_repeat('*', strlen($user) - 2)
+            . '@' . $domain;
     }
 
     public function create(){
@@ -210,16 +310,22 @@ class Leadcontroller extends Controller
 
     public function exportlead(Request $request)
     {
-        
+        if (!$request->isMethod('post')) {
+            return redirect()->route('leadlist')
+                ->with('error', 'Invalid request method.');
+        }
+
+
         //  echo $request->input('vendor_id');
-        
-      $filters = [
-            'vendor_id' => $request->input('vendor_id')
-        ];
+        if(Session::get('role_id')==1){
+            $filters = [
+                    'vendor_id' => $request->input('vendor_id')
+                ];
 
-
-         return Excel::download(new LeadExport($filters), 'leads.xlsx');
-   
+            return Excel::download(new LeadExport($filters), 'leads.xlsx');
+        }else{
+            return redirect()->back()->with('error', 'You do not have permission to export leads.');
+        }
         
     }
 

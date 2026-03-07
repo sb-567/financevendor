@@ -27,12 +27,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-         $username = $request->username;
+         $mobile = $request->mobile;
          $password = $request->password;
    
-        $user = Auth::where(function($query) use ($username) {
-            $query->where('username', $username)
-              ->orWhere('email', $username);
+        $user = Auth::where(function($query) use ($mobile) {
+            $query->where('mobile', $mobile);
+            //   ->orWhere('email', $username);
         })->first();
 
         if ($user && Hash::check($password, $user->password)) {
@@ -44,7 +44,7 @@ class AuthController extends Controller
            
             Auth::where('id', $user->id)->update(['otp' => $otp]); 
             
-
+            
             // $request->session()->put('role_id', $user->role_id);
             return redirect('verify');
         } else {
@@ -58,26 +58,27 @@ class AuthController extends Controller
     {
         
          if (!$request->session()->has('user_id')) {
-            return redirect('/');
+             return redirect('/');
+            }
+            
+            return view('admin.verify');
         }
-
-        return view('admin.verify');
-    }
-    
-    public function verifyotp(Request $request)
-    {   
-        // echo "ef";
-        // die;
-        if (!$request->session()->has('user_id')) {
-            return redirect('/');
-        }
-
+        
+        public function verifyotp(Request $request)
+        {   
+            // echo "ef";
+            // die;
+            if (!$request->session()->has('user_id')) {
+                return redirect('/');
+            }
+            
          $uid = session('user_id');
          $otp = $request->otp1. $request->otp2 . $request->otp3 . $request->otp4;
-   
-        $user = Auth::where('id', $uid)->first();
-
-        if ($user->otp==$otp) {
+         
+         $user = Auth::where('id', $uid)->first();
+         
+         if ($user->otp==$otp) {
+            Auth::where('id', $uid)->update(['is_password_reset' => 0]); 
             
             $request->session()->put('uid', $user->id);
             $request->session()->put('role_id', $user->role_id);
@@ -193,14 +194,7 @@ class AuthController extends Controller
 
     public function usersave(Request $request){
         
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:tbl_admin,email',
-        ]);
-
-        if ($validator->fails()) {
-            session()->flash('error', $validator->errors()->first('email'));
-            return redirect()->back()->withInput();
-        }
+        
 
         if ($request->input('id') != "") {
            
@@ -210,18 +204,38 @@ class AuthController extends Controller
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'email' => $request->input('email'),
-                'password' =>  Hash::make($request->input('password')), // Hash the password if provided
+                'mobile' => $request->input('mobile'),
+                // 'password' =>  Hash::make($request->input('password')), // Hash the password if provided
                 'role_id' => $request->input('role_id'),
                 'status' =>$request->input('status')
             ]);
-    
+            
+            if($request->input('password')!=""){
+                DB::table('tbl_admin')
+                ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
+                ->update([
+                    'password' =>  Hash::make($request->input('password')), // Hash the password if provided
+                    'is_password_reset' => 1,
+                ]);
+            }
     
         } else {
+
+            $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:tbl_admin,email',
+            ]);
+
+            if ($validator->fails()) {
+                session()->flash('error', $validator->errors()->first('email'));
+                return redirect()->back()->withInput();
+            }
+            
     
             DB::table('tbl_admin')->insert([
                 'name' => $request->input('name'),
                 'username' => $request->input('username'),
                 'email' => $request->input('email'),
+                'mobile' => $request->input('mobile'),
                 'password' =>  Hash::make($request->input('password')), // Hash the password if provided
                 'role_id' => $request->input('role_id'),
                 'status' =>$request->input('status')

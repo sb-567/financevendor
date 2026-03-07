@@ -30,8 +30,10 @@ class RoleController extends Controller
     public function getrolelistdata(Request $request)
     {
         $query = Role::query();
-            // $query = Role::where('id', '!=', 1);
+            $query = Role::where('id', '!=', 1);
         // Return DataTable response
+        
+        $query->orderBy('id', 'AsC');
         return DataTables::of($query)
           
             // Filter by search term

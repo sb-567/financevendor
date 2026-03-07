@@ -20,15 +20,27 @@
  
      <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
+     <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script> -->
+     <!-- <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script> -->
+      <!-- <script src="https://cdn.tiny.cloud/1/l0eptpai4fuwmeprliph18rb1by1kog3y3wp3edh5slo6xa7/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script> -->
+      <script src="https://cdn.tiny.cloud/1/l0eptpai4fuwmeprliph18rb1by1kog3y3wp3edh5slo6xa7/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+        
+
+
+
+
      <style>
         .navbar-brand-box{
             background: #fff !important;
             
         }
         table.dataTable td.text-wrap {
-    white-space: normal !important;
-    word-break: break-word;
-}
+            white-space: normal !important;
+            word-break: break-word;
+        }
+
+
 
    .swal2-container .swal2-title {
     padding: 0px 24px 0;

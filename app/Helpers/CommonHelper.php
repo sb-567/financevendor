@@ -13,6 +13,7 @@ if (!function_exists('getMenus')) {
         return Menu::orderBy('sequence_no', 'asc')->get();
     }
 }
+
 if (!function_exists('getSubMenus')) {
     function getSubMenus($menu_id)
     {
@@ -20,10 +21,10 @@ if (!function_exists('getSubMenus')) {
     }
 }
 
-if (!function_exists('getSubMenus')) {
-    function getSubMenus($menu_id)
+if (!function_exists('getSubMenusbyslug')) {
+    function getSubMenusbyslug($menu_id)
     {
-        return Menu::where('parent_id', $menu_id)->get();
+        return Menu::where('route_name', $menu_id)->first();
     }
 }
 

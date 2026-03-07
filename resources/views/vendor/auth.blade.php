@@ -22,25 +22,7 @@
     <link href="{{asset('assets/css/app.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{asset('assets/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-
-    <style>
-        body{
-            background: url('{{asset("assets/images/loginbg.jpg")}}');
-            background-size: cover;
-    backdrop-filter: blur(1.1px);
-        }
-        .card{
-            border-right: 2px solid #fe7b67;
-            border-left: 2px solid #0ca27b;
-            border-top: 2px solid #0ca27b;
-            border-bottom: 2px solid #fe7b67;
-        }
-        .swal2-container .swal2-title {
-    padding: 0px 24px 0;
-    font-size: 15px;
-    font-weight: var(--vz-font-weight-medium);
-}
-    </style>
+    
 </head>
 
 <body>
@@ -72,8 +54,8 @@
                                             <form action="{{ route('vendors.vlogin') }}" method="post">
                                                 @csrf
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username</label>
-                                                    <input type="text" class="form-control" name="username" placeholder="Enter username">
+                                                    <label for="mobile" class="form-label">Mobile Number</label>
+                                                    <input type="text" class="form-control" name="mobile" placeholder="Enter mobile number" required>
                                                 </div>
 
                                                 <div class="mb-3">
@@ -141,6 +123,8 @@
     <script src="{{asset('assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- password-addon init -->
     <script src="{{asset('assets/js/pages/password-addon.init.js')}}"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -149,9 +133,13 @@
             this.value = this.value.replace(/\D/g, '').slice(0, 4);
         });
 
+
+        
+
     </script>
 
-    
+
+
 @if(session('success'))
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -172,7 +160,6 @@
 </script>
 @endif
 
-
 @if(session('error'))
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -184,14 +171,19 @@
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            // didOpen: (toast) => {
+            //     toast.addEventListener('mouseenter', Swal.stopTimer);
+            //     toast.addEventListener('mouseleave', Swal.resumeTimer);
+            // },
+            customClass: {
+                title: 'swal-small-text',
+                popup: 'swal-small-popup'
             }
         });
     });
 </script>
 @endif
+
 </body>
 
 

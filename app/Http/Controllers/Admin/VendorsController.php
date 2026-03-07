@@ -12,44 +12,45 @@ use Nette\Utils\Json;
 class VendorsController extends Controller
 {
     public function index(){
-        $data['title']="Vendor";
+        $data['title']="Agent";
+        
         return view('admin/vendors/vendorslist',$data);
     }
 
 
-    public function vendorlistbyeventid(Request $request){
+    // public function vendorlistbyeventid(Request $request){
 
-        $data['title']="Vendor List";
-        $data['user_id'] = $request->user_id;
-        $data['event_id'] = $request->event_id ?? "";
-        $data['page'] = "vendor";
-        $data['pageroute']="1";
+    //     $data['title']="Agent List";
+    //     $data['user_id'] = $request->user_id;
+    //     $data['event_id'] = $request->event_id ?? "";
+    //     $data['page'] = "agent";
+    //     $data['pageroute']="1";
 
-        $url = request()->fullUrl();
+    //     $url = request()->fullUrl();
 
-        Session::put('redirectionurl', $url);
+    //     Session::put('redirectionurl', $url);
 
-        return view( 'events/vendorlist',$data);
-    }
+    //     return view( 'events/vendorlist',$data);
+    // }
 
-    public function vendorlistbyuserid(Request $request){
+    // public function vendorlistbyuserid(Request $request){
 
-        $data['title']="Vendor List";
-        $data['user_id'] = $request->user_id;
-        $data['event_id'] = $request->event_id ?? "";
-        $data['page'] = "vendor";
-        $data['pageroute']="vendorlistbyuserid";
+    //     $data['title']="Vendor List";
+    //     $data['user_id'] = $request->user_id;
+    //     $data['event_id'] = $request->event_id ?? "";
+    //     $data['page'] = "vendor";
+    //     $data['pageroute']="vendorlistbyuserid";
 
-        $url = request()->fullUrl();
+    //     $url = request()->fullUrl();
 
-        Session::put('redirectionurl', $url);
+    //     Session::put('redirectionurl', $url);
 
         
 
        
 
-        return view( 'events/vendorlist',$data);
-    }
+    //     return view( 'events/vendorlist',$data);
+    // }
 
     public function getvendorlistdata(Request $request){
 
@@ -67,6 +68,10 @@ class VendorsController extends Controller
         if($request->user_id){
             $query->where('tbl_vendors.user_id', '=',$request->user_id);
         }
+
+        if ($request->has('selected_status')!= null && $request->selected_status != '2') {
+            $query->where('tbl_vendors.status',$request->selected_status);
+        }   
 
 
         // Return DataTable response
@@ -128,19 +133,19 @@ class VendorsController extends Controller
 
     public function vendoredit(Request $request){
 
-        $data['title']="vendor Edit";
+        $data['title']="Agent Edit";
         $data['fetched']=DB::table('tbl_vendors')->where('id','=',$request->id)->first();
         // $data['events'] =$events= DB::table('tbl_events')->get();
         
      
         // $data['states']= DB::table('tbl_states')->get();
-        return view( 'admin/vendors/vendoradd', $data);
+        return view('admin/vendors/vendoradd', $data);
 
     }
 
     public function create(){
 
-        $data['title']="vendor Create";
+        $data['title']="Agent Create";
         // $data['events']= DB::table('tbl_events')->get();
         return view('admin/vendors/vendoradd',$data);
     }
@@ -202,43 +207,67 @@ class VendorsController extends Controller
             ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
             ->update([
                 'name' => $request->input('name'),
+                'agent_business_name' => $request->input('agent_business_name'),
+                'business_type' => $request->input('business_type'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
                 'area' => $request->input('area'),
+                'zone_side' => $request->input('sidezone'),
+                'parent_area' => $request->input('parentarea'),
+                'micro_area_galli' => $request->input('micro_area_galli'),
+                'service_area_covered' => $request->input('service_area_covered'),
+                'property_type' => $request->input('property_type'),
+                'transaction_type' => $request->input('transaction_type'),
+                'landmark' => $request->input('landmark'),
                 'pincode' => $request->input('pincode'),
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
-                'landmark' => $request->input('landmark'),
+                'admin_notes' => $request->input('admin_notes'),
+                'status' =>$request->input('status'),
+                'subscription_plan' =>$request->input('subscription_type'),
+                'signup_source' =>$request->input('signup_source'),
+                'admin_description' =>$request->input('admin_description'),
                 'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
-                'real_estate_certificate' => $real_estate_certificate,
-                'status' =>$request->input('status')
+                'real_estate_certificate' => $real_estate_certificate
             ]);
     
     
         } else {
     
             DB::table('tbl_vendors')->insert([
-                 'name' => $request->input('name'),
+                'name' => $request->input('name'),
+                'agent_business_name' => $request->input('agent_business_name'),
+                'business_type' => $request->input('business_type'),
                 'phone' => $request->input('mobile'),
                 'email' => $request->input('email'),
                 'area' => $request->input('area'),
+                'zone_side' => $request->input('sidezone'),
+                'parent_area' => $request->input('parentarea'),
+                'micro_area_galli' => $request->input('micro_area_galli'),
+                'service_area_covered' => $request->input('service_area_covered'),
+                'property_type' => $request->input('property_type'),
+                'transaction_type' => $request->input('transaction_type'),
+                'landmark' => $request->input('landmark'),
                 'pincode' => $request->input('pincode'),
                 'city' => $request->input('city'),
                 'state' => $request->input('state'),
-                'landmark' => $request->input('landmark'),
-                 'rera_certificate' => $rera_certificate,
+                'admin_notes' => $request->input('admin_notes'),
+                'status' =>$request->input('status'),
+                'subscription_plan' =>$request->input('subscription_type'),
+                'signup_source' =>$request->input('signup_source'),
+                'admin_description' =>$request->input('admin_description'),
+                'rera_certificate' => $rera_certificate,
                 'pancard' => $pancard,
-                'real_estate_certificate' => $real_estate_certificate,
-                'status' =>$request->input('status')
+                'real_estate_certificate' => $real_estate_certificate
             ]);
             
         }
          
-         session()->flash('success', 'vendor saved successfully');
+         session()->flash('success', 'Agent saved successfully');
         
         
-         return redirect('vendorlist');
+         return redirect('agentlist');
 
 
 
@@ -258,7 +287,7 @@ class VendorsController extends Controller
         
                 return response()->json([
                     'success' => true,
-                    'message' => 'vendor status updated successfully!',
+                    'message' => 'Agent status updated successfully!',
                     'id' => $request->input('id'),
                     'status' => $request->input('status')
 
@@ -267,7 +296,7 @@ class VendorsController extends Controller
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'vendor not found!',
+                    'message' => 'Agent not found!',
                 ], 404);
             }
         } else {
@@ -277,7 +306,7 @@ class VendorsController extends Controller
         
             return response()->json([
                 'success' => true,
-                'message' => 'Vendor created successfully!',
+                'message' => 'Agent created successfully!',
                 'id' => $id, // Return newly inserted ID
             ]);
         }

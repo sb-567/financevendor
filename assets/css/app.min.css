@@ -10929,9 +10929,19 @@ div.code-toolbar > .toolbar button:hover {
     color: #fff !important;
 }
 .swal2-container .swal2-title {
-    padding: 24px 24px 0;
+    padding: 3px 0px 0;
     font-size: 20px;
     font-weight: var(--vz-font-weight-medium);
+}
+.swal-small-text {
+    font-size: 13px !important;
+}
+
+.swal-small-popup {
+    padding: 8px 12px !important;
+}
+.swal2-icon {
+    transform: scale(0.8);
 }
 .swal2-popup {
     padding-bottom: 24px;
