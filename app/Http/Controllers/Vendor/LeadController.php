@@ -56,25 +56,26 @@ class LeadController extends Controller
             });
 
             if(Session::get('role_id')!=1){
-                
-                $dataTable->editColumn('name', function ($row) {
-                    $name = trim($row->name);
+                 if(empty(getcurrentsubcription())){
+                    $dataTable->editColumn('name', function ($row) {
+                        $name = trim($row->name);
 
-                    if (strlen($name) <= 2) {
-                        return $name;
-                    }
+                        if (strlen($name) <= 2) {
+                            return $name;
+                        }
 
-                    return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
-                });
-                $dataTable->editColumn('phone', function ($row) {
-                    $phone = $row->phone;
-                    return substr($phone, 0, 2) . '******' . substr($phone, -2);
-                });
-                $dataTable->editColumn('email', function ($row) {
-                    $email = $row->email;
-                    $parts = explode('@', $email);
-                    return substr($parts[0], 0, 2) . '****@' . $parts[1];
-                });
+                        return substr($name, 0, 2) . str_repeat('*', strlen($name) - 2);
+                    });
+                    $dataTable->editColumn('phone', function ($row) {
+                        $phone = $row->phone;
+                        return substr($phone, 0, 2) . '******' . substr($phone, -2);
+                    });
+                    $dataTable->editColumn('email', function ($row) {
+                        $email = $row->email;
+                        $parts = explode('@', $email);
+                        return substr($parts[0], 0, 2) . '****@' . $parts[1];
+                    });
+                 }
             }
             
             // Checkbox column
@@ -86,9 +87,14 @@ class LeadController extends Controller
             });
             // Action column
             $dataTable->addColumn('action', function ($row) {
-            
+                        $message = "Name: {$row->name}
+                                    Email: {$row->email}
+                                    Phone: {$row->phone}
+                                    Area: {$row->area_name}
+                                    City: {$row->city_name}
+                                    Local Area: {$row->local_area_name}";
                         return '<div class="d-flex">
-                                    <a href="https://wa.me/' . $row->phone . '"  class="btn btn-sm btn-success me-2"> Whatsapp </a>
+                                    <a href="https://wa.me/'.$row->phone.'?text='.urlencode($message).'" class="btn btn-sm btn-success me-2"> Whatsapp </a>
                         
                        
                                     <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
@@ -250,11 +256,12 @@ class LeadController extends Controller
         }
 
         if(Session::get('role_id')!=1){
-
-       // Apply masking
-        $lead->name   = $this->maskName($lead->name);
-        $lead->email  = $this->maskEmail($lead->email);
-        $lead->phone = $this->maskPhone($lead->phone);
+            if(empty(getcurrentsubcription())){
+                // Apply masking
+                    $lead->name   = $this->maskName($lead->name);
+                    $lead->email  = $this->maskEmail($lead->email);
+                    $lead->phone = $this->maskPhone($lead->phone);
+            }
         }
         return response()->json([
             'success' => true,

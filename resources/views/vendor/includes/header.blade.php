@@ -935,39 +935,35 @@
 
                 @if(!empty(getcurrentsubcription()))
                 
-                <div class="card m-2 position-absolute bottom-0">
-                    <div class="card-body p-1">
-                            
+                @php
+                  $getplandetails = getcurrentsubcription();
+                @endphp
 
-                            @php
-                              $getplandetails = getcurrentsubcription();
-                            @endphp
+                    
+                    <div class="card m-2 position-absolute bottom-0">
+                        <div class="card-body p-1">
+                        
+                                        <div class="p-3">
+                                            <h3> <span class="fw-semibold">{{ $getplandetails->title }}</span></h3>
 
-                         
+                                            <p class="fs-13"> You Plan is Activated </p>
+                                            @if($getplandetails->subscription_type==1)
+                                            <p class="fs-15"> Your plan is valid till <br> {{date('d-m-Y',strtotime($getplandetails->end_date))}} </p>
+                                            @else
+                                            <p class="fs-15">  NO OF Leads ({{$getplandetails->used_no_of_lead}}/{{ $getplandetails->no_of_leads }}) </p>
+                                            @endif
 
-                                
-                                    <div class="p-3">
-                                        <h3> <span class="fw-semibold">{{ $getplandetails->title }}</span></h3>
-
-                                        <p class="fs-13"> You Plan is Activated </p>
-                                        @if($getplandetails->subscription_type==1)
-                                        <p class="fs-15"> Your plan is valid till <br> {{date('d-m-Y',strtotime($getplandetails->end_date))}} </p>
-                                        @else
-                                        <p class="fs-15">  NO OF Leads ({{$getplandetails->no_of_lead_get}}/{{ $getplandetails->no_of_leads }}) </p>
-                                        @endif
-
-                                        <div class="mt-3">
-                                            <a href="{{ route('vendors.subcribtionplan') }}" class="btn btn-success">Upgrade plan</a>
+                                            <div class="mt-3">
+                                                <a href="{{ route('vendors.subcribtionplan') }}" class="btn btn-success">Upgrade plan</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                
+                        
+                        </div> 
+                    </div>
 
-                                
+                    
 
-                            
-                    </div> 
-                </div>
-
+              
                 @endif
                      
 
