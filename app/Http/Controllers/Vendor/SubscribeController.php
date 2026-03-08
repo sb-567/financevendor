@@ -140,7 +140,7 @@ class SubscribeController extends Controller
 
         $start_date = now();
         $end_date = now();
-
+        $no_of_lead=NULL;
         // Calculate end date based on subscription type
         if ($subscriptiondata->subscription_type == 1) {
             // Time based subscription
@@ -159,6 +159,9 @@ class SubscribeController extends Controller
         } elseif ($subscriptiondata->subscription_type == 2) {
             // Lead based subscription
             $end_date = null; // No expiry, depends on leads
+
+
+            $no_of_lead = $subscriptiondata->no_of_leads;
         }
 
         
@@ -171,6 +174,8 @@ class SubscribeController extends Controller
             'amount' => $subscriptiondata->cross_price ?? 0,
             'start_date' => $start_date,
             'end_date' => $end_date,
+            'no_of_lead_get' => $no_of_lead,
+            'used_no_of_lead' => $no_of_lead,
             'created_at' => now(),
             'updated_at' => now(),
         ];

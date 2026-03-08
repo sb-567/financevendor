@@ -94,24 +94,54 @@ if (!function_exists('checkvendorverify2')) {
     }
 }
 
-
 if (!function_exists('getcurrentsubcription')) {
-    function getcurrentsubcription()
-    {
-        $vid = session('vid');
 
-        if (!$vid) {
-            return null;
+function getcurrentsubcription()
+{
+    $agent_id = session('vid');
+    $today = date('Y-m-d');
+
+    if (!$agent_id) {
+        return null;
+    }
+
+    $plans = DB::table('tbl_orders')
+        ->select(
+            'tbl_orders.*',
+            'tbl_subscription.title',
+            'tbl_subscription.subscription_type',
+            'tbl_subscription.no_of_leads'
+        )
+        ->leftJoin('tbl_subscription', 'tbl_subscription.id', '=', 'tbl_orders.subscription_id')
+        ->where('tbl_orders.agent_id', $agent_id)
+        ->orderBy('tbl_orders.id','ASC')
+        ->get();
+
+    foreach ($plans as $plan) {
+
+        // DATE PLAN
+        if ($plan->subscription_type == 1) {
+
+            if ($today <= date('Y-m-d',strtotime($plan->end_date))) {
+                return $plan;
+            }
+
         }
 
-       $order = DB::table('tbl_orders')
-            ->select('tbl_orders.*','tbl_subscription.title','tbl_subscription.subscription_type','tbl_subscription.no_of_leads')
-            ->leftJoin('tbl_subscription', 'tbl_subscription.id', '=', 'tbl_orders.subscription_id')
-            ->where('tbl_orders.agent_id', $vid)
-            ->first();
+        // LEAD PLAN
+        if ($plan->subscription_type == 2) {
+        //     echo $remainingLeads = $plan->no_of_lead_get - $plan->used_no_of_lead;
+        // die;
+            if ($plan->used_no_of_lead > 0) {
+                return $plan;
+            }
+        }
 
-        return $order;
     }
+
+    return null;
+}
+
 }
 
 
