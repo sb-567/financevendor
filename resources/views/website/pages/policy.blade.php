@@ -1,0 +1,132 @@
+@extends('website.master')
+@section('title',''.$title)
+@section('content')
+
+<main class="main">
+     <section class="section-box">
+        <div class="banner-hero banner-breadcrums">
+          <div class="container text-center">
+            <h1 class="text-heading-1">
+             Privacy Policy</h1>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section class="section-box mt-50 mb-50">
+        <div class="container text-center"> 
+          <h1 class="text-heading-1">
+             Terms and Conditions</h1>
+        </div>
+      </section> -->
+      <section class="section-box mt-50 mb-50"> 
+        <div class="container">
+          <div class="row"> 
+            <div class="col-lg-12 mx-auto"> 
+              <div class="row">
+              
+                <div class="single-detail">
+               
+
+  <p><strong>LocalAgent.in</strong> is operated by <strong>INTELARIS STRATEGIES PRIVATE LIMITED</strong>.</p>
+
+  <p>The website <a href="https://www.localagent.in" target="_blank">https://www.localagent.in</a> and any associated mobile applications (together referred to as the “Website”) are owned and operated by <strong>INTELARIS STRATEGIES PRIVATE LIMITED</strong>, a company incorporated in India under the Companies Act, 2013 (“Company”).</p>
+
+  <p><strong>LocalAgent.in</strong> is an online directory platform that connects users with verified local real estate agents in their preferred locations. Our service helps buyers, sellers, landlords, and tenants find real estate agents nearby and contact them for property-related services (“Services”).</p>
+
+  <p>This Privacy Policy (“Policy”) explains how we collect, use, share, and protect your information when you use our Website and Services.</p>
+
+  <p>This document is published in accordance with the Information Technology Act, 2000 and rules made thereunder, which require publishing a privacy policy and terms of use on an online platform.</p>
+
+  <p>By using our Services, you agree to the terms of this Privacy Policy and consent to the collection, use, and sharing of your information as described here. If you do not agree, please discontinue using the Website.</p>
+
+  <h5>1. Collection of Information</h5>
+  <p>We may collect the following types of information:</p>
+
+  <p><strong>a) Information You Provide</strong></p>
+  <ul>
+    <li>Name, email address, phone number, and location when you register, fill a contact form, or request to connect with an agent.</li>
+    <li>Details related to your property requirements (buy, sell, rent, lease).</li>
+    <li>Feedback, reviews, or inquiries you submit.</li>
+  </ul>
+
+  <p><strong>b) Information Collected Automatically</strong></p>
+  <ul>
+    <li>IP address, browser type, operating system, and device information.</li>
+    <li>Location data (when you allow location access) to help show relevant agents in your area.</li>
+    <li>Cookies and tracking data to improve user experience.</li>
+  </ul>
+
+  <h5>2. Use of Information</h5>
+  <p>We use your information to:</p>
+  <ul>
+    <li>Match you with relevant local real estate agents based on your search or inquiry.</li>
+    <li>Facilitate communication between you and the agents you choose to contact.</li>
+    <li>Improve our platform, listings, and search functionality.</li>
+    <li>Send service-related alerts, updates, or changes to policies.</li>
+    <li>Prevent fraud, enhance security, and comply with legal requirements.</li>
+  </ul>
+  <p>We do not engage in direct property transactions — all dealings after connecting with an agent are between you and the agent.</p>
+
+  <h5>3. Sharing of Information</h5>
+  <p>We may share your information with:</p>
+  <ul>
+    <li>Verified real estate agents you choose to connect with.</li>
+    <li>Service providers who help us operate the Website (hosting, analytics, email/SMS services).</li>
+    <li>Legal authorities when required by law, to prevent fraud, or to protect rights and safety.</li>
+  </ul>
+  <p>We do not sell your personal data to third parties for marketing.</p>
+
+  <h5>4. Cookies Policy</h5>
+  <p><strong>LocalAgent.in</strong> uses cookies to:</p>
+  <ul>
+    <li>Remember your search preferences.</li>
+    <li>Show relevant agents and areas.</li>
+    <li>Track website performance and improve features.</li>
+  </ul>
+  <p>You can manage cookies in your browser settings. Disabling cookies may affect your experience on the Website.</p>
+
+  <h5>5. Security of Information</h5>
+  <p>We use reasonable security measures to protect your personal information. However, no method of data transmission over the internet is 100% secure. You use the Website at your own risk.</p>
+
+  <h5>6. Data Retention</h5>
+  <p>We retain your personal information only as long as needed to fulfill the purposes for which it was collected or as required by law.</p>
+
+  <h5>7. Your Rights</h5>
+  <p>You can:</p>
+  <ul>
+    <li>Request correction of your data.</li>
+    <li>Withdraw your consent for data use (this may limit service availability).</li>
+    <li>Request deletion of your account and associated data.</li>
+  </ul>
+  <p>To exercise these rights, contact us at <a href="mailto:contact@localagent.in">contact@localagent.in</a>.</p>
+
+  <h5>8. Third-Party Links</h5>
+  <p>Our Website may contain links to third-party websites. We are not responsible for their privacy practices.</p>
+
+  <h5>9. Changes to This Policy</h5>
+  <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with the updated date.</p>
+
+  <h5>10. Contact Information</h5>
+  <div class="contact-info">
+    <p><strong>INTELARIS STRATEGIES PRIVATE LIMITED</strong><br>
+    Address: 10 3A Raghuleela CHS Ltd, Padmavati Nagar, Bhayander West, Thane, Thane- 401101, Maharashtra<br>
+    Phone: <a href="tel:+917888875553">7888875553</a><br>
+    Email: <a href="mailto:contact@localagent.in">contact@localagent.in</a></p>
+
+    <p><strong>Grievance Officer</strong><br>
+    Name: Compliance Manager – LocalAgent.in<br>
+    Email: <a href="mailto:contact@localagent.in">contact@localagent.in</a><br>
+    The Grievance Officer will address any complaints within one month of receipt.</p>
+  </div>
+  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    
+    </main>
+
+
+@endsection

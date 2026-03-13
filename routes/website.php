@@ -1,22 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DistrictController;
-use App\Http\Controllers\Admin\VendorsController;
-use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\Admin\StateController;
-use App\Http\Controllers\Admin\SubeventController;
-use App\Http\Controllers\Admin\TaskController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CommonController;
-use App\Http\Controllers\Admin\GuestController;
-use App\Http\Controllers\Admin\Leadcontroller;
-use App\Http\Controllers\Admin\SubscribeController;
-use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Website\HomeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,12 +16,28 @@ use App\Http\Controllers\Admin\RoleController;
 |
 */
 
-Route::get('/', function () {
-   echo "efe";
-});
+// Route::get('/', function () {
+//    echo "efe";
+// });
 
 
-// Route::get('/',[AuthController::class, 'index']);
+Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('aboutus',[HomeController::class, 'aboutus'])->name('aboutus');
+Route::get('contactus',[HomeController::class, 'contactus'])->name('contactus');
+
+Route::get('propertieslist',[HomeController::class, 'getproperties'])->name('propertieslist');
+Route::get('propertydetail',[HomeController::class, 'getpropertydetail'])->name('propertydetail');
+
+
+Route::get('bloglist',[HomeController::class, 'getblog'])->name('bloglist');
+Route::get('blogdetail',[HomeController::class, 'getblogdetail'])->name('blogdetail');
+
+Route::get('disclaimer',[HomeController::class, 'getdisclaimer'])->name('disclaimer');
+Route::get('policy',[HomeController::class, 'getpolicy'])->name('policy');
+Route::get('refund',[HomeController::class, 'getrefund'])->name('refund');
+Route::get('cookies',[HomeController::class, 'getcookies'])->name('cookies');
+Route::get('termsncondition',[HomeController::class, 'gettermsncondition'])->name('termsncondition');
+
 // Route::post('login',[AuthController::class, 'login']);
 // Route::get('verify',[AuthController::class, 'verify']);
 // Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
