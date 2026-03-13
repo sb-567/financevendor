@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\RoleController;
 //     return view('welcome');
 // });
 
+Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/',[AuthController::class, 'index']);
 Route::post('login',[AuthController::class, 'login']);
@@ -101,7 +102,7 @@ Route::middleware(['guard'])->group(function(){
 
     Route::get('exportlead', fn () =>
     redirect()->route('leadlist')->with('error', 'Invalid request method.')
-);
+    );
 
     Route::get('leadedit/{id}',[Leadcontroller::class, 'leadedit']);
     Route::post('leadview',[Leadcontroller::class, 'leadview'])->name('leadview');
@@ -128,7 +129,9 @@ Route::middleware(['guard'])->group(function(){
     Route::delete('/subscriptionplandelete/{id}', [SubscribeController::class, 'subscriptionplandelete'])->name('subscriptionplandelete');
     Route::post('deleteselectedsubscriptionplan',[SubscribeController::class, 'deleteselectedsubscriptionplan'])->name('deleteselectedsubscriptionplan');
 
+    
 
 
     
+});
 });
