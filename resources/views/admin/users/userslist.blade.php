@@ -33,7 +33,7 @@
 
 
                         <div class="text-end">
-                             <a href="{{ route('usercreate') }}" class="btn btn-primary">Add Staff</a>
+                             <a href="{{ route('admin.usercreate') }}" class="btn btn-primary">Add Staff</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         </div>
@@ -94,12 +94,12 @@
                     processing: true,
                     serverSide: true,
                     ajax: {
-                    url: "{{ route('getuserlistdata') }}", // Server-side URL
+                    url: "{{ route('admin.getuserlistdata') }}", // Server-side URL
                     data: function (d) {
                         // Add custom filters to the request data
                         d.selected_status = status;
                     }
-                },  // You can't use Laravel's blade syntax in JS, use route helper
+                },  // You can't use Laravel's blade syntax in JS, use route hadmin.elper
                     columns: [
                         { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
                         { data: 'name', name: 'name' },
@@ -151,7 +151,7 @@
                         }
                     });
                 $.ajax({
-                    url: "{{ route('userstatuschange') }}", // Your PHP file to update status
+                    url: "{{ route('admin.userstatuschange') }}", // Your PHP file to update status
                     type: 'POST',
                     data: { id: id, status: status },
                     dataType: 'json',
@@ -292,7 +292,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedvendor') }}`,
+                         url: `{{ route('admin.deleteselectedvendor') }}`,
                          type: 'POST',
                          data:{
                                 items: items

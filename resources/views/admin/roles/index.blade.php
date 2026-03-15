@@ -33,7 +33,7 @@
 
 
                         <div class="text-end">
-                            <a href="{{ route('rolecreate') }}" class="btn btn-primary">Add Role</a>
+                            <a href="{{ route('admin.rolecreate') }}" class="btn btn-primary">Add Role</a>
                            
                         </div>
 
@@ -84,12 +84,12 @@
                     processing: true,
                     serverSide: true,
                     ajax: {
-                    url: "{{ route('getrolelistdata') }}", // Server-side URL
+                    url: "{{ route('admin.getrolelistdata') }}", // Server-side URL
                     data: function (d) {
                         // Add custom filters to the request data
                         d.selected_status = status;
                     }
-                },  // You can't use Laravel's blade syntax in JS, use route helper
+                },  // You can't use Laravel's blade syntax in JS, use route hadmin.elper
                     columns: [
                        
                         { data: 'role_name', name: 'role_name' },              

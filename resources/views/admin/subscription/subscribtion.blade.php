@@ -33,7 +33,7 @@
                             
                         <div class="text-end">
                              
-                             <a href="{{ route('subscriptionplancreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                             <a href="{{ route('admin.subscriptionplancreate') }}" class="btn btn-primary">Add {{$title}}</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         
@@ -95,7 +95,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                url: "{{ route('getsubscriptionplandata') }}", // Server-side URL
+                url: "{{ route('admin.getsubscriptionplandata') }}", // Server-side URL
                 data: function (d) {
                     // Add custom filters to the request data
                     d.vendor_id = vendor_id;
@@ -151,7 +151,7 @@
                         }
                     });
                 $.ajax({
-                    url: "{{ route('subscriptionplanstatuschange') }}", // Your PHP file to update status
+                    url: "{{ route('admin.subscriptionplanstatuschange') }}", // Your PHP file to update status
                     type: 'POST',
                     data: { id: id, status: status },
                     dataType: 'json',
@@ -288,7 +288,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedsubscriptionplan') }}`,
+                         url: `{{ route('admin.deleteselectedsubscriptionplan') }}`,
                          type: 'POST',
                          data:{
                                 items: items

@@ -36,8 +36,8 @@ use App\Http\Controllers\Admin\RoleController;
 Route::prefix('admin')->name('admin.')->group(function () {
 
 Route::get('/',[AuthController::class, 'index']);
-Route::post('login',[AuthController::class, 'login']);
-Route::get('verify',[AuthController::class, 'verify']);
+Route::post('login',[AuthController::class, 'login'])->name('login');
+Route::get('verify',[AuthController::class, 'verify'])->name('verify');
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 
 
@@ -78,10 +78,12 @@ Route::middleware(['guard'])->group(function(){
   
     Route::get('communication', function () {
         return  "Welcome to the Admin Dashboard"; 
-    });
+    })->name('communication');
+
     Route::get('subscription', function () {
         return  "Welcome to the Admin Dashboard"; 
-    });
+    })->name('subscription');
+
  
  
     Route::get('agentlist',[VendorsController::class, 'index'])->name('agentlist');

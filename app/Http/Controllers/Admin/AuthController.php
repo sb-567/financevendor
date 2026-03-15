@@ -46,7 +46,7 @@ class AuthController extends Controller
             
             
             // $request->session()->put('role_id', $user->role_id);
-            return redirect('verify');
+             return redirect()->route('admin.verify');
         } else {
             
             session()->flash('error', 'Username or password does not match');
@@ -69,7 +69,7 @@ class AuthController extends Controller
             // echo "ef";
             // die;
             if (!$request->session()->has('user_id')) {
-                return redirect('/');
+                return redirect()->route('admin');
             }
             
          $uid = session('user_id');
@@ -84,11 +84,13 @@ class AuthController extends Controller
             $request->session()->put('role_id', $user->role_id);
 
             $request->session()->forget('user_id');
-            return redirect('dashboard');
+            // return redirect('dashboard');
+            return redirect()->route('admin.dashboard');
         } else {
             
             session()->flash('error', 'OTP does not match');
-            return redirect('/');
+            // return redirect('/');
+            return redirect()->route('admin');
         }
     }
 
@@ -97,7 +99,8 @@ class AuthController extends Controller
     {
         $request->session()->forget('uid');
         $request->session()->forget('role_id');
-        return redirect('/');
+        // return redirect('/');
+        return redirect()->route('admin');
     }
 
 

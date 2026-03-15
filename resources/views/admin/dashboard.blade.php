@@ -51,7 +51,7 @@
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
                                                         <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $allagents }}">0</span> </h4>
-                                                        <a href="{{ route('agentlist') }}" class="text-decoration-underline">View all</a>
+                                                        <a href="{{ route('admin.agentlist') }}" class="text-decoration-underline">View all</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-success-subtle rounded fs-3">
@@ -88,7 +88,7 @@
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
                                                         <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $verifiedagent }}">0</span></h4>
-                                                        <a href="{{ route('agentlist', ['status' => 1]) }}" class="text-decoration-underline">View all </a>
+                                                        <a href="{{ route('admin.agentlist', ['status' => 1]) }}" class="text-decoration-underline">View all </a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-info-subtle rounded fs-3">
@@ -125,7 +125,7 @@
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
                                                         <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="{{ $newsignup }}">0</span> </h4>
-                                                        <a href="{{ route('agentlist', ['status' => 0]) }}" class="text-decoration-underline">View all</a>
+                                                        <a href="{{ route('admin.agentlist', ['status' => 0]) }}" class="text-decoration-underline">View all</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
                                                         <span class="avatar-title bg-warning-subtle rounded fs-3">
