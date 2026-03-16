@@ -34,12 +34,11 @@
                         <div class="d-flex justify-content-between align-items-center mt-4">
                            
 
-                            <form method="post" action="{{route('admin.exportlead')}}" id="filterForm" enctype="multipart/form-data">
+                            <form method="post" action="{{url('/')}}/exportlead" id="filterForm" enctype="multipart/form-data">
                                 @csrf
                                                 
                         @php
-                         $slugdata=getSubMenusbyslug(Request::segment(2));
-                       
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
                         @endphp
 
                          
@@ -71,7 +70,7 @@
 
                          $role_id = Session::get('role_id');
 
-                         $slugdata=getSubMenusbyslug(Request::segment(2));
+                         $slugdata=getSubMenusbyslug(Request::segment(1));
                          
                         @endphp
 
@@ -81,7 +80,7 @@
                              @if($role_id==1)
                              <button type="submit" form="filterForm" class="btn btn-success ms-2">Export {{$title}}</button>
                              @endif
-                             <a href="{{ route('admin.leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                             <a href="{{ route('leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
                             <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
                             @endif
                         </div>
@@ -184,7 +183,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                url: "{{ route('admin.getleadlistdata') }}", // Server-side URL
+                url: "{{ route('getleadlistdata') }}", // Server-side URL
                 data: function (d) {
                     // Add custom filters to the request data
                     d.vendor_id = vendor_id;
@@ -369,7 +368,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('admin.deleteselectedlead') }}`,
+                         url: `{{ route('deleteselectedlead') }}`,
                          type: 'POST',
                          data:{
                                 items: items
