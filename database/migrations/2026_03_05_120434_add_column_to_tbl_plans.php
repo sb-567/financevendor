@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_plans', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->integer('status')->default(1);
-            $table->timestamps();
+        Schema::table('tbl_plans', function (Blueprint $table) {
+            $table->string('title_value')->nullable()->after('title');
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_plans');
+        Schema::table('tbl_plans', function (Blueprint $table) {
+            //
+        });
     }
 };

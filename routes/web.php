@@ -131,7 +131,10 @@ Route::middleware(['guard'])->group(function(){
     Route::delete('/subscriptionplandelete/{id}', [SubscribeController::class, 'subscriptionplandelete'])->name('subscriptionplandelete');
     Route::post('deleteselectedsubscriptionplan',[SubscribeController::class, 'deleteselectedsubscriptionplan'])->name('deleteselectedsubscriptionplan');
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> vendors
 
 
     
