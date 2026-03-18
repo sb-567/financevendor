@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" id="vendorForm" action="{{url('/')}}/vendorsave"  enctype="multipart/form-data">
+                                <form method="post" id="vendorForm" action="{{route('admin.vendorsave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-4">

@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index(){
         $data['title']="Users";
-        return view( 'users/userslist',$data);
+        return view('users/userslist',$data);
     }
 
     public function getuserlistdata(Request $request){
