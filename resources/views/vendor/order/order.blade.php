@@ -29,91 +29,19 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title mb-0">{{ $title }} List</h5>
-
-                          <div class="d-flex justify-content-between align-items-center mt-4">
+                        <h5 class="card-title mb-0">{{$title}} List</h5>
+                            
+                        {{-- <div class="d-flex justify-content-between align-items-center mt-4"> --}}
                            
-                                               
-                        @php
-                         $slugdata=getSubMenusbyslug(Request::segment(2));
-                        @endphp
 
-                         
-                            <div class="d-flex">
+                           
+                           
+                     
 
-                                <div class="me-3">
-                                <label for="vendorFilter" class="form-label me-2">Filter by Status:</label>
-                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
-                                    
-                                    <option value=""  disabled>-- Select verification Status --</option>
-                                    <option value="2" selected>All</option>
-                                    <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Active</option>
-                                    <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inactive</option>
-                                    
-                                </select>
-                                </div>
-
-                                <div class="me-3">
-                                <label for="subscriptionFilter" class="form-label me-2">Filter by Subscription Type:</label>
-                                <select class="form-control me-3" id="subscriptionFilter" name="vendor_id">
-                                    
-                                <option value=""  disabled>-- Select Subscription Type --</option>
-                                <option value="0" selected>All</option>
-                                <option value="1" >Day wise</option>
-                                <option value="2" >Lead wise</option>
-                                    
-                                </select>
-                                </div>
-
-                                <div class="me-3">
-                                <label for="subscriptionstateFilter" class="form-label me-2">Filter by Subscription State:</label>
-                                <select class="form-control me-3" id="subscriptionstateFilter" name="vendor_id">
-                                    
-                                <option value=""  disabled>-- Select Subscription State --</option>
-                                <option value="0" selected>All</option>
-                                <option value="1" >Active</option>
-                                <option value="2" >Inactive</option>
-                                    
-                                </select>
-                                </div>
-<!--                                 
-                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
-                                    
-                                <option value="" selected disabled>-- Select City --</option>
-                                <option value="1" class="status" data-val="1">All</option>
-                                <option value="2" class="status" data-val="2">Active</option>
-                                <option value="3" class="status" data-val="3">Inactive</option>
-                                    
-                                </select>
-                                
-                                <select class="form-control me-3" id="vendorFilter" name="vendor_id">
-                                    
-                                <option value="" selected disabled>-- Select Area --</option>
-                                <option value="1" class="status" data-val="1">All</option>
-                                <option value="2" class="status" data-val="2">Active</option>
-                                <option value="3" class="status" data-val="3">Inactive</option>
-                                    
-                                </select> -->
-
-                                </div>
-
-
-                        <!-- <div class="text-end"> -->
-
-                         @php
-
-                         $role_id = Session::get('role_id');
-
-                         $slugdata=getSubMenusbyslug(Request::segment(2));
-                         
-                        @endphp
-
-                         
-                             @if(getMenusWithPermissions($slugdata->id,'can_add') || getMenusWithPermissions($slugdata->id,'can_edit'))
-
-                            <a href="{{ route('admin.agentcreate') }}" class="btn btn-primary">Add {{ $title }}</a>
-                            <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
-                           @endif
+                        <div class="text-end">
+                             <!-- <a href="{{ route('vendors.leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
+                           
                         </div>
                         {{-- </div> --}}
 
@@ -195,27 +123,10 @@
     <script>
 
         
-       $(document).ready(function () {
+        $(document).ready(function() {
+            
+            categorytable();
 
-    var table = $('#vendor_list').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "{{ route('admin.getvendorlistdata') }}",
-            data: function (d) {
-                // Always fetch latest filter value
-                d.selected_status = $('#vendorFilter').val();
-            }
-        },
-        columns: [
-            { data: 'checkbox', orderable: false, searchable: false, className: 'action' },
-            { data: 'name', name: 'name' },
-            { data: 'email', name: 'email' },
-            { data: 'phone', name: 'mobile' },
-            { data: 'status', orderable: false, searchable: false },
-            { data: 'action', orderable: false, searchable: false, className: 'action' }
-        ]
-    });
 
         });
 
@@ -277,6 +188,7 @@
                     categorytable(vendor_id);
                 // }
 
+            });
 
             
 
@@ -411,11 +323,7 @@
                         }
                     });
                      $.ajax({
-<<<<<<< HEAD:resources/views/admin/vendors/vendorslist.blade.php
-                         url: `{{ route('admin.deleteselectedvendor') }}`,
-=======
                         url: "{{ route('deleteselectedlead') }}",
->>>>>>> vendors:resources/views/vendor/order/order.blade.php
                          type: 'POST',
                          data:{
                                 items: items

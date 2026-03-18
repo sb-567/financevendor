@@ -149,62 +149,7 @@
 
             });
 
-<<<<<<< HEAD:resources/views/admin/announcement/announcementlist.blade.php
-            $(document).on('change', '.statuschange', function() {
-                var status = $(this).prop('checked') ? 1 : 0;
-                var id = $(this).data('id');
-                $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    });
-                $.ajax({
-                    url: "{{ route('admin.announcementstatuschange') }}", // Your PHP file to update status
-                    type: 'POST',
-                    data: { id: id, status: status },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                         
-                            if(response.status == 1){
-                                swal.fire({
-                                            // position: 'top-right',
-                                            type: 'success',
-                                            title: 'Status Activated successfully!',
-                                            // showConfirmButton: false,
-                                            timer: 5000
-                                        
-                                });
-                            }else{
-                                swal.fire({
-                                            // position: 'top-right',
-                                            type: 'success',
-                                            title: 'Status Inactivated successfully!',
-                                            // showConfirmButton: false,
-                                            timer: 5000
-                                        
-                                });
-                            }
-
-                        } 
-                    },
-                    error: function() {
-                        // alert('Error in AJAX request.');
-
-                         swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Failed to update status.',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
-                    }
-                });
-            });
-=======
             
->>>>>>> vendors:resources/views/vendor/property/property.blade.php
 
 
 
@@ -299,11 +244,7 @@
                         }
                     });
                      $.ajax({
-<<<<<<< HEAD:resources/views/admin/announcement/announcementlist.blade.php
-                         url: `{{ route('admin.deleteselectedannouncement') }}`,
-=======
                         url: "{{ route('vendors.deleteselectedproperties', '') }}",
->>>>>>> vendors:resources/views/vendor/property/property.blade.php
                          type: 'POST',
                          data:{
                                 items: items

@@ -141,8 +141,6 @@
     <script src="{{asset('assets/js/pages/plugins/lord-icon-2.1.0.js')}}"></script>
     <script src="{{asset('assets/js/plugins.js')}}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <!-- password-addon init -->
     <script src="{{asset('assets/js/pages/password-addon.init.js')}}"></script>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -150,9 +148,6 @@
         document.querySelector('input[name="otp"]').addEventListener('input', function () {
             this.value = this.value.replace(/\D/g, '').slice(0, 4);
         });
-
-
-        
 
     </script>
 
@@ -176,6 +171,7 @@
     });
 </script>
 @endif
+
 
 @if(session('error'))
 <script>

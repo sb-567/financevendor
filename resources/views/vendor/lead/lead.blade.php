@@ -39,12 +39,8 @@
                      
 
                         <div class="text-end">
-<<<<<<< HEAD:resources/views/admin/users/userslist.blade.php
-                             <a href="{{ route('admin.usercreate') }}" class="btn btn-primary">Add Staff</a>
-=======
                              {{-- <button type="submit" form="filterForm" class="btn btn-success ms-2">Export {{$title}}</button> --}}
                              <a href="{{ route('vendors.leadcreate') }}" class="btn btn-primary">Add {{$title}}</a>
->>>>>>> vendors:resources/views/vendor/lead/lead.blade.php
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         </div>
@@ -326,11 +322,7 @@
                         }
                     });
                      $.ajax({
-<<<<<<< HEAD:resources/views/admin/users/userslist.blade.php
-                         url: `{{ route('admin.deleteselectedvendor') }}`,
-=======
                         url: "{{ route('deleteselectedlead') }}",
->>>>>>> vendors:resources/views/vendor/lead/lead.blade.php
                          type: 'POST',
                          data:{
                                 items: items
