@@ -49,7 +49,7 @@ class UserController extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('useredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('admin/useredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';
@@ -77,7 +77,7 @@ class UserController extends Controller
 
                 
 
-                    return '<a href="' . url('eventlist/' . $row->id) . '">'.$row->name.'</a>';
+                    return '<a href="' . url('admin/eventlist/' . $row->id) . '">'.$row->name.'</a>';
                 
                 
                 
@@ -149,7 +149,7 @@ class UserController extends Controller
          
          session()->flash('success', 'Users saved successfully');
         
-         return redirect('userslist');
+         return redirect('admin/userslist');
 
 
     }

@@ -248,7 +248,7 @@
                 });
 
                 $.ajax({
-                    url: `{{ url('leadview') }}`,
+                    url: `{{ route('admin.leadview') }}`,
                     type: 'POST',
                     data: {
                         id: id

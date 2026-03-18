@@ -95,7 +95,7 @@ class VendorsController extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('vendoredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('admin/vendoredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';
@@ -266,7 +266,7 @@ class VendorsController extends Controller
          session()->flash('success', 'Agent saved successfully');
         
         
-         return redirect('agentlist');
+         return redirect('admin/agentlist');
 
 
 
