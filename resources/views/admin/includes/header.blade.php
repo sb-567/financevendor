@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="{{ route('dashboard') }}" class="logo logo-dark">
+                    <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                              
@@ -14,7 +14,7 @@
                         </span>
                     </a>
 
-                    <a href="{{ route('dashboard') }}" class="logo logo-light">
+                    <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                         </span>
@@ -422,7 +422,7 @@
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
                         <h6 class="dropdown-header">Welcome Anna!</h6>
-                        <a class="dropdown-item" href="{{ route('logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
+                        <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
                         
                     </div>
                 </div>
@@ -462,7 +462,7 @@
         <!-- LOGO -->
         <div class="navbar-brand-box">
             <!-- Dark Logo-->
-            <a href="{{ route('dashboard') }}" class="logo logo-dark">
+            <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                 <span class="logo-sm">
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                     <h2 class="text-white"></h2>
@@ -473,7 +473,7 @@
                 </span>
             </a>
             <!-- Light Logo-->
-            <a href="{{ route('dashboard') }}" class="logo logo-light">
+            <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                 <span class="logo-sm">
                     <h2 class="text-white"></h2>
                     <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
@@ -502,7 +502,7 @@
                 <!-- item-->
                 <h6 class="dropdown-header">Welcome Admin!</h6>
                 
-                <a class="dropdown-item" href="{{ route('logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
+                <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
             </div>
         </div>
         <div id="scrollbar">
@@ -535,7 +535,7 @@
                             href="#sidebarApps{{ $menu->id }}" 
                              data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps"
                              @else
-                             href="{{ url($menu->route_name) }}" 
+                             href="{{ route('admin.'.$menu->route_name) }}" 
                             @endif
                             >
                                 <i class="{{ $menu->icon }}"></i> <span data-key="t-dashboards">{{ $menu->menu_name }}</span>
@@ -547,7 +547,7 @@
                                         @foreach($submenu as $child)
                                          
                                                 <li class="nav-item">
-                                                    <a href="{{ url($child->route_name) }}" class="nav-link">
+                                                    <a href="{{ route('admin.'.$child->route_name) }}" class="nav-link">
                                                         {{ $child->menu_name }}
                                                     </a>
                                                 </li>
@@ -604,7 +604,7 @@
                     </li>   -->
 
                   <!-- <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('rolelist') }}" >
+                        <a class="nav-link menu-link" href="{{ route('admin.rolelist') }}" >
                             <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Role </span>
                         </a>
                     </li> -->

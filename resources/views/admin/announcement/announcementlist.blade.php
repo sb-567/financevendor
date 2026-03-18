@@ -33,7 +33,7 @@
 
 
                         <div class="text-end">
-                             <a href="{{ route('announcementcreate') }}" class="btn btn-primary">Add Announcement</a>
+                             <a href="{{ route('admin.announcementcreate') }}" class="btn btn-primary">Add Announcement</a>
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
                         </div>
@@ -97,7 +97,7 @@
     responsive: false, // disable plus/child row feature
     autoWidth: false,  // allow column widths
     ajax: {
-        url: "{{ route('getannouncementlistdata') }}",
+        url: "{{ route('admin.getannouncementlistdata') }}",
         data: function (d) {
             d.selected_status = status;
         }
@@ -152,7 +152,7 @@
                         }
                     });
                 $.ajax({
-                    url: "{{ route('announcementstatuschange') }}", // Your PHP file to update status
+                    url: "{{ route('admin.announcementstatuschange') }}", // Your PHP file to update status
                     type: 'POST',
                     data: { id: id, status: status },
                     dataType: 'json',
@@ -289,7 +289,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedannouncement') }}`,
+                         url: `{{ route('admin.deleteselectedannouncement') }}`,
                          type: 'POST',
                          data:{
                                 items: items

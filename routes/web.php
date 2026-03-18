@@ -35,8 +35,8 @@ use App\Http\Controllers\Admin\RoleController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
-Route::get('/',[AuthController::class, 'index']);
-Route::post('login',[AuthController::class, 'login'])->name('login');
+Route::get('/',[AuthController::class, 'index'])->name('login');
+Route::post('login',[AuthController::class, 'login'])->name('vlogin');
 Route::get('verify',[AuthController::class, 'verify'])->name('verify');
 Route::post('verifyotp',[AuthController::class, 'verifyotp'])->name('verifyotp');
 

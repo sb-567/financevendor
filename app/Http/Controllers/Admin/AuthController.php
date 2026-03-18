@@ -18,7 +18,7 @@ class AuthController extends Controller
     public function index(Request $request){
         // Check if the user is already logged in
         if ($request->session()->has('uid')) {
-            return redirect('dashboard'); // Redirect to dashboard if session is set
+            return redirect()->route('admin.dashboard'); // Redirect to dashboard if session is set
         }
 
         return view('admin.auth');
@@ -46,11 +46,14 @@ class AuthController extends Controller
             
             
             // $request->session()->put('role_id', $user->role_id);
-             return redirect()->route('admin.verify');
+            // return redirect('verify');
+            return redirect()->route('admin.verify'); 
         } else {
             
             session()->flash('error', 'Username or password does not match');
-            return redirect('/');
+            // return redirect('/');
+            return redirect()->route('admin.login'); 
+            
         }
     }
     
@@ -58,7 +61,7 @@ class AuthController extends Controller
     {
         
          if (!$request->session()->has('user_id')) {
-             return redirect('/');
+             return redirect()->route('admin.login'); 
             }
             
             return view('admin.verify');
@@ -70,6 +73,7 @@ class AuthController extends Controller
             // die;
             if (!$request->session()->has('user_id')) {
                 return redirect()->route('admin');
+                // return redirect()->route('admin.userlist'); 
             }
             
          $uid = session('user_id');
@@ -84,13 +88,11 @@ class AuthController extends Controller
             $request->session()->put('role_id', $user->role_id);
 
             $request->session()->forget('user_id');
-            // return redirect('dashboard');
             return redirect()->route('admin.dashboard');
         } else {
             
             session()->flash('error', 'OTP does not match');
-            // return redirect('/');
-            return redirect()->route('admin');
+            return redirect()->route('admin.login'); 
         }
     }
 
@@ -100,7 +102,7 @@ class AuthController extends Controller
         $request->session()->forget('uid');
         $request->session()->forget('role_id');
         // return redirect('/');
-        return redirect()->route('admin');
+        return redirect()->route('admin.login'); 
     }
 
 
@@ -248,7 +250,8 @@ class AuthController extends Controller
          
          session()->flash('success', 'Users saved successfully');
         
-         return redirect('userlist');
+         
+         return redirect()->route('admin.userlist');
 
 
     }
