@@ -35,7 +35,7 @@
                            
                                                
                         @php
-                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                         $slugdata=getSubMenusbyslug(Request::segment(2));
                         @endphp
 
                          
@@ -104,14 +104,14 @@
 
                          $role_id = Session::get('role_id');
 
-                         $slugdata=getSubMenusbyslug(Request::segment(1));
+                         $slugdata=getSubMenusbyslug(Request::segment(2));
                          
                         @endphp
 
                          
                              @if(getMenusWithPermissions($slugdata->id,'can_add') || getMenusWithPermissions($slugdata->id,'can_edit'))
 
-                            <a href="{{ route('agentcreate') }}" class="btn btn-primary">Add {{ $title }}</a>
+                            <a href="{{ route('admin.agentcreate') }}" class="btn btn-primary">Add {{ $title }}</a>
                             <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
                            @endif
                         </div>
@@ -165,7 +165,7 @@
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{{ route('getvendorlistdata') }}",
+            url: "{{ route('admin.getvendorlistdata') }}",
             data: function (d) {
                 // Always fetch latest filter value
                 d.selected_status = $('#vendorFilter').val();
@@ -227,7 +227,7 @@
                         }
                     });
                 $.ajax({
-                    url: "{{ route('vendorstatuschange') }}", // Your PHP file to update status
+                    url: "{{ route('admin.vendorstatuschange') }}", // Your PHP file to update status
                     type: 'POST',
                     data: { id: id, status: status },
                     dataType: 'json',
@@ -362,7 +362,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedvendor') }}`,
+                         url: `{{ route('admin.deleteselectedvendor') }}`,
                          type: 'POST',
                          data:{
                                 items: items
