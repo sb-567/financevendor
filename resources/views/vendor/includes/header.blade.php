@@ -4,7 +4,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                     <a href="{{ route('dashboard') }}" class="logo logo-dark">
+                     <a href="{{ route('vendors.dashboard') }}" class="logo logo-dark">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                              
@@ -14,7 +14,7 @@
                         </span>
                     </a>
 
-                    <a href="{{ route('dashboard') }}" class="logo logo-light">
+                    <a href="{{ route('vendors.dashboard') }}" class="logo logo-light">
                         <span class="logo-sm">
                              <img src="{{asset('assets/images/localagent.png')}}" alt="" height="22"> 
                         </span>
@@ -462,7 +462,7 @@
         <!-- LOGO -->
         <div class="navbar-brand-box">
             <!-- Dark Logo-->
-            <a href="{{ route('dashboard') }}" class="logo logo-dark">
+            <a href="{{ route('vendors.dashboard') }}" class="logo logo-dark">
                  <span class="logo-sm">
                      <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
                     <h2 class="text-white"></h2>
@@ -473,7 +473,7 @@
                 </span> 
             </a>
             <!-- Light Logo-->
-            <a href="{{ route('dashboard') }}" class="logo logo-light">
+            <a href="{{ route('vendors.dashboard') }}" class="logo logo-light">
                  <span class="logo-sm">
                     <h2 class="text-white"></h2>
                     <img src="{{asset('assets/images/localagent.png')}}" alt="" height="100">
