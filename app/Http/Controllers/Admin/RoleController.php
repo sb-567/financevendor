@@ -50,7 +50,7 @@ class RoleController extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('roleedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('admin/roleedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                   
                                   
                                 </div>';
@@ -95,7 +95,7 @@ class RoleController extends Controller
             }
         }
 
-        return redirect()->route('rolelist')->with('success', 'Role created successfully');
+        return redirect()->route('admin.rolelist')->with('success', 'Role created successfully');
     }
 
     public function edit(Request $request)

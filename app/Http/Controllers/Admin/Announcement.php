@@ -50,7 +50,7 @@ class Announcement extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('announcementedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('admin/announcementedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';

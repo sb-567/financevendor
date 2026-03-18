@@ -247,7 +247,7 @@ class Leadcontroller extends Controller
          session()->flash('success', 'Lead saved successfully');
         
         
-         return redirect('leadlist');
+         return redirect('admin/leadlist');
 
 
 
