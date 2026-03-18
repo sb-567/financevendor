@@ -594,11 +594,7 @@
                         </div>
                     </li>   -->
 
-                  <!-- <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('rolelist') }}" >
-                            <i class="ri-file-list-line"></i> <span data-key="t-dashboards"> Role </span>
-                        </a>
-                    </li> -->
+                
                       
 
                     
