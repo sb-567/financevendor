@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                 <form method="post" id="leadForm" action="{{url('/')}}/plandescriptionsave"  enctype="multipart/form-data">
+                                 <form method="post" id="leadForm" action="{{route('admin.plandescriptionsave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
 

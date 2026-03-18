@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{url('/')}}/rolesave"  enctype="multipart/form-data">
+                                <form method="post" action="{{route('admin.rolesave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-12">

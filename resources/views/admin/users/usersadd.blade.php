@@ -45,7 +45,7 @@
 
                             
                             
-                                <form method="post" action="{{url('/')}}/usersave"  enctype="multipart/form-data">
+                                <form method="post" action="{{route('admin.usersave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-4">

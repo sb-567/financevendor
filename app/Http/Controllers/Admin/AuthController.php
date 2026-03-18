@@ -147,7 +147,7 @@ class AuthController extends Controller
             ->addColumn('action', function ($row) {
             
                         return '<div class="d-flex">
-                                    <a href="' . url('useredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                    <a href="' . url('admin/useredit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
                                 </div>';
@@ -193,7 +193,7 @@ class AuthController extends Controller
 
         $data['title']="Staff Create";
         $data['role']= DB::table('tbl_roles')->get();
-        return view( 'admin.users.usersadd',$data);
+        return view('admin.users.usersadd',$data);
     }
 
 
