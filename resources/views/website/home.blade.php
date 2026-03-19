@@ -282,7 +282,7 @@
     <section
       class="popular-locations"
       style="
-        background-image: url('{{ asset('wassets/img/Tracks.png')}});
+      background-image: url('{{ asset('wassets/img/Tracks.png')}}');
         background-repeat: no-repeat;
         background-size: contain;
         background-position: center;
@@ -693,7 +693,7 @@
                 of local agents. Get discovered by homebuyers and sellers
                 searching in your neighborhood.
               </p>
-              <a href="#" class="join-btn">Join Us</a>
+              <a href="{{ route('vendors.login') }}" class="join-btn">Join Us</a>
             </div>
           </div>
         </div>

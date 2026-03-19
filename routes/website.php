@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\HomeController;
+use App\Http\Controllers\Website\BlogController;
 
 
 /*
@@ -22,15 +23,15 @@ use App\Http\Controllers\Website\HomeController;
 
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
-Route::get('aboutus',[HomeController::class, 'aboutus'])->name('aboutus');
+Route::get('about-us',[HomeController::class, 'aboutus'])->name('aboutus');
 Route::get('contactus',[HomeController::class, 'contactus'])->name('contactus');
 
 Route::get('propertieslist',[HomeController::class, 'getproperties'])->name('propertieslist');
 Route::get('propertydetail',[HomeController::class, 'getpropertydetail'])->name('propertydetail');
 
 
-Route::get('bloglist',[HomeController::class, 'getblog'])->name('bloglist');
-Route::get('blogdetail',[HomeController::class, 'getblogdetail'])->name('blogdetail');
+Route::get('bloglist',[BlogController::class, 'getblog'])->name('bloglist');
+Route::get('blogdetail',[BlogController::class, 'getblogdetail'])->name('blogdetail');
 
 Route::get('disclaimer',[HomeController::class, 'getdisclaimer'])->name('disclaimer');
 Route::get('policy',[HomeController::class, 'getpolicy'])->name('policy');

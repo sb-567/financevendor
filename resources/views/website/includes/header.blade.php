@@ -15,7 +15,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
-          <ul class="navbar-nav mb-2 mb-lg-0">
+          <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
             <li class="nav-item">
               <a class="nav-link active" href="{{ route('home') }}">Home</a>
             </li>
@@ -24,9 +24,7 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('bloglist') }}">Blog</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('contactus') }}">Contact</a></li>
           </ul>
-          <a href="#" class="btn btn-success btn-shadow ms-lg-3"
-            >Agent Sign-up</a
-          >
+          <a href="{{ route('vendors.login') }}" class="btn btn-success btn-shadow ms-lg-3">Agent Sign-up</a>
           {{-- <img
             src="{{ asset('wassets/img/user_profile.png') }}"
             class="rounded-circle ms-5"

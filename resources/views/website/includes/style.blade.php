@@ -10,6 +10,7 @@
       referrerpolicy="no-referrer"
     />
     <link href="{{ asset('wassets/css/style.css') }}" rel="stylesheet" />
+
+    @if (!request()->routeIs('home'))
     <link href="{{ asset('wassets/assets/css/style.css') }}" rel="stylesheet" />
-  </head>
-  <body>
+    @endif

@@ -417,14 +417,14 @@ a {
 
 .text-heading-5 {
   
-  font-weight: bold;
+  font-weight: 600;
   font-size: 22px;
   line-height: 24px;
   letter-spacing: 0%;
 }
 
 .text-heading-6 {
-  
+
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
