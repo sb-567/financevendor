@@ -39,53 +39,38 @@
                         <div class="card-body">
                             
                             
-                                 <form method="post" id="leadForm" action="{{route('admin.blogdetailcreate')}}"  enctype="multipart/form-data">
+                                 <form method="post" id="leadForm" action="{{route('admin.blogdetailsave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
 
                                     <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <select class="form-select"  name="vendor_id" aria-label="Floating label select example">
+                                                <select class="form-select"  name="category_id" aria-label="Floating label select example">
 
-                                                    @if(!empty($vendors))
-                                                        <option value="">Select Vendor</option>
-                                                        @foreach($vendors as $vendor)
-                                                            <option value="{{$vendor->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$vendor->id){{"selected"}}@endif>{{$vendor->name}}</option>
+                                                    @if(!empty($blogcategory))
+                                                        <option value="">Select Blog Category</option>
+                                                        @foreach($blogcategory as $bg)
+                                                            <option value="{{$bg->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$bg->id){{"selected"}}@endif>{{$bg->title}}</option>
                                                         @endforeach
                                                     @else
-                                                        <option value="">No Vendor Available</option>  
+                                                        <option value="">No Blog Category Available</option>  
                                                     @endif
 
                                                     
                                                     
                                                 </select>
-                                                <label for="floatingSelect">Agent Name</label>
+                                                <label for="floatingSelect">Blog Category</label>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" >
-                                                <label for="firstnamefloatingInput">Lead Name</label>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="blog_title" placeholder="Enter your title" value="@if(!empty($fetched->blog_title)){{$fetched->blog_title}}@endif" >
+                                                <label for="firstnamefloatingInput">Title</label>
                                             </div>
                                         </div>
-                                        
-                                        
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="email" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" >
-                                                <label for="firstnamefloatingInput">Email</label>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" >
-                                                <label for="firstnamefloatingInput">Mobile</label>
-                                            </div>
-                                        </div>
-                                       
+
                                         <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect" name="status" aria-label="Floating label select example">
@@ -97,6 +82,37 @@
                                                 <label for="floatingSelect">Status</label>
                                             </div>
                                         </div>
+
+
+                                           <div class="col-lg-12">
+                                            
+                                            <div class="mb-3">
+                                                <label for="VertimeassageInput" class="form-label">Description</label>
+                                                <textarea class="form-control tinymce" name="description" id="description" rows="3" placeholder="Enter your Description">@if(!empty($fetched->description)){{$fetched->description}}@endif</textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                    
+                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-floating">
+                                                <input type="file" class="form-control" id="firstnamefloatingInput" name="image"  >
+                                                <label for="firstnamefloatingInput">Image</label>
+                                            </div>
+                                        </div>
+                                       
+
+                                         <div class="col-lg-6">
+                                            @if(!empty($fetched->image) && file_exists(public_path('uploads/blog/'.$fetched->image)))
+                                                <img src="{{ asset('public/uploads/blog/'.$fetched->image) }}" alt="RERA Certificate" style="width: 200px; ">
+                                                
+                                                <input type="hidden" name="old_image" value="{{$fetched->image}}">
+                                                @endif
+                                        </div>
+                                       
+                                        
 
 
                                         
@@ -139,7 +155,7 @@
 $(document).ready(function () {
     $("#leadForm").validate({
         rules: {
-            name: {
+            title: {
                 required: true,
                 minlength: 3
             },
@@ -175,6 +191,34 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+
+
+
+tinymce.init({
+    selector: '.tinymce',
+    height: 300,
+
+    plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image',
+        'charmap', 'preview', 'searchreplace',
+        'code', 'fullscreen', 'media', 'table',
+        'emoticons', 'wordcount'
+    ],
+
+    toolbar:
+        'undo redo | blocks | bold italic underline | ' +
+        'alignleft aligncenter alignright | bullist numlist | ' +
+        'emoticons | image media table | code fullscreen',
+
+    menubar: false,
+
+    emoticons_database: 'emojis',   // full emoji set 😀
+});
+
+
 </script>
 
 

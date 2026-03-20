@@ -201,9 +201,9 @@ class Blogcontroller extends Controller
 
        
         $query = DB::table('tbl_blogs')
-            // ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
-            // ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
-            ->orderBy('id', 'desc');
+            ->select('tbl_blogs.*', 'tbl_blog_categories.title')
+            ->leftJoin('tbl_blog_categories', 'tbl_blog_categories.id', '=', 'tbl_blogs.category_id')
+            ->orderBy('tbl_blogs.id', 'desc');
 
         // if ($request->vendor_id) {
         //     $query->where('tbl_leads.vendor_id', $request->vendor_id);
@@ -217,9 +217,9 @@ class Blogcontroller extends Controller
                 if ($request->has('search') && !empty($request->input('search.value'))) {
                     $keyword = $request->input('search.value');
                     $query->where(function ($q) use ($keyword) {
-                        $q->where('title', 'like', "%{$keyword}%");
+                        $q->where('tbl_blogs.blog_title', 'like', "%{$keyword}%");
 
-                        // $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
+                        $q->orWhere('tbl_blog_categories.title', 'like', "%{$keyword}%");
                         // $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
                     });
                 }
@@ -239,7 +239,7 @@ class Blogcontroller extends Controller
 
                  if(getMenusWithPermissions($slugdata->id,'can_edit')){
                         return '<div class="d-flex">
-                                      <a href="' . url('admin/blogcategoryedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                      <a href="' . url('admin/blogdetailedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                 </div>';
                  }
 
@@ -278,8 +278,8 @@ class Blogcontroller extends Controller
 
     public function blogdetailcreate(){
 
-        $data['title']="Blog Category Create";
-        // $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['title']="Blog Detail Create";
+        $data['blogcategory']= DB::table('tbl_blog_categories')->where('status',1)->get();
         return view('admin/blog/blogdetailadd',$data);
     }
 
@@ -287,16 +287,47 @@ class Blogcontroller extends Controller
     public function blogdetailstore(Request $request){
         
         $request->validate([
-            'title' => 'required',
+            'blog_title' => 'required',
             'status' => 'required',
         ]);
 
+
+        $imageName = null;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            // Create image resource (GdImage)
+            $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
+
+            if ($imageResource === false) {
+                throw new Exception('Invalid image file');
+            }
+
+            // Generate filename
+            $imageName = time() . '.webp';
+
+            // सही path
+            $destinationPath = public_path('uploads/blog/' . $imageName);
+
+            // Convert to webp
+            imagewebp($imageResource, $destinationPath, 80);
+
+            // Free memory
+            imagedestroy($imageResource);
+
+        } else {
+            $imageName = $request->input('old_image');
+        }
         if ($request->input('id') != "") {
            
             DB::table('tbl_blogs')
             ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
             ->update([
-                'title' => $request->input('title'),
+                'blog_title' => $request->input('blog_title'),
+                'category_id' => $request->input('category_id'),
+                'image' => $imageName,
+                'description' =>$request->input('description'),
                 'status' =>$request->input('status'),
                 'updated_at' => now() 
             ]);
@@ -305,17 +336,20 @@ class Blogcontroller extends Controller
         } else {
     
             DB::table('tbl_blogs')->insert([
-                'title' => $request->input('title'),
+                'blog_title' => $request->input('blog_title'),
+                'category_id' =>$request->input('category_id'),
+                'image' => $imageName,
+                'description' =>$request->input('description'),
                 'status' =>$request->input('status'),
                 'created_at' => now(),
             ]);
             
         }
          
-         session()->flash('success', 'Blog Catgeory saved successfully');
+         session()->flash('success', 'Blog detail saved successfully');
         
         
-         return redirect('admin/blogcategorylist');
+         return redirect('admin/blogdetaillist');
 
 
 
@@ -324,7 +358,7 @@ class Blogcontroller extends Controller
 
     public function blogdetailedit(Request $request){
 
-        $data['title']="BLog Edit";
+        $data['title']="BLog Detail Edit";
         $data['fetched']=DB::table('tbl_blogs')->where('id','=',$request->id)->first();
         
         

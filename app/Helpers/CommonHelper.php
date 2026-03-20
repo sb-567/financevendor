@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 if (!function_exists('getMenus')) {
     function getMenus()
     {
-        return Menu::orderBy('sequence_no', 'asc')->get();
+        return Menu::orderBy('sequence_no', 'asc')->where('parent_id',0)->get();
     }
 }
 if (!function_exists('getSubMenus')) {

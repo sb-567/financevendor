@@ -123,7 +123,7 @@
             },  // You can't use Laravel's blade syntax in JS, use route hadmin.elper
                 columns: [
                     { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
-                    { data: 'blog_category', name: 'blog_category' },
+                    { data: 'title', name: 'title' },
                     { data: 'blog_title', name: 'blog_title' },
                     { data: 'created_at', name: 'created_at' },
                     @if(getMenusWithPermissions($slugdata->id,'can_view'))
