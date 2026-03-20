@@ -30,9 +30,10 @@ if (!function_exists('getSubMenusbyslug')) {
 if (!function_exists('getMenusWithPermissions')) {
     function getMenusWithPermissions($menu_id,$action)
     {
-        
+        $userdata= DB::table('tbl_admin')->where('id',session('uid'))->first();
+
         $hasPermission = DB::table('tbl_role_permissions')
-        ->where('role_id', Session::get('role_id'))
+        ->where('role_id', $userdata->role_id)
         ->where('menu_id', $menu_id)
         ->where($action, 1)
         ->exists();

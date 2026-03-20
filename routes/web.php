@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\Blogcontroller;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\VendorsController;
@@ -131,6 +132,22 @@ Route::middleware(['guard'])->group(function(){
     Route::delete('/subscriptionplandelete/{id}', [SubscribeController::class, 'subscriptionplandelete'])->name('subscriptionplandelete');
     Route::post('deleteselectedsubscriptionplan',[SubscribeController::class, 'deleteselectedsubscriptionplan'])->name('deleteselectedsubscriptionplan');
 
+
+    Route::get('blogcategorylist',[Blogcontroller::class, 'index'])->name('blogcategorylist');
+    Route::get('getblogcatgeorylistdata',[Blogcontroller::class, 'getblogcatgeorylistdata'])->name('getblogcatgeorylistdata');
+    Route::get('blogcategorycreate',[Blogcontroller::class, 'blogcategorycreate'])->name('blogcategorycreate');
+    Route::post('blogcategorysave',[Blogcontroller::class, 'blogcategorystore'])->name('blogcategorysave');
+    Route::get('blogcategoryedit/{id}',[Blogcontroller::class, 'blogcategoryedit']);
+    Route::delete('/blogcategorydelete/{id}', [Blogcontroller::class, 'blogcategorydestroy'])->name('blogcategorydelete');
+    // Route::post('deleteselectedbloa',[VendorsController::class, 'selecteddestroy'])->name('deleteselectedvendor');
+
+
+    Route::get('blogdetaillist',[Blogcontroller::class, 'blogdetaillist'])->name('blogdetaillist');
+    Route::get('getblogdetaillistdata',[Blogcontroller::class, 'getblogdetaillistdata'])->name('getblogdetaillistdata');
+    Route::get('blogdetailcreate',[Blogcontroller::class, 'blogdetailcreate'])->name('blogdetailcreate');
+    Route::post('blogdetailsave',[Blogcontroller::class, 'blogdetailstore'])->name('blogdetailsave');
+    Route::get('blogdetailedit/{id}',[Blogcontroller::class, 'blogdetailedit']);
+    Route::delete('/blogdetaildelete/{id}', [Blogcontroller::class, 'blogdetaildestroy'])->name('blogdetaildelete');
 
 
     

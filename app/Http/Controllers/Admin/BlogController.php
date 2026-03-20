@@ -1,0 +1,353 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+ 
+
+use App\Exports\LeadExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+
+class Blogcontroller extends Controller
+{
+
+    public function index(){
+        $data['title']="Blog Category";
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['slugdata']=getSubMenusbyslug('leadlist');
+
+        return view('admin/blog/blogcategories',$data);
+    }
+
+
+
+
+    public function getblogcatgeorylistdata(Request $request){
+
+       
+        $query = DB::table('tbl_blog_categories')
+            // ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
+            // ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
+            ->orderBy('id', 'desc');
+
+        // if ($request->vendor_id) {
+        //     $query->where('tbl_leads.vendor_id', $request->vendor_id);
+        // }
+
+
+        // Return DataTable response
+         $dataTable =  DataTables::of($query);
+            // Filter by search term
+             $dataTable->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->input('search.value'))) {
+                    $keyword = $request->input('search.value');
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('title', 'like', "%{$keyword}%");
+
+                        // $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
+                        // $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
+                    });
+                }
+            });
+            
+            // Checkbox column
+             $dataTable->addColumn('checkbox', function ($row) {
+                return '<div class="form-check">
+                            <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
+                            <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
+                        </div>';
+            });
+            // Action column
+             $dataTable->addColumn('action', function ($row) {
+            
+                   $slugdata=getSubMenusbyslug('blogcategorylist');
+
+                 if(getMenusWithPermissions($slugdata->id,'can_edit')){
+                        return '<div class="d-flex">
+                                      <a href="' . url('admin/blogcategoryedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                </div>';
+                 }
+
+                                // <div class="d-flex">
+                                //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                //     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button
+                                  
+                                // </div>
+            });
+            // Status column with badge
+             $dataTable->editColumn('created_at', function ($row) {
+                return date('d-m-Y h:i a', strtotime($row->created_at));
+            });
+
+            $dataTable->editColumn('status', function ($row) {
+
+                 if($row->status==1){
+                    return '<span class="badge rounded-pill bg-success">Active</span>';
+                }else{
+                    return '<span class="badge rounded-pill bg-danger">Inactive</span>';
+                }
+                
+            });
+    
+            
+            
+            // Ensure HTML columns are rendered as raw HTML
+            $dataTable->rawColumns(['checkbox','created_at', 'status', 'action']);
+            return $dataTable->make(true);
+
+
+    }
+
+    
+
+
+    public function blogcategoryedit(Request $request){
+
+        $data['title']="BLog Edit";
+        $data['fetched']=DB::table('tbl_blog_categories')->where('id','=',$request->id)->first();
+        
+        
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        // $data['states']= DB::table('tbl_states')->get();
+        return view('admin/blog/blogcategoryadd',$data);
+
+    }
+
+   
+
+    public function blogcategorycreate(){
+
+        $data['title']="Blog Category Create";
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        return view('admin/blog/blogcategoryadd',$data);
+    }
+
+
+    public function blogcategorystore(Request $request){
+        
+        $request->validate([
+            'title' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($request->input('id') != "") {
+           
+            DB::table('tbl_blog_categories')
+            ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
+            ->update([
+                'title' => $request->input('title'),
+                'status' =>$request->input('status'),
+                'updated_at' => now() 
+            ]);
+    
+    
+        } else {
+    
+            DB::table('tbl_blog_categories')->insert([
+                'title' => $request->input('title'),
+                'status' =>$request->input('status'),
+                'created_at' => now(),
+            ]);
+            
+        }
+         
+         session()->flash('success', 'Blog Catgeory saved successfully');
+        
+        
+         return redirect('admin/blogcategorylist');
+
+
+
+    }
+
+
+
+    public function blogcategorydestroy(Request $request)
+    {   
+
+        $id = $request->id;
+        DB::table('tbl_blog_categories')->where('id', $id)->delete();
+        return;
+
+    }
+
+    public function selectedblogcategorydestroy(Request $request){
+        foreach($request->items as $item){
+            // Subevent::destroy(array('id',$item));
+            DB::table('tbl_blog_categories')->where('id', $item)->delete();
+        }
+        return;
+    }
+
+
+
+
+    public function blogdetaillist(){
+      $data['title']="Blog Detail";
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        $data['slugdata']=getSubMenusbyslug('blogdetaillist');
+
+        return view('admin/blog/blogdetaillist',$data); 
+    }
+
+
+
+    public function getblogdetaillistdata(Request $request){
+
+       
+        $query = DB::table('tbl_blogs')
+            // ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
+            // ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
+            ->orderBy('id', 'desc');
+
+        // if ($request->vendor_id) {
+        //     $query->where('tbl_leads.vendor_id', $request->vendor_id);
+        // }
+
+
+        // Return DataTable response
+         $dataTable =  DataTables::of($query);
+            // Filter by search term
+             $dataTable->filter(function ($query) use ($request) {
+                if ($request->has('search') && !empty($request->input('search.value'))) {
+                    $keyword = $request->input('search.value');
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('title', 'like', "%{$keyword}%");
+
+                        // $q->orWhere('tbl_leads.phone', 'like', "%{$keyword}%");
+                        // $q->orWhere('tbl_leads.email', 'like', "%{$keyword}%");
+                    });
+                }
+            });
+            
+            // Checkbox column
+             $dataTable->addColumn('checkbox', function ($row) {
+                return '<div class="form-check">
+                            <input class="form-check-input fs-15" type="checkbox" id="checkBox_' . $row->id . '" value="' . $row->id . '">
+                            <label class="custom-control-label" for="checkBox_' . $row->id . '"></label>
+                        </div>';
+            });
+            // Action column
+             $dataTable->addColumn('action', function ($row) {
+            
+                   $slugdata=getSubMenusbyslug('blogdetaillist');
+
+                 if(getMenusWithPermissions($slugdata->id,'can_edit')){
+                        return '<div class="d-flex">
+                                      <a href="' . url('admin/blogcategoryedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                </div>';
+                 }
+
+                                // <div class="d-flex">
+                                //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
+                                //     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button
+                                  
+                                // </div>
+            });
+            // Status column with badge
+             $dataTable->editColumn('created_at', function ($row) {
+                return date('d-m-Y h:i a', strtotime($row->created_at));
+            });
+
+            $dataTable->editColumn('status', function ($row) {
+
+                 if($row->status==1){
+                    return '<span class="badge rounded-pill bg-success">Active</span>';
+                }else{
+                    return '<span class="badge rounded-pill bg-danger">Inactive</span>';
+                }
+                
+            });
+    
+            
+            
+            // Ensure HTML columns are rendered as raw HTML
+            $dataTable->rawColumns(['checkbox','created_at', 'status', 'action']);
+            return $dataTable->make(true);
+
+
+    }
+
+
+
+
+    public function blogdetailcreate(){
+
+        $data['title']="Blog Category Create";
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        return view('admin/blog/blogdetailadd',$data);
+    }
+
+
+    public function blogdetailstore(Request $request){
+        
+        $request->validate([
+            'title' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($request->input('id') != "") {
+           
+            DB::table('tbl_blogs')
+            ->where('id', $request->input('id')) // Make sure to specify the correct ID or condition
+            ->update([
+                'title' => $request->input('title'),
+                'status' =>$request->input('status'),
+                'updated_at' => now() 
+            ]);
+    
+    
+        } else {
+    
+            DB::table('tbl_blogs')->insert([
+                'title' => $request->input('title'),
+                'status' =>$request->input('status'),
+                'created_at' => now(),
+            ]);
+            
+        }
+         
+         session()->flash('success', 'Blog Catgeory saved successfully');
+        
+        
+         return redirect('admin/blogcategorylist');
+
+
+
+    }
+
+
+    public function blogdetailedit(Request $request){
+
+        $data['title']="BLog Edit";
+        $data['fetched']=DB::table('tbl_blogs')->where('id','=',$request->id)->first();
+        
+        
+        // $data['vendors']= DB::table('tbl_vendors')->get();
+        // $data['states']= DB::table('tbl_states')->get();
+        return view('admin/blog/blogdetailadd',$data);
+
+    }
+
+
+
+    public function blogdetaildestroy(Request $request)
+    {   
+
+        $id = $request->id;
+        DB::table('tbl_blogs')->where('id', $id)->delete();
+        return;
+
+    }
+
+
+    // public function export()
+    // {
+    //     return Excel::download(new LeadExport, 'leads.xlsx');
+    // }
+}
