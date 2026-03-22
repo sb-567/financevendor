@@ -53,12 +53,23 @@ class SubscribeController extends Controller
             })
             // Action column
             ->addColumn('action', function ($row) {
-            
-                        return '<div class="d-flex">
-                                    <a href="' . url('admin/plandescriptionedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                    <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
+
+
+              $slugdata=getSubMenusbyslug('subscription');
+                $btn="";
+                 if(getMenusWithPermissions($slugdata->id,'can_edit')){
+                     $btn .= '<div class="d-flex">
+                     <a href="' . url('admin/plandescriptionedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>';
+                     
+                     }
+                     if(getMenusWithPermissions($slugdata->id,'can_delete')){
+                        $btn .= ' <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
                                   
-                                </div>';
+                            </div>';
+
+                     }
+
+                            return $btn;
             })
              // Status column with badge
             ->editColumn('status', function ($row) {
@@ -145,7 +156,7 @@ class SubscribeController extends Controller
          session()->flash('success', 'Plan saved successfully');
         
         
-         return redirect('plandescriptionlist');
+         return redirect('admin/subscription/plandescriptionlist');
 
 
 
@@ -251,11 +262,22 @@ class SubscribeController extends Controller
             // Action column
             ->addColumn('action', function ($row) {
             
-                        return '<div class="d-flex">
-                                    <a href="' . url('subscriptionplanedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                    <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>
-                                  
-                                </div>';
+
+              $slugdata=getSubMenusbyslug('subscription');
+                $btn = '<div class="d-flex">';
+                 if(getMenusWithPermissions($slugdata->id,'can_edit')){
+
+
+                        $btn .= '<a href="' . url('subscriptionplanedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>';
+
+                 }
+
+                 if(getMenusWithPermissions($slugdata->id,'can_delete')){
+                        $btn .= '<button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button>';
+                 } 
+                        $btn .= '</div>';
+
+                        return $btn;
             })
              // Status column with badge
             ->editColumn('status', function ($row) {
@@ -356,7 +378,7 @@ class SubscribeController extends Controller
          session()->flash('success', 'Subscription Plan saved successfully');
         
         
-         return redirect('subscriptionplanlist');
+         return redirect('admin/subscription/subscriptionplanlist');
 
 
 

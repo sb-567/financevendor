@@ -39,12 +39,13 @@
                         <div class="card-body">
                             
                             
-                                 <form method="post" id="leadForm" action="{{route('admin.plandescriptionsave')}}"  enctype="multipart/form-data">
+                                 <form method="post" id="leadForm" action="{{route('admin.blogcategorysave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
 
-                                    
-                                        <div class="col-lg-8">
+                                  
+
+                                        <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="firstnamefloatingInput" name="title" placeholder="Enter your Title" value="@if(!empty($fetched->title)){{$fetched->title}}@endif" >
@@ -52,19 +53,23 @@
                                             </div>
                                         </div>
                                         
-                                       
+                                        
+                                      
                                         <div class="col-lg-4">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect" name="status" aria-label="Floating label select example">
                                                 
                                                         <option value="1"  @if(!empty($fetched->status) && $fetched->status==1){{"selected"}}@endif>Active</option>
-                                                        <option value="0"  @if(!empty($fetched->status) && $fetched->status==0){{"selected"}}@endif>Inactive</option>
+                                                        <option value="2"  @if(!empty($fetched->status) && $fetched->status==2){{"selected"}}@endif>Inactive</option>
                                                     
                                                 </select>
                                                 <label for="floatingSelect">Status</label>
                                             </div>
                                         </div>
 
+
+                                        
+                                        
                                         <div class="col-lg-12">
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -104,15 +109,13 @@ $(document).ready(function () {
     $("#leadForm").validate({
         rules: {
             title: {
-                required: true,
-                minlength: 3
+                required: true
             },
-        
-          
+            
         },
         messages: {
             name: {
-                required: "Please enter Title",
+                required: "Please enter Title"                
             },
        
            

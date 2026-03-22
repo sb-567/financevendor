@@ -31,30 +31,43 @@
                     <div class="card-header">
                         <h5 class="card-title mb-0">{{$title}} List</h5>
                             
-                        <div class="text-end">
-                               @php
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                           
 
-                                    $slugdata=getSubMenusbyslug(Request::segment(2));
-                                    
-                                    @endphp
+                           
+                     <div></div>
+
+                        <div class="">
+                            
+                        @php
+
+                         
+
+                         $slugdata=getSubMenusbyslug(Request::segment(2));
+                         
+                        @endphp
+
+                         
+                             @if(getMenusWithPermissions($slugdata->id,'can_add') || getMenusWithPermissions($slugdata->id,'can_edit'))
+                           
+                             <a href="{{ route('admin.blogdetailcreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                            <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
+                            @endif
 
                             
-                                @if(getMenusWithPermissions($slugdata->id,'can_add'))
-
-                             <a href="{{ route('admin.plandescriptioncreate') }}" class="btn btn-primary">Add {{$title}}</a>
-
-                             @endif
-
-                              @if(getMenusWithPermissions($slugdata->id,'can_delete'))
-
+                                
+                             @if(getMenusWithPermissions($slugdata->id,'can_delete'))
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
+                           @endif
+
                            
-                            @endif
+                        </div>
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <table id="user_list" class="table table-bordered dt-responsive nowrap table-striped align-middle" style="width:100%">
+                        <div class="table-responsive">
+                        <table id="user_list" class="table table-bordered  nowrap table-striped align-middle" style="width:100%">
                             <thead>
                                 <tr>
                                   
@@ -62,13 +75,13 @@
                                         <div class="form-check">
                                             <input class="form-check-input fs-15" type="checkbox" id="checkAll" value="option">
                                         </div>
-                                        SR No.
+                                        SR. No
                                     </th>
-                               
-                                    <th>Name</th>
-                                    <th>Status</th>
+                                    <th>Blog Category</th>
+                                    <th>Title</th>
+                                    <th>Created</th>
                                     @if(getMenusWithPermissions($slugdata->id,'can_view'))
-                                    <th>Action</th> 
+                                        <th>Action</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -76,6 +89,7 @@
                                 
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div><!--end col-->
@@ -86,6 +100,7 @@
     </div>
     <!-- container-fluid -->
 </div>
+
 
 
 @endsection
@@ -108,18 +123,19 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                url: "{{ route('admin.getplandescriptiondata') }}", // Server-side URL
+                url: "{{ route('admin.getblogdetaillistdata') }}", // Server-side URL
                 data: function (d) {
                     // Add custom filters to the request data
                     d.vendor_id = vendor_id;
                 }
-            },  // You can't use Laravel's blade syntax in JS, use route helper
+            },  // You can't use Laravel's blade syntax in JS, use route hadmin.elper
                 columns: [
                     { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
                     { data: 'title', name: 'title' },
-                    { data: 'status', name: 'status',orderable: false, searchable: false },
-                    @if(getMenusWithPermissions($slugdata->id,'can_delete') || getMenusWithPermissions($slugdata->id,'can_edit'))
-                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                    { data: 'blog_title', name: 'blog_title' },
+                    { data: 'created_at', name: 'created_at' },
+                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
+                    { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' },
                     @endif
                 ],
                 
@@ -155,65 +171,51 @@
 
             });
 
-            $(document).on('change', '.statuschange', function() {
-                var status = $(this).prop('checked') ? 1 : 0;
-                var id = $(this).data('id');
+            
+
+            function viewdata(id){
+
+                // $('#leadmodal').modal('show'); 
                 $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    });
-                $.ajax({
-                    url: "{{ route('admin.plandescriptionstatuschange') }}", // Your PHP file to update status
-                    type: 'POST',
-                    data: { id: id, status: status },
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                         
-                            if(response.status == 1){
-                                
-                                swal.fire({
-                                            // position: 'top-right',
-                                            type: 'success',
-                                            title: 'Status Activated successfully!',
-                                            // showConfirmButton: false,
-                                            timer: 5000
-                                        
-                                });
-
-                            }else{
-                                swal.fire({
-                                            // position: 'top-right',
-                                            type: 'success',
-                                            title: 'Status Inactivated successfully!',
-                                            // showConfirmButton: false,
-                                            timer: 5000
-                                        
-                                });
-                            }
-
-                        } 
-                    },
-                    error: function() {
-                        swal.fire({
-                                        // position: 'top-right',
-                                        type: 'success',
-                                        title: 'Failed to update status.',
-                                        // showConfirmButton: false,
-                                        timer: 5000
-                                    
-                            });
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     }
                 });
-            });
+
+                $.ajax({
+                    url: `{{ route('admin.leadview') }}`,
+                    type: 'POST',
+                    data: {
+                        id: id
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            $('#agent_name').text(res.data.agent_name);
+                            $('#lead_name').text(res.data.name);
+                            $('#lead_email').text(res.data.email);
+                            $('#lead_mobile').text(res.data.phone);
+                            $('#area_name').text(res.data.area_name);
+                            $('#city_name').text(res.data.city_name);
+                            $('#local_area').text(res.data.local_area);
+                            $('#created_at').text(res.data.created_at);
+
+                            $('#leadmodal').modal('show'); // Show the modal
+                         }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        swal.fire("!Opps ", "Something went wrong, try again later", "error");
+                    }
+                });
 
 
+
+
+            }
 
             function deleted(items) {
                     swal.fire({
                         title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Plan ?",
+                        text: "Are you sure you want to Delete Blog detail ?",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes'
@@ -227,7 +229,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('admin/plandescriptiondelete') }}/${items}`,
+                                url: `{{ url('admin/blogdetaildelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -244,7 +246,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'Plan data Deleted Successfully',
+                                        title: 'Blog detail data Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -276,7 +278,7 @@
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Plan data to delete", "error");
+                    swal.fire("! Opps ", "Please check Blog detail data to delete", "error");
                     }
             }
          
@@ -289,7 +291,7 @@
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Plan?",
+                 text: "Are you sure you want to Delete Blog detail ?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'
@@ -301,7 +303,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('admin.deleteselectedplandescription') }}`,
+                         url: `{{ route('admin.selectedblogdetaildestroy') }}`,
                          type: 'POST',
                          data:{
                                 items: items
@@ -320,7 +322,7 @@
                              swal.fire({
                                  // position: 'top-right',
                                  type: 'success',
-                                 title: 'Plan Deleted Successfully',
+                                 title: 'Blog Deleted Successfully',
                                  // showConfirmButton: false,
                                  // timer: 5000
                                 

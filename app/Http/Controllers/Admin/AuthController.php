@@ -72,7 +72,7 @@ class AuthController extends Controller
             // echo "ef";
             // die;
             if (!$request->session()->has('user_id')) {
-                return redirect()->route('admin');
+                return redirect()->route('admin.login');
                 // return redirect()->route('admin.userlist'); 
             }
             

@@ -39,7 +39,7 @@
                         <div class="card-body">
                             
                             
-                                <form method="post" action="{{route('admin.announcementsave')}}"  enctype="multipart/form-data">
+                                <form method="post" id="announcementForm" action="{{route('admin.announcementsave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-12">
@@ -53,7 +53,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label for="StartleaveDate" class="form-label">Start  Date</label>
-                                                <input type="text" name="start_date" class="form-control flatpickr-input active" data-provider="flatpickr" value="@if(!empty($fetched->start_date)){{$fetched->start_date}}@endif" id="StartleaveDate" readonly="readonly" fdprocessedid="ifanho">
+                                                <input type="text" name="start_date" id="start_date" class="form-control flatpickr-input active" data-provider="flatpickr" value="@if(!empty($fetched->start_date)){{$fetched->start_date}}@endif" readonly="readonly" fdprocessedid="ifanho">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -140,6 +140,73 @@ tinymce.init({
 
     emoticons_database: 'emojis',   // full emoji set 😀
 });
+
+
+
+
+$(document).ready(function () {
+  
+
+    // 🔥 Custom rule: end_date must be greater than or equal to start_date
+    $.validator.addMethod("greaterThan", function (value, element, param) {
+        let startDate = $(param).val();
+        if (!value || !startDate) return true;
+
+        return new Date(value) >= new Date(startDate);
+    }, "End date must be greater than or equal to start date");
+
+    $("#announcementForm").validate({
+        rules: {
+            message: {
+                required: true
+            },
+            start_date: {
+                required: true,
+                date: true
+            },
+            end_date: {
+                required: true,
+                date: true,
+                greaterThan: "#start_date"
+            }
+        },
+        messages: {
+            message: {
+                required: "Please enter message"
+            },
+            start_date: {
+                required: "Please enter start date",
+                date: "Please enter a valid date"
+            },
+            end_date: {
+                required: "Please enter end date",
+                date: "Please enter a valid date",
+                greaterThan: "End date must be after start date"
+            }
+        },
+        errorElement: "span",
+        errorClass: "text-danger",
+
+        errorPlacement: function (error, element) {
+            error.insertAfter(element);
+        },
+
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+
+        success: function (label, element) {
+            $(element).addClass("is-valid");
+        }
+    });
+
+
+});
+
 
 </script>
 @endsection

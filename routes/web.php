@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\Blogcontroller;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DistrictController;
 use App\Http\Controllers\Admin\VendorsController;
@@ -112,7 +113,7 @@ Route::middleware(['guard'])->group(function(){
     Route::delete('/leaddelete/{id}', [Leadcontroller::class, 'destroy'])->name('leaddelete');
     Route::post('deleteselectedlead',[Leadcontroller::class, 'selecteddestroy'])->name('deleteselectedlead');
 
-    Route::get('plandescriptionlist',[SubscribeController::class, 'plandescriptionlist'])->name('plandescriptionlist');
+    Route::get('/subscription/plandescriptionlist',[SubscribeController::class, 'plandescriptionlist'])->name('plandescriptionlist');
     Route::get('getplandescriptiondata',[SubscribeController::class, 'getplandescriptiondata'])->name('getplandescriptiondata');
     Route::get('plandescriptioncreate',[SubscribeController::class, 'plandescriptioncreate'])->name('plandescriptioncreate');
     Route::post('plandescriptionsave',[SubscribeController::class, 'plandescriptionsave'])->name('plandescriptionsave');
@@ -122,7 +123,7 @@ Route::middleware(['guard'])->group(function(){
     Route::post('deleteselectedplandescription',[SubscribeController::class, 'deleteselectedplandescription'])->name('deleteselectedplandescription');
     
     
-    Route::get('subscriptionplanlist',[SubscribeController::class, 'subscriptionplanlist'])->name('subscriptionplanlist');
+    Route::get('/subscription/subscriptionplanlist',[SubscribeController::class, 'subscriptionplanlist'])->name('subscriptionplanlist');
     Route::get('getsubscriptionplandata',[SubscribeController::class, 'getsubscriptionplandata'])->name('getsubscriptionplandata');
     Route::get('subscriptionplancreate',[SubscribeController::class, 'subscriptionplancreate'])->name('subscriptionplancreate');
     Route::post('subscriptionplansave',[SubscribeController::class, 'subscriptionplansave'])->name('subscriptionplansave');
@@ -131,6 +132,23 @@ Route::middleware(['guard'])->group(function(){
     Route::delete('/subscriptionplandelete/{id}', [SubscribeController::class, 'subscriptionplandelete'])->name('subscriptionplandelete');
     Route::post('deleteselectedsubscriptionplan',[SubscribeController::class, 'deleteselectedsubscriptionplan'])->name('deleteselectedsubscriptionplan');
 
+
+    Route::get('/blog/blogcategorylist',[Blogcontroller::class, 'index'])->name('blogcategorylist');
+    Route::get('getblogcatgeorylistdata',[Blogcontroller::class, 'getblogcatgeorylistdata'])->name('getblogcatgeorylistdata');
+    Route::get('blogcategorycreate',[Blogcontroller::class, 'blogcategorycreate'])->name('blogcategorycreate');
+    Route::post('blogcategorysave',[Blogcontroller::class, 'blogcategorystore'])->name('blogcategorysave');
+    Route::get('blogcategoryedit/{id}',[Blogcontroller::class, 'blogcategoryedit']);
+    Route::delete('/blogcategorydelete/{id}', [Blogcontroller::class, 'blogcategorydestroy'])->name('blogcategorydelete');
+    Route::post('deleteselectedblog',[Blogcontroller::class, 'selectedblogcategorydestroy'])->name('deleteselectedblog');
+    
+    
+    Route::get('/blog/blogdetaillist',[Blogcontroller::class, 'blogdetaillist'])->name('blogdetaillist');
+    Route::get('getblogdetaillistdata',[Blogcontroller::class, 'getblogdetaillistdata'])->name('getblogdetaillistdata');
+    Route::get('blogdetailcreate',[Blogcontroller::class, 'blogdetailcreate'])->name('blogdetailcreate');
+    Route::post('blogdetailsave',[Blogcontroller::class, 'blogdetailstore'])->name('blogdetailsave');
+    Route::get('blogdetailedit/{id}',[Blogcontroller::class, 'blogdetailedit']);
+    Route::delete('/blogdetaildelete/{id}', [Blogcontroller::class, 'blogdetaildestroy'])->name('blogdetaildelete');
+    Route::post('selectedblogdetaildestroy',[Blogcontroller::class, 'selectedblogdetaildestroy'])->name('selectedblogdetaildestroy');
 
 
     

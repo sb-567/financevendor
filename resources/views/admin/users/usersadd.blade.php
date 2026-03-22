@@ -37,21 +37,21 @@
                             
                         </div><!-- end card header -->
                         <div class="card-body">
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+                    {{-- @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif --}}
 
                             
                             
-                                <form method="post" action="{{route('admin.usersave')}}"  enctype="multipart/form-data">
+                                <form method="post" id="userForm" action="{{route('admin.usersave')}}"  enctype="multipart/form-data">
                                     @csrf
                                     <div class="row g-3">
                                         <div class="col-lg-4">
                                             <input type="hidden" name="id" value="@if(!empty($fetched->id)){{$fetched->id}}@endif" >
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="name" placeholder="Enter your Name" value="@if(!empty($fetched->name)){{$fetched->name}}@endif" >
                                                 <label for="firstnamefloatingInput">Name</label>
                                             </div>
                                         </div>
@@ -60,19 +60,19 @@
                                        
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="username" placeholder="Enter your username" value="@if(!empty($fetched->username)){{$fetched->username}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="username" placeholder="Enter your username" value="@if(!empty($fetched->username)){{$fetched->username}}@endif" >
                                                 <label for="firstnamefloatingInput">Username</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="email" placeholder="Enter your Email" value="@if(!empty($fetched->email)){{$fetched->email}}@endif" >
                                                 <label for="firstnamefloatingInput">Email</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" required>
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="mobile" placeholder="Enter your Mobile" value="@if(!empty($fetched->mobile)){{$fetched->mobile}}@endif" >
                                                 <label for="firstnamefloatingInput">Mobile</label>
                                             </div>
                                         </div>
@@ -190,6 +190,78 @@
 function clearPassword() {
     document.getElementById("passwordInput").value = "";
 }
+
+
+
+$(document).ready(function () {
+    $("#userForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            username: {
+                required: true,
+                minlength: 3
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            role_id: {
+                required: true
+            },
+            mobile: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 10
+            }
+        },
+        messages: {
+            name: {
+                required: "Please enter name",
+                minlength: "Name must be at least 3 characters long"
+            },
+            username: {
+                required: "Please enter username",
+                minlength: "Username must be at least 3 characters long"
+            },
+            email: {
+                required: "Please enter email",
+                email: "Please enter a valid email address"
+            },
+            role_id: {
+                required: "Please select role"
+            },
+            mobile: {
+                required: "Please enter mobile number",
+                digits: "Only numbers allowed",
+                minlength: "Mobile must be 10 digits",
+                maxlength: "Mobile must be 10 digits"
+            }
+        },
+        errorElement: "span",
+        errorClass: "text-danger",
+
+        // 🔥 Place error properly (important fix)
+        errorPlacement: function (error, element) {
+            error.insertAfter(element);
+        },
+
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+
+        // ✅ Add valid class (optional but better UI)
+        success: function (label, element) {
+            $(element).addClass("is-valid");
+        }
+    });
+});
 
 </script>
 @endsection

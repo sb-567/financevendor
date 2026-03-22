@@ -22,7 +22,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        $menus = Menu::all();
+        $menus = Menu::where('parent_id',0)->get();
         $title = 'Create Role';
         return view('admin.roles.create', compact('menus','title'));
     }
@@ -104,7 +104,7 @@ class RoleController extends Controller
         
 
         $role = Role::findOrFail($request->id);
-        $menus = Menu::all();
+        $menus = Menu::where('parent_id',0)->get();
         $permissions = RolePermission::where('role_id', $request->id)->get()->keyBy('menu_id');
         $title = 'Edit Role';
         
