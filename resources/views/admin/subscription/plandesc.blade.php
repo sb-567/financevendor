@@ -32,11 +32,24 @@
                         <h5 class="card-title mb-0">{{$title}} List</h5>
                             
                         <div class="text-end">
-                             
-                             <a href="{{ route('plandescriptioncreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                               @php
+
+                                    $slugdata=getSubMenusbyslug(Request::segment(2));
+                                    
+                                    @endphp
+
+                            
+                                @if(getMenusWithPermissions($slugdata->id,'can_add'))
+
+                             <a href="{{ route('admin.plandescriptioncreate') }}" class="btn btn-primary">Add {{$title}}</a>
+
+                             @endif
+
+                              @if(getMenusWithPermissions($slugdata->id,'can_delete'))
+
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
                            
-                        
+                            @endif
                         </div>
 
                     </div>
@@ -54,7 +67,9 @@
                                
                                     <th>Name</th>
                                     <th>Status</th>
+                                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
                                     <th>Action</th> 
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +108,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                url: "{{ route('getplandescriptiondata') }}", // Server-side URL
+                url: "{{ route('admin.getplandescriptiondata') }}", // Server-side URL
                 data: function (d) {
                     // Add custom filters to the request data
                     d.vendor_id = vendor_id;
@@ -103,7 +118,9 @@
                     { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
                     { data: 'title', name: 'title' },
                     { data: 'status', name: 'status',orderable: false, searchable: false },
+                    @if(getMenusWithPermissions($slugdata->id,'can_delete') || getMenusWithPermissions($slugdata->id,'can_edit'))
                     { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                    @endif
                 ],
                 
             });
@@ -147,7 +164,7 @@
                         }
                     });
                 $.ajax({
-                    url: "{{ route('plandescriptionstatuschange') }}", // Your PHP file to update status
+                    url: "{{ route('admin.plandescriptionstatuschange') }}", // Your PHP file to update status
                     type: 'POST',
                     data: { id: id, status: status },
                     dataType: 'json',
@@ -210,7 +227,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('plandescriptiondelete') }}/${items}`,
+                                url: `{{ url('admin/plandescriptiondelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -284,7 +301,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('deleteselectedplandescription') }}`,
+                         url: `{{ route('admin.deleteselectedplandescription') }}`,
                          type: 'POST',
                          data:{
                                 items: items

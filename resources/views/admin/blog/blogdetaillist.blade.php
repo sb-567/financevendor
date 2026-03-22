@@ -53,6 +53,14 @@
                              <a href="{{ route('admin.blogdetailcreate') }}" class="btn btn-primary">Add {{$title}}</a>
                             <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
                             @endif
+
+                            
+                                
+                             @if(getMenusWithPermissions($slugdata->id,'can_delete'))
+                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
+                           @endif
+
+                           
                         </div>
                         </div>
 
@@ -221,7 +229,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('leaddelete') }}/${items}`,
+                                url: `{{ url('admin/blogdetaildelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -295,7 +303,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('admin.deleteselectedlead') }}`,
+                         url: `{{ route('admin.selectedblogdetaildestroy') }}`,
                          type: 'POST',
                          data:{
                                 items: items

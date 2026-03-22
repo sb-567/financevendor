@@ -218,7 +218,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('userdelete') }}/${items}`,
+                                url: `{{ url('admin/userdelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',

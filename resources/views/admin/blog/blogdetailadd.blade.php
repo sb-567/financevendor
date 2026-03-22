@@ -50,7 +50,7 @@
                                                     @if(!empty($blogcategory))
                                                         <option value="">Select Blog Category</option>
                                                         @foreach($blogcategory as $bg)
-                                                            <option value="{{$bg->id}}" @if(!empty($fetched->vendor_id) && $fetched->vendor_id==$bg->id){{"selected"}}@endif>{{$bg->title}}</option>
+                                                            <option value="{{$bg->id}}" @if(!empty($fetched->category_id) && $fetched->category_id==$bg->id){{"selected"}}@endif>{{$bg->title}}</option>
                                                         @endforeach
                                                     @else
                                                         <option value="">No Blog Category Available</option>  
@@ -111,6 +111,27 @@
                                                 <input type="hidden" name="old_image" value="{{$fetched->image}}">
                                                 @endif
                                         </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="image_alt" value="@if(!empty($fetched->image_alt)){{$fetched->image_alt}} @endif" >
+                                                <label for="firstnamefloatingInput">Image Alt</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="meta_title" value="@if(!empty($fetched->meta_title)){{$fetched->meta_title}} @endif" >
+                                                <label for="firstnamefloatingInput">Meta Title</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="firstnamefloatingInput" name="meta_description" value="@if(!empty($fetched->meta_description)){{$fetched->meta_description}}@endif" >
+                                                <label for="firstnamefloatingInput">Meta Description</label>
+                                            </div>
+                                        </div>
                                        
                                         
 
@@ -149,48 +170,9 @@
 @section('customscript')
 
  
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/additional-methods.min.js"></script>
 
 <script>
-$(document).ready(function () {
-    $("#leadForm").validate({
-        rules: {
-            title: {
-                required: true,
-                minlength: 3
-            },
-            mobile: {
-                required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 10
-            },
-          
-        },
-        messages: {
-            name: {
-                required: "Please enter name",
-                minlength: "Name must be at least 3 characters long"
-            },
-       
-            mobile: {
-                required: "Please enter mobile number",
-                digits: "Only numbers allowed",
-                minlength: "Mobile must be 10 digits",
-                maxlength: "Mobile must be 10 digits"
-            },
-            
-        },
-        errorElement: "span",
-        errorClass: "text-danger",
-        highlight: function (element) {
-            $(element).addClass("is-invalid");
-        },
-        unhighlight: function (element) {
-            $(element).removeClass("is-invalid");
-        }
-    });
-});
 
 
 
@@ -216,6 +198,98 @@ tinymce.init({
     menubar: false,
 
     emoticons_database: 'emojis',   // full emoji set 😀
+});
+
+
+
+$(document).ready(function () {
+
+    $("#leadForm").validate({
+        rules: {
+            category_id: {
+                required: true
+            },
+            blog_title: {
+                required: true,
+                minlength: 3
+            },
+            status: {
+                required: true
+            },
+            description: {
+                required: true,
+                minlength: 10
+            },
+            image: {
+                extension: "jpg|jpeg|png|webp"
+            },
+            image_alt: {
+                maxlength: 100
+            },
+            meta_title: {
+                maxlength: 255
+            },
+            meta_description: {
+                maxlength: 255
+            }
+        },
+
+        messages: {
+            category_id: {
+                required: "Please select blog category"
+            },
+            blog_title: {
+                required: "Please enter blog title",
+                minlength: "Title must be at least 3 characters"
+            },
+            status: {
+                required: "Please select status"
+            },
+            description: {
+                required: "Please enter description",
+                minlength: "Description must be at least 10 characters"
+            },
+            image: {
+                extension: "Only JPG, PNG, JPEG, WEBP files allowed"
+            },
+            image_alt: {
+                maxlength: "Max 100 characters allowed"
+            },
+            meta_title: {
+                maxlength: "Max 255 characters allowed"
+            },
+            meta_description: {
+                maxlength: "Max 255 characters allowed"
+            }
+        },
+
+        errorElement: "span",
+        errorClass: "text-danger",
+
+        errorPlacement: function (error, element) {
+            // 🔥 Fix for file input + tinymce
+            if (element.attr("name") == "image") {
+                error.insertAfter(element.closest('.form-floating'));
+            } else if (element.attr("name") == "description") {
+                error.insertAfter("#description");
+            } else {
+                error.insertAfter(element);
+            }
+        },
+
+        highlight: function (element) {
+            $(element).addClass("is-invalid");
+        },
+
+        unhighlight: function (element) {
+            $(element).removeClass("is-invalid");
+        },
+
+        success: function (label, element) {
+            $(element).addClass("is-valid");
+        }
+    });
+
 });
 
 

@@ -32,10 +32,20 @@
                         <h5 class="card-title mb-0">{{$title}} List</h5>
                             
                         <div class="text-end">
-                             
+                              @php
+
+                                    $slugdata=getSubMenusbyslug(Request::segment(2));
+                                    
+                                    @endphp
+
+                            
+                                @if(getMenusWithPermissions($slugdata->id,'can_add'))
                              <a href="{{ route('admin.subscriptionplancreate') }}" class="btn btn-primary">Add {{$title}}</a>
+                             @endif
+
+                             @if(getMenusWithPermissions($slugdata->id,'can_delete'))
                             <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
-                           
+                           @endif
                         
                         </div>
 
@@ -56,7 +66,9 @@
                                     <th>Price</th>
                                     <th>Selling Price</th>
                                     <th>Status</th>
+                                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
                                     <th>Action</th> 
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -107,7 +119,9 @@
                     { data: 'price', name: 'price' },
                     { data: 'cross_price', name: 'cross_price' },
                     { data: 'status', name: 'status',orderable: false, searchable: false },
+                    @if(getMenusWithPermissions($slugdata->id,'can_view'))
                     { data: 'action', name: 'action', orderable: false, searchable: false, className: 'action' }
+                    @endif
                 ],
                 
             });
@@ -214,7 +228,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('subscriptionplandelete') }}/${items}`,
+                                url: `{{ url('admin/subscriptionplandelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',

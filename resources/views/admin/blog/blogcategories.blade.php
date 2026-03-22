@@ -52,6 +52,12 @@
                                 <a href="{{ route('admin.blogcategorycreate') }}" class="btn btn-primary">Add {{$title}}</a>
                                 <!-- <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button> -->
                                 @endif
+
+                                
+                             @if(getMenusWithPermissions($slugdata->id,'can_delete'))
+                            <button type="button" onclick="deletedchecked()"class="btn btn-danger">Delete Selected item</button>
+                           @endif
+                        
                             </div>
                         </div>
 
@@ -207,7 +213,7 @@
             function deleted(items) {
                     swal.fire({
                         title: 'Are you sure?',
-                        text: "Are you sure you want to Delete Lead ?",
+                        text: "Are you sure you want to Delete Catgeory ?",
                         type: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes'
@@ -221,7 +227,7 @@
                             });
 
                             $.ajax({
-                                url: `{{ url('leaddelete') }}/${items}`,
+                                url: `{{ url('admin/blogcategorydelete') }}/${items}`,
                                 type: 'DELETE',
                                 
                             //  dataType:'json',
@@ -238,7 +244,7 @@
                                     swal.fire({
                                         // position: 'top-right',
                                         type: 'success',
-                                        title: 'Lead data Deleted Successfully',
+                                        title: 'Blog Category Deleted Successfully',
                                         // showConfirmButton: false,
                                         // timer: 5000
                                     
@@ -270,7 +276,7 @@
                     if (selectedValues.length != 0) {
                         deletedcheckeditem(selectedValues);
                     } else {
-                    swal.fire("! Opps ", "Please check Lead data to delete", "error");
+                    swal.fire("! Opps ", "Please check data to delete", "error");
                     }
             }
          
@@ -283,7 +289,7 @@
          function deletedcheckeditem(items) {
              swal.fire({
                  title: 'Are you sure?',
-                 text: "Are you sure you want to Delete Lead?",
+                 text: "Are you sure you want to Delete?",
                  type: 'warning',
                  showCancelButton: true,
                  confirmButtonText: 'Yes'
@@ -295,7 +301,7 @@
                         }
                     });
                      $.ajax({
-                         url: `{{ route('admin.deleteselectedlead') }}`,
+                         url: `{{ route('admin.deleteselectedblog') }}`,
                          type: 'POST',
                          data:{
                                 items: items
@@ -314,7 +320,7 @@
                              swal.fire({
                                  // position: 'top-right',
                                  type: 'success',
-                                 title: 'Lead Deleted Successfully',
+                                 title: 'Deleted Successfully',
                                  // showConfirmButton: false,
                                  // timer: 5000
                                 

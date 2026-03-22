@@ -167,47 +167,96 @@
 
 <script>
 
-
 $(document).ready(function () {
+
+    // 🔥 Conditional validation based on subscription type
+    $.validator.addMethod("checkLeads", function (value, element) {
+        return $("#subscription_type").val() != "2" || value !== "";
+    }, "Please enter number of leads");
+
+    $.validator.addMethod("checkDuration", function (value, element) {
+        return $("#subscription_type").val() != "1" || value !== "";
+    }, "Please select time duration");
+
     $("#leadForm").validate({
         rules: {
-            name: {
+            title: {
                 required: true,
                 minlength: 3
             },
-            mobile: {
-                required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 10
+            subscription_type: {
+                required: true
             },
-          
+            no_of_leads: {
+                digits: true,
+                checkLeads: true
+            },
+            time_duration: {
+                checkDuration: true
+            },
+            price: {
+                required: true,
+                number: true
+            },
+            cross_price: {
+                 required: true,
+                number: true
+            },
+            offer_text: {
+                maxlength: 255
+            },
+            status: {
+                required: true
+            }
         },
         messages: {
-            name: {
-                required: "Please enter name",
-                minlength: "Name must be at least 3 characters long"
+            title: {
+                required: "Please enter title",
+                minlength: "Title must be at least 3 characters"
             },
-       
-            mobile: {
-                required: "Please enter mobile number",
-                digits: "Only numbers allowed",
-                minlength: "Mobile must be 10 digits",
-                maxlength: "Mobile must be 10 digits"
+            subscription_type: {
+                required: "Please select subscription type"
             },
-            
+            no_of_leads: {
+                digits: "Only numbers allowed"
+            },
+            time_duration: {
+                required: "Please select time duration"
+            },
+            price: {
+                required: "Please enter price",
+                number: "Only numeric value allowed"
+            },
+            cross_price: {
+                number: "Only numeric value allowed"
+            },
+            offer_text: {
+                maxlength: "Max 255 characters allowed"
+            },
+            status: {
+                required: "Please select status"
+            }
         },
+
         errorElement: "span",
         errorClass: "text-danger",
+
+        errorPlacement: function (error, element) {
+            error.insertAfter(element);
+        },
+
         highlight: function (element) {
             $(element).addClass("is-invalid");
         },
+
         unhighlight: function (element) {
             $(element).removeClass("is-invalid");
+        },
+
+        success: function (label, element) {
+            $(element).addClass("is-valid");
         }
     });
-
-
 
 });
 

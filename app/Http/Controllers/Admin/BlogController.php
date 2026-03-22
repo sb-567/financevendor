@@ -64,18 +64,24 @@ class Blogcontroller extends Controller
             });
             // Action column
              $dataTable->addColumn('action', function ($row) {
-            
-                   $slugdata=getSubMenusbyslug('blogcategorylist');
+                    $btn="";
+                   $slugdata=getSubMenusbyslug('blog');
 
                  if(getMenusWithPermissions($slugdata->id,'can_edit')){
-                        return '<div class="d-flex">
-                                      <a href="' . url('admin/blogcategoryedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                </div>';
+                     $btn .= '<div class="d-flex">
+                     <a href="' . url('admin/blogcategoryedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>';
+                    
                  }
+                     
+                     if(getMenusWithPermissions($slugdata->id,'can_delete')){
+    
+                       $btn .='<button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button> </div>';
+                     }
 
+
+                     return $btn;
                                 // <div class="d-flex">
                                 //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                //     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button
                                   
                                 // </div>
             });
@@ -159,7 +165,7 @@ class Blogcontroller extends Controller
          session()->flash('success', 'Blog Catgeory saved successfully');
         
         
-         return redirect('admin/blogcategorylist');
+         return redirect('admin/blog/blogcategorylist');
 
 
 
@@ -209,7 +215,7 @@ class Blogcontroller extends Controller
         //     $query->where('tbl_leads.vendor_id', $request->vendor_id);
         // }
 
-
+        
         // Return DataTable response
          $dataTable =  DataTables::of($query);
             // Filter by search term
@@ -235,19 +241,22 @@ class Blogcontroller extends Controller
             // Action column
              $dataTable->addColumn('action', function ($row) {
             
-                   $slugdata=getSubMenusbyslug('blogdetaillist');
-
-                 if(getMenusWithPermissions($slugdata->id,'can_edit')){
-                        return '<div class="d-flex">
-                                      <a href="' . url('admin/blogdetailedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
-                                </div>';
-                 }
-
+                   $slugdata=getSubMenusbyslug('blog');
+                    $btn="";
+                     if(getMenusWithPermissions($slugdata->id,'can_edit')){
+                     $btn .='<div class="d-flex"><a href="' . url('admin/blogdetailedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>';                     
+                     }
+                     
+                     if(getMenusWithPermissions($slugdata->id,'can_delete')){
+                        $btn .='<button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button></div>';
+                     }
                                 // <div class="d-flex">
                                 //     <a href="' . url('leadedit/' . $row->id) . '"  class="btn btn-sm btn-primary me-2"> Edit</a>
                                 //     <button type="button" onclick="deleted(' . $row->id.')"  class="btn btn-sm btn-danger me-2"> Delete</button
                                   
                                 // </div>
+
+                                return $btn;
             });
             // Status column with badge
              $dataTable->editColumn('created_at', function ($row) {
@@ -289,13 +298,22 @@ class Blogcontroller extends Controller
         $request->validate([
             'blog_title' => 'required',
             'status' => 'required',
+            'image'      => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
+        
 
         $imageName = null;
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
+
+              if (!$file->isValid()) {
+                    return back()
+                        ->with('error', 'Invalid image upload')
+                        ->withInput();
+              }
+
 
             // Create image resource (GdImage)
             $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
@@ -329,6 +347,9 @@ class Blogcontroller extends Controller
                 'image' => $imageName,
                 'description' =>$request->input('description'),
                 'status' =>$request->input('status'),
+                'image_alt' =>$request->input('image_alt'),
+                'meta_title' =>$request->input('meta_title'),
+                'meta_description' =>$request->input('meta_description'),
                 'updated_at' => now() 
             ]);
     
@@ -341,6 +362,9 @@ class Blogcontroller extends Controller
                 'image' => $imageName,
                 'description' =>$request->input('description'),
                 'status' =>$request->input('status'),
+                'image_alt' =>$request->input('image_alt'),
+                'meta_title' =>$request->input('meta_title'),
+                'meta_description' =>$request->input('meta_description'),
                 'created_at' => now(),
             ]);
             
@@ -349,7 +373,7 @@ class Blogcontroller extends Controller
          session()->flash('success', 'Blog detail saved successfully');
         
         
-         return redirect('admin/blogdetaillist');
+         return redirect('admin/blog/blogdetaillist');
 
 
 
@@ -359,6 +383,7 @@ class Blogcontroller extends Controller
     public function blogdetailedit(Request $request){
 
         $data['title']="BLog Detail Edit";
+        $data['blogcategory']= DB::table('tbl_blog_categories')->where('status',1)->get();
         $data['fetched']=DB::table('tbl_blogs')->where('id','=',$request->id)->first();
         
         
@@ -378,6 +403,16 @@ class Blogcontroller extends Controller
         return;
 
     }
+
+
+        public function selectedblogdetaildestroy(Request $request){
+        foreach($request->items as $item){
+            // Subevent::destroy(array('id',$item));
+            DB::table('tbl_blogs')->where('id', $item)->delete();
+        }
+        return;
+    }
+
 
 
     // public function export()

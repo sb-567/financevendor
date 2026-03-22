@@ -103,30 +103,19 @@
 $(document).ready(function () {
     $("#leadForm").validate({
         rules: {
-            name: {
+            title: {
                 required: true,
                 minlength: 3
             },
-            mobile: {
-                required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 10
-            },
+        
           
         },
         messages: {
             name: {
-                required: "Please enter name",
-                minlength: "Name must be at least 3 characters long"
+                required: "Please enter Title",
             },
        
-            mobile: {
-                required: "Please enter mobile number",
-                digits: "Only numbers allowed",
-                minlength: "Mobile must be 10 digits",
-                maxlength: "Mobile must be 10 digits"
-            },
+           
             
         },
         errorElement: "span",
