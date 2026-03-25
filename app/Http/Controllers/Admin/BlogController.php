@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
  
 
 use App\Exports\LeadExport;
@@ -355,9 +356,12 @@ class Blogcontroller extends Controller
     
     
         } else {
-    
+
+            $slug=Str::slug($request->input('blog_title'));
+
             DB::table('tbl_blogs')->insert([
                 'blog_title' => $request->input('blog_title'),
+                'slug' => $slug,
                 'category_id' =>$request->input('category_id'),
                 'image' => $imageName,
                 'description' =>$request->input('description'),
