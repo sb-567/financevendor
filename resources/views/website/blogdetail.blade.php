@@ -7,7 +7,7 @@
       <section class="section-box">
         <div class="banner-hero banner-breadcrums">
           <div class="container text-center">
-            <h1 class="text-heading-2 color-gray-1000 mb-20">Blog details</h1>
+            <h1 class="text-heading-2 color-gray-1000 mb-20">{{$title}}</h1>
             
           </div>
         </div>
@@ -44,12 +44,8 @@
           <div class="row">
             {{-- <div class="col-lg-2"></div> --}}
             <div class="col-lg-8">
-              <div class="single-detail "><img class="img-responsive bdr-16" src="{{ asset('wassets/assets/imgs/page/blog/single/img-1.png')}}" alt="Agon">
-                <p></p>
-                <p>Tortor placerat bibendum consequat sapien, facilisi facilisi pellentesque morbi. Id conse ctetur ut vitae a massa a. Lacus ut bibendum sollicitudin fusce sociis mi. Dictum volutpat praesent ornare accumsan elit venenatis. Congue sodales nunc quis ultricies odio porta. Egestas mauris placerat leo phasellu s ut sit.</p>
-                <h2 class="text-heading-3">Use your headings</h2>
-                <p>Thirty there &amp; time wear across days, make inside on these you. Can young a really, roses blog small of song their dreamy life pretty? Because really duo living to noteworthy bloom bell. Transform clean daydreaming cute twenty process rooms cool. White white dreamy dramatically place everything although. Place out apartment afternoon whimsical kinder, little romantic joy we flowers handmade. Thirty she a studio of she whimsical projects, afternoon effect going an floated maybe.</p>
-                
+              <div class="single-detail "><img class="img-responsive bdr-16" src="{{ asset('public/uploads/blog/' . $blog->image) }}" alt="Agon">
+               {{ $blog->description }}
               </div>
             
             </div>

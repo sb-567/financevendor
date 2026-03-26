@@ -21,8 +21,16 @@ class BlogController extends Controller
 
         return view('website.blog',$data);
     }
-    public function getblogdetail(){
-         $data['title']='Blog Details';
+
+
+    public function getblogdetail(Request $request){
+            $slug=$request->slug;
+
+            $datas=DB::table('tbl_blogs')->where('slug',$slug)->first();
+            
+         $data['title']=$datas->blog_title;
+         $data['blog']=$datas;
+
         return view('website.blogdetail',$data);
     }
     
