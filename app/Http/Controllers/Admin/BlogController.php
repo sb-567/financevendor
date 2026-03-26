@@ -316,17 +316,23 @@ class Blogcontroller extends Controller
               }
 
 
-            // Create image resource (GdImage)
-            $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
+           $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
 
             if ($imageResource === false) {
                 throw new Exception('Invalid image file');
             }
 
+            // 🔥 FIX: Convert palette → truecolor
+            if (!imageistruecolor($imageResource)) {
+                imagepalettetotruecolor($imageResource);
+            }
+
+            // Enable alpha blending (important for PNG transparency)
+            imagealphablending($imageResource, true);
+            imagesavealpha($imageResource, true);
+
             // Generate filename
             $imageName = time() . '.webp';
-
-            // सही path
             $destinationPath = public_path('uploads/blog/' . $imageName);
 
             // Convert to webp
