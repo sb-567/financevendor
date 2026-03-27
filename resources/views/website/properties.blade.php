@@ -7,7 +7,7 @@
       <section class="section-box">
         <div class="banner-hero banner-breadcrums">
           <div class="container text-center">
-            <h1 class="text-heading-2 color-gray-1000 mb-20">Properties List</h1>
+            <h1 class="text-heading-2 color-gray-1000 mb-20">Properties Listing</h1>
             
           </div>
         </div>
