@@ -163,40 +163,103 @@ class VendorsController extends Controller
 
         if ($request->hasFile('rera_certificate')) {
             $file = $request->file('rera_certificate');
-            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+          
+    
+             $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
 
+            if ($imageResource === false) {
+                throw new Exception('Invalid image file');
+            }
+
+            // 🔥 FIX: Convert palette → truecolor
+            if (!imageistruecolor($imageResource)) {
+                imagepalettetotruecolor($imageResource);
+            }
+
+            // Enable alpha blending (important for PNG transparency)
+            imagealphablending($imageResource, true);
+            imagesavealpha($imageResource, true);
+
+            
+            // Generate filename
             $rera_certificate = time() . '_rera.webp';
-            $path = public_path('uploads/vendors/' . $rera_certificate);
+            $destinationPath = public_path('uploads/vendors/' . $rera_certificate);
+            
 
-            // Convert and save to webp
-            imagewebp($image, $path, 80); // 80 = quality
-            imagedestroy($image);
+            // Convert to webp
+            imagewebp($imageResource, $destinationPath, 80);
+            // Free memory
+            imagedestroy($imageResource);
+            
         } else {
             $rera_certificate = $request->input('old_rera_certificate');
         }
 
         if ($request->hasFile('real_estate_certificate')) {
             $file = $request->file('real_estate_certificate');
-            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+      
 
-            $real_estate_certificate = time() . '_realestate.webp';
-            $path = public_path('uploads/vendors/' . $real_estate_certificate);
+            $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
 
-            imagewebp($image, $path, 80);
-            imagedestroy($image);
+            if ($imageResource === false) {
+                throw new Exception('Invalid image file');
+            }
+
+            // 🔥 FIX: Convert palette → truecolor
+            if (!imageistruecolor($imageResource)) {
+                imagepalettetotruecolor($imageResource);
+            }
+
+            // Enable alpha blending (important for PNG transparency)
+            imagealphablending($imageResource, true);
+            imagesavealpha($imageResource, true);
+
+            
+            // Generate filename            
+            $rera_certificate = time() . '_realestate.webp';
+            $destinationPath = public_path('uploads/vendors/' . $rera_certificate);
+
+
+            // Convert to webp
+            imagewebp($imageResource, $destinationPath, 80);
+            // Free memory
+            imagedestroy($imageResource);
+
+
         } else {
             $real_estate_certificate = $request->input('old_real_estate_certificate');
         }
 
         if ($request->hasFile('pancard')) {
             $file = $request->file('pancard');
-            $image = imagecreatefromstring(file_get_contents($file->getRealPath()));
+        
+            $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
 
+            if ($imageResource === false) {
+                throw new Exception('Invalid image file');
+            }
+
+            // 🔥 FIX: Convert palette → truecolor
+            if (!imageistruecolor($imageResource)) {
+                imagepalettetotruecolor($imageResource);
+            }
+
+            // Enable alpha blending (important for PNG transparency)
+            imagealphablending($imageResource, true);
+            imagesavealpha($imageResource, true);
+
+            
+            // Generate filename            
             $pancard = time() . '_pancard.webp';
-            $path = public_path('uploads/vendors/' . $pancard);
+            $destinationPath = public_path('uploads/vendors/' . $pancard);
 
-            imagewebp($image, $path, 80);
-            imagedestroy($image);
+
+            // Convert to webp
+            imagewebp($imageResource, $destinationPath, 80);
+            // Free memory
+            imagedestroy($imageResource);
+
+
         } else {
             $pancard = $request->input('old_pancard');
         }
