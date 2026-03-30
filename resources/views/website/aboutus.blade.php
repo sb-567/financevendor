@@ -6,14 +6,28 @@
 
   <main class="main">
 
-        <section class="section-box">
+       <section class="section-box">
         <div class="banner-hero banner-breadcrums">
-          <div class="container text-center">
-            <h1 class="text-heading-2 color-gray-1000 mb-20">About Us</h1>
-            
-          </div>
+            <div class="container text-center">
+                
+                <!-- Page Title -->
+                <h1 class="text-heading-2 color-gray-1000 mb-10">About Us</h1>
+
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb justify-content-center bg-transparent p-0 mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            About Us
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
         </div>
-      </section>
+    </section>
 
 
      <section class="section-box mt-100 pt-30">

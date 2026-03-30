@@ -309,35 +309,38 @@ class Blogcontroller extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
-              if (!$file->isValid()) {
-                    return back()
-                        ->with('error', 'Invalid image upload')
-                        ->withInput();
-              }
+            if (!$file->isValid()) {
+                return back()
+                    ->with('error', 'Invalid image upload')
+                    ->withInput();
+            }
 
-
-            // Create image resource (GdImage)
             $imageResource = imagecreatefromstring(file_get_contents($file->getRealPath()));
 
             if ($imageResource === false) {
                 throw new Exception('Invalid image file');
             }
 
-            // Generate filename
-            $imageName = time() . '.webp';
+            // ✅ FIX: convert palette to truecolor
+            if (!imageistruecolor($imageResource)) {
+                imagepalettetotruecolor($imageResource);
+            }
 
-            // सही path
+            // Optional: preserve transparency (important for PNG)
+            imagealphablending($imageResource, true);
+            imagesavealpha($imageResource, true);
+
+            $imageName = time() . '.webp';
             $destinationPath = public_path('uploads/blog/' . $imageName);
 
-            // Convert to webp
             imagewebp($imageResource, $destinationPath, 80);
 
-            // Free memory
             imagedestroy($imageResource);
 
         } else {
             $imageName = $request->input('old_image');
         }
+
         if ($request->input('id') != "") {
            
             DB::table('tbl_blogs')

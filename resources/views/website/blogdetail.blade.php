@@ -9,6 +9,18 @@
           <div class="container text-center">
             <h1 class="text-heading-2 color-gray-1000 mb-20">{{$title}}</h1>
             
+            <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb justify-content-center bg-transparent p-0 mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{$title}}
+                        </li>
+                    </ul>
+                </nav>
+
+
           </div>
         </div>
       </section>
@@ -43,47 +55,37 @@
           </div> --}}
           <div class="row">
             {{-- <div class="col-lg-2"></div> --}}
-            <div class="col-lg-8">
-              <div class="single-detail "><img class="img-responsive bdr-16" src="{{ asset('public/uploads/blog/' . $blog->image) }}" alt="Agon">
-               {{ $blog->description }}
+            <div class="col-lg-9">
+              <div class="single-detail ">
+                <img class="img-responsive bdr-16 mb-3" src="{{ asset('public/uploads/blog/' . $blog->image) }}" alt="Agon">
+               {!! $blog->description !!}
               </div>
             
             </div>
 
 
-            <div class="col-lg-4 col-sm-12 pr-30 mb-50">
-              <div class="card-list-style-1"><a class="text-heading-6" href="blog-single.html">Design Studios That Everyone Should Know About?</a>
-                <div class="blog-img-user">
-                  <div class="img-user img-user-round"><img src="{{ asset('wassets/assets/imgs/page/blog/2/user-3.png')}}" alt="Agon"></div>
-                  <h4 class="text-body-lead color-gray-500">Jane Cooper</h4>
-                  <p class="text-body-small color-gray-500">August 25, 2025</p>
+            <div class="col-lg-3 col-sm-12 pr-30 mb-50">
+              
+              @if(!empty($relatedBlogs))
+                @foreach ($relatedBlogs as $item)
+                    
+                <div class="card-list-style-1"><a class="text-heading-7" href="{{ route('blogdetail', ['slug' => $item->slug]) }}">{{$item->blog_title}}</a>
+                  <div class="">
+                    {{-- <div class="img-user img-user-round"><img src="{{ asset('wassets/assets/imgs/page/blog/2/user-3.png')}}" alt="Agon"></div> --}}
+                    {{-- <h4 class="text-body-lead color-gray-500">Jane Cooper</h4> --}}
+                    <p class="text-body-small color-gray-500 mt-2">{{ date('M d, Y', strtotime($item->created_at)) }}</p>
+                  </div>
+                  <div class="style-1-img color-bg-10"><a href="{{ route('blogdetail', ['slug' => $item->slug]) }}"><img src="{{ asset('public/uploads/blog/' . $item->image) }}" alt="Agon"></a></div>
                 </div>
-                <div class="style-1-img color-bg-10"><a href="blog-single.html"><img src="{{ asset('wassets/assets/imgs/page/blog/2/img-news-1.png')}}" alt="Agon"></a></div>
-              </div>
-              <div class="card-list-style-1"><a class="text-heading-6" href="blog-single.html">Design Studios That Everyone Should Know About?</a>
-                <div class="blog-img-user">
-                  <div class="img-user img-user-round"><img src="{{ asset('wassets/assets/imgs/page/blog/2/user-4.png')}}" alt="Agon"></div>
-                  <h4 class="text-body-lead color-gray-500">Wade Warren</h4>
-                  <p class="text-body-small color-gray-500">August 25, 2025</p>
-                </div>
-                <div class="style-1-img color-bg-2"><a href="blog-single.html"><img src="{{ asset('wassets/assets/imgs/page/blog/2/img-news-1.png')}}" alt="Agon"></a></div>
-              </div>
-              <div class="card-list-style-1"><a class="text-heading-6" href="blog-single.html">Design Studios That Everyone Should Know About?</a>
-                <div class="blog-img-user">
-                  <div class="img-user img-user-round"><img src="{{ asset('wassets/assets/imgs/page/blog/2/user-5.png')}}" alt="Agon"></div>
-                  <h4 class="text-body-lead color-gray-500">Jenny Wilson</h4>
-                  <p class="text-body-small color-gray-500">August 25, 2025</p>
-                </div>
-                <div class="style-1-img color-bg-5"><a href="blog-single.html"><img src="{{ asset('wassets/assets/imgs/page/blog/2/img-news-1.png')}}" alt="Agon"></a></div>
-              </div>
-              <div class="card-list-style-1"><a class="text-heading-6" href="blog-single.html">Design Studios That Everyone Should Know About?</a>
-                <div class="blog-img-user">
-                  <div class="img-user img-user-round"><img src="{{ asset('wassets/assets/imgs/page/blog/2/user-6.png')}}" alt="Agon"></div>
-                  <h4 class="text-body-lead color-gray-500">Robert Fox</h4>
-                  <p class="text-body-small color-gray-500">August 25, 2025</p>
-                </div>
-                <div class="style-1-img color-bg-9"><a href="blog-single.html"><img src="{{ asset('wassets/assets/imgs/page/blog/2/img-news-1.png')}}" alt="Agon"></a></div>
-              </div>
+
+                @endforeach
+
+              @endif
+
+
+           
+            
+
             </div>
           </div>
         </div>

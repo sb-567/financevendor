@@ -4,7 +4,7 @@
 @section('content')
 
    <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="herosection">
       <div class="container">
         <div class="row align-items-center">
           <!-- Left Content -->
@@ -662,9 +662,9 @@
 
         <!-- View More Button -->
         <div class="mt-5">
-          <a href="#" class="btn btn-outline-dark rounded-pill px-4"
+          {{-- <a href="#" class="btn btn-outline-dark rounded-pill px-4"
             >View more</a
-          >
+          > --}}
         </div>
       </div>
     </section>
@@ -693,7 +693,7 @@
                 of local agents. Get discovered by homebuyers and sellers
                 searching in your neighborhood.
               </p>
-              <a href="{{ route('vendors.login') }}" class="join-btn">Join Us</a>
+              <a href="#herosection" class="join-btn">Search Now</a>
             </div>
           </div>
         </div>

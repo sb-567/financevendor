@@ -11,25 +11,47 @@ class BlogController extends Controller
 {
     
 
-     public function getblog(){
-         $data['title']='Blog List';
-         $data['blogs']=DB::table('tbl_blogs')
-         ->select('tbl_blogs.*','tbl_blog_categories.title as category')
-         ->Leftjoin('tbl_blog_categories','tbl_blogs.category_id','=','tbl_blog_categories.id')
-         ->where('tbl_blogs.status',1)
-         ->orderBy('tbl_blogs.id','desc')->get();
+   public function getblog(Request $request)
+{
+    $blogs = DB::table('tbl_blogs')
+        ->select('tbl_blogs.*', 'tbl_blog_categories.title as category')
+        ->leftJoin('tbl_blog_categories', 'tbl_blogs.category_id', '=', 'tbl_blog_categories.id')
+        ->where('tbl_blogs.status', 1)
+        ->orderBy('tbl_blogs.id', 'desc')
+        ->paginate(6); // ✅ IMPORTANT
 
-        return view('website.blog',$data);
+    // ✅ AJAX response
+    if ($request->ajax()) {
+        return view('website.partials.blog_data', compact('blogs'))->render();
     }
+
+    return view('website.blog', [
+        'title' => 'Blogs',
+        'blogs' => $blogs
+    ]);
+}
 
 
     public function getblogdetail(Request $request){
-            $slug=$request->slug;
+         
+         $slug=$request->slug;
 
-            $datas=DB::table('tbl_blogs')->where('slug',$slug)->first();
+         $datas=DB::table('tbl_blogs')->where('slug',$slug)->where('status', 1)
+        ->orderBy('id', 'desc')
+        ->paginate(6); 
+
+
+       
+
+
+
+         $blogcategory=DB::table('tbl_blog_categories')->where('id',$datas->category_id)->first();
+         $sideblogcategory=DB::table('tbl_blogs')->where('category_id',$datas->category_id)->where('status',1)->orderBy('id','desc')->limit(10)->get();
             
          $data['title']=$datas->blog_title;
          $data['blog']=$datas;
+         $data['blogcategory']=$blogcategory;
+         $data['sideblogcategory']=$sideblogcategory;
 
         return view('website.blogdetail',$data);
     }

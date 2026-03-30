@@ -482,6 +482,39 @@
       color: #ecf0f1;
     }
 
+
+
+
+
+
+
+    .breadcrumb {
+    display: flex;
+    list-style: none;
+    gap: 6px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #6c757d;
+}
+
+.breadcrumb-item.active {
+    color: #000;
+    font-weight: 500;
+}
+
+.breadcrumb-item+.breadcrumb-item{
+  padding-left: 0 !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "/";
+    padding: 0 6px;
+    color: #6c757d;
+}
+
+
     @media (max-width: 767px) {
       .hero {
         padding: 100px 0 150px;

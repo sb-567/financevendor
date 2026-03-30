@@ -4,19 +4,35 @@
 @section('content')
 
  <main class="main">
+
   <section class="section-box">
-        <div class="banner-hero nav-breadcrums bg-gray-100">
-          <div class="container">
-            <div class="breadcrumb">
-              <ul>
-                <li class="home"><a href="index.html">Home</a></li>
-                <li><a href="page-portfolio-grid-1.html">Portfolio</a></li>
-                <li><span>Real Estate UI/UX kit</span></li>
-              </ul>
-            </div>
+        <div class="banner-hero banner-breadcrums">
+          <div class="container text-center">
+            <h1 class="text-heading-2 color-gray-1000 mb-20">Properties details</h1>
+            
+
+            <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb justify-content-center bg-transparent p-0 mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="page-portfolio-grid-1.html" >Properties</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Properties details
+                        </li>
+                    </ul>
+                </nav>
+
+
           </div>
         </div>
       </section>
+
+
+
+
+
+
       <section class="section-box">
         <div class="banner-hero banner-breadcrums bg-white">
           <div class="container text-center">
