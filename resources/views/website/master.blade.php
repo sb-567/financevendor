@@ -9,7 +9,8 @@
    
     @include('website.includes.style')
 
-
+    @yield('customstyle')
+    
 
 </head>
 

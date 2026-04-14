@@ -31,7 +31,7 @@ Route::get('propertydetail',[HomeController::class, 'getpropertydetail'])->name(
 
 
 Route::get('bloglist',[BlogController::class, 'getblog'])->name('bloglist');
-Route::get('blogdetail/{slug}',[BlogController::class, 'getblogdetail'])->name('blogdetail');
+Route::get('blog-detail/{slug}',[BlogController::class, 'getblogdetail'])->name('blogdetail');
 
 Route::get('disclaimer',[HomeController::class, 'getdisclaimer'])->name('disclaimer');
 Route::get('policy',[HomeController::class, 'getpolicy'])->name('policy');

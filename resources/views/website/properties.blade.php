@@ -65,62 +65,65 @@
             </div> --}}
             <div class="row ">
               <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="product-item-2 hover-up"><a href="#">
-                    <div class="product-image"><img src="{{ asset('wassets/assets/imgs/page/homepage5/sp4.png')}}" alt="agon"></div></a>
-                  <div class="box-quick-view">
-                    <div class="quick-view"><a class="like-product" href="#"></a><a class="shuffle-product" href="#"></a><a class="view-product" href="#"></a></div>
-                  </div>
-                  <div class="product-info"><span class="text-body-small color-gray-500 font-bold">Sony</span><a href="#">
-                      <h3 class="text-body-lead color-gray-900">4K TV Game Mini Arcade Rocker Console 32GB/64GB</h3></a>
-                    <div class="rating mt-10">
-                      <div class="box-rating"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star.svg')}}" alt="agon"></div><span class="text-semibold"><span>(</span><span>94</span><span>&nbsp;rates )</span></span>
+                <div class="product-item-2 hover-up"><a href="{{ route('propertydetail') }}">
+                    <div class="product-image1"><img src="{{ asset('wassets/assets/imgs/p1.jpg')}}" alt="agon"></div></a>
+                  
+                  <div class="product-info">
+                    <span class="text-body-small color-gray-500 font-bold"><i class="fi fi-rr-location-alt"></i> Mumbai</span>
+                    {{-- <span class="text-body-small color-gray-500 font-bold"><i class="fi fi-rr-user"></i> Agent</span> --}}
+                    <a href="#"><h3 class="text-body-lead color-gray-900">3bhk Bangalow Sea facing</h3></a>
+                    
+                      
+                      <div class="property-meta mt-2 mb-3">
+                        <span>3bhk</span> |
+                        <span>Andheri West</span> |
+                        <span>West Direction face</span> 
+                        
                     </div>
-                    <div class="d-flex mt-20">
-                      <div class="box-prices"><span class="price-regular mr-5">$22.51</span><span class="price-regular price-line">$29.8</span></div>
-                      <div class="button-add text-end"><a class="btn btn-cart" href="#">Add</a></div>
+
+                    <div class="d-flex justify-content-between mt-20">
+                      <h4 class="text-body-lead2"><i class="fi fi-rr-user"></i> Agent, lastname </h4>
+                      <h4 class="text-body-lead2"><i class="fi fi-rr-phone-call"></i> xxxxxxx589 </h4>
                     </div>
+                    
+                    
+                      {{-- <div class="box-prices">Sale</div>  --}}
+                      <a class="btn btn-cart" href="#">Contact</a>
                   </div>
                 </div>
               </div>
+
               <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="product-item-2 hover-up"><a href="#">
-                    <div class="product-image"><img src="{{ asset('wassets/assets/imgs/page/homepage5/sp5.png')}}" alt="agon"></div></a>
-                  <div class="box-quick-view">
-                    <div class="quick-view"><a class="like-product" href="#"></a><a class="shuffle-product" href="#"></a><a class="view-product" href="#"></a></div>
-                  </div>
-                  <div class="product-info"><span class="text-body-small color-gray-500 font-bold">Apple</span><a href="#">
-                      <h3 class="text-body-lead color-gray-900">T500BT Original Wireless Bluetooth Headphone Deep Bass</h3></a>
-                    <div class="rating mt-10">
-                      <div class="box-rating"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star.svg')}}" alt="agon"></div><span class="text-semibold"><span>(</span><span>126</span><span>&nbsp;rates )</span></span>
+                    <div class="product-image1"><img src="{{ asset('wassets/assets/imgs/p2.jpg')}}" alt="agon"></div></a>
+                  
+                  <div class="product-info"><span class="text-body-small color-gray-500 font-bold"><i class="fi fi-rr-location-alt"></i> Mumbai</span><a href="#">
+                      <h3 class="text-body-lead color-gray-900">3bhk Bangalow Sea facing</h3></a>
+
+                      <div class="property-meta mt-2 mb-3">
+                        <span>3bhk</span> |
+                        <span>Andheri West</span> |
+                        <span>West Direction face</span> 
+                        
+                      </div>
+                    
+                     <div class="d-flex justify-content-between mt-20">
+                      <h4 class="text-body-lead2"><i class="fi fi-rr-user"></i> Agent, lastname </h4>
+                      <h4 class="text-body-lead2"><i class="fi fi-rr-phone-call"></i> xxxxxxx589 </h4>
                     </div>
-                    <div class="d-flex mt-20">
-                      <div class="box-prices"><span class="price-regular mr-5">$95.26</span><span class="price-regular price-line">$96.5</span></div>
-                      <div class="button-add text-end"><a class="btn btn-cart" href="#">Add</a></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="product-item-2 hover-up"><a href="#">
-                    <div class="product-image"><img src="{{ asset('wassets/assets/imgs/page/homepage5/sp6.png')}}" alt="agon"></div></a>
-                  <div class="box-quick-view">
-                    <div class="quick-view"><a class="like-product" href="#"></a><a class="shuffle-product" href="#"></a><a class="view-product" href="#"></a></div>
-                  </div>
-                  <div class="product-info"><span class="text-body-small color-gray-500 font-bold">Toshiba</span><a href="#">
-                      <h3 class="text-body-lead color-gray-900">Black Walnut Wood &amp; Aluminum Headphone Stand </h3></a>
-                    <div class="rating mt-10">
-                      <div class="box-rating"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star-active.svg')}}" alt="agon"><span></span><img src="{{ asset('wassets/assets/imgs/page/homepage5/star.svg')}}" alt="agon"></div><span class="text-semibold"><span>(</span><span>87</span><span>&nbsp;rates )</span></span>
-                    </div>
-                    <div class="d-flex mt-20">
-                      <div class="box-prices"><span class="price-regular mr-5">$25.6</span><span class="price-regular price-line">$32.2</span></div>
-                      <div class="button-add text-end"><a class="btn btn-cart" href="#">Add</a></div>
-                    </div>
+
+                    {{-- <div class="d-flex mt-20">
+                      <div class="box-prices">Sale</div> --}}
+                      <a class="btn btn-cart" href="#">Contact</a>
+                    {{-- </div> --}}
                   </div>
                 </div>
               </div>
-           
+
+
+              
             </div>
-            <div class="paginations">
+            {{-- <div class="paginations">
               <ul class="pager">
                 <li><a class="prev-page" href="#"></a></li>
                 <li><a href="#">1</a></li>
@@ -129,7 +132,7 @@
                 <li><a class="page-dotted" href="#"></a></li>
                 <li><a class="next-page" href="#"></a></li>
               </ul>
-            </div>
+            </div> --}}
           </div>
           <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 dr-ltr">
             <div class="sidebar">
@@ -180,6 +183,26 @@
                       <input type="checkbox"><span class="text-lbl">3Bhk</span><span class="checkmark"></span>
                     </label>
                   </li>
+                  
+                </ul>
+               
+                <h4 class="text-heading-6 color-green-900">Parking Avaliable</h4>
+                <ul class="list-type">
+                  <li>
+                    <label class="cb-container">
+                      <input type="radio" name="parking_avalible" value="yes">
+                      <span class="text-lbl">Yes</span>
+                      <span class="checkmark"></span>
+                    </label>
+                  </li>
+                  <li>
+                   <label class="cb-container">
+                    <input type="radio" name="parking_avalible" value="no">
+                    <span class="text-lbl">No</span>
+                    <span class="checkmark"></span>
+                    </label>
+                  </li>
+                
                   
                 </ul>
                

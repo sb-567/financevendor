@@ -36,9 +36,7 @@ class BlogController extends Controller
          
          $slug=$request->slug;
 
-         $datas=DB::table('tbl_blogs')->where('slug',$slug)->where('status', 1)
-        ->orderBy('id', 'desc')
-        ->paginate(6); 
+         $datas=DB::table('tbl_blogs')->where('slug',$slug)->where('status', 1)->orderBy('id', 'desc')->first();
 
 
        
@@ -51,7 +49,7 @@ class BlogController extends Controller
          $data['title']=$datas->blog_title;
          $data['blog']=$datas;
          $data['blogcategory']=$blogcategory;
-         $data['sideblogcategory']=$sideblogcategory;
+         $data['relatedBlogs']=$sideblogcategory;
 
         return view('website.blogdetail',$data);
     }

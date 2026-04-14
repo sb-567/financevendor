@@ -198,7 +198,7 @@
 
      <script src="{{ asset('wassets/assets/js/vendors/modernizr-3.6.0.min.js')}}"></script>
     <script src="{{ asset('wassets/assets/js/vendors/jquery-3.7.1.min.js')}}"></script>
-    <script src="{{ asset('wassets/assets/js/vendors/jquery-migrate-3.3.0.min.js')}}"></script>
+    {{-- <script src="{{ asset('wassets/assets/js/vendors/jquery-migrate-3.3.0.min.js')}}"></script> --}}
     <!-- <script src="{{ asset('wassets/assets/js/vendors/bootstrap.bundle.min.js')}}"></script> -->
     <script src="{{ asset('wassets/assets/js/vendors/waypoints.js')}}"></script>
     <script src="{{ asset('wassets/assets/js/vendors/wow.js')}}"></script>
