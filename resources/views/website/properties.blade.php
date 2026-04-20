@@ -64,36 +64,51 @@
               </div>
             </div> --}}
             <div class="row ">
-              <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
-                <div class="product-item-2 hover-up"><a href="{{ route('propertydetail') }}">
-                    <div class="product-image1"><img src="{{ asset('wassets/assets/imgs/p1.jpg')}}" alt="agon"></div></a>
-                  
-                  <div class="product-info">
-                    <span class="text-body-small color-gray-500 font-bold"><i class="fi fi-rr-location-alt"></i> Mumbai</span>
-                    {{-- <span class="text-body-small color-gray-500 font-bold"><i class="fi fi-rr-user"></i> Agent</span> --}}
-                    <a href="#"><h3 class="text-body-lead color-gray-900">3bhk Bangalow Sea facing</h3></a>
-                    
-                      
-                      <div class="property-meta mt-2 mb-3">
-                        <span>3bhk</span> |
-                        <span>Andheri West</span> |
-                        <span>West Direction face</span> 
-                        
-                    </div>
+             @foreach($propertiesdata as $property)
+<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+    <div class="product-item-2 hover-up">
 
-                    <div class="d-flex justify-content-between mt-20">
-                      <h4 class="text-body-lead2"><i class="fi fi-rr-user"></i> Agent, lastname </h4>
-                      <h4 class="text-body-lead2"><i class="fi fi-rr-phone-call"></i> xxxxxxx589 </h4>
-                    </div>
-                    
-                    
-                      {{-- <div class="box-prices">Sale</div>  --}}
-                      <a class="btn btn-cart" href="#">Contact</a>
-                  </div>
-                </div>
-              </div>
+        <a href="{{ route('propertydetail', $property->id) }}">
 
-              <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+          @php
+              $images = json_decode($property->property_images, true);
+          @endphp
+            <div class="product-image1">
+                @if (!empty($images) && is_array($images) && count($images) > 0)
+                    <img src="{{ asset('public/uploads/vendors/properties/' . $images[0]) }}" alt="{{ $property->property_name }}">
+                @else
+                    <img src="https://placehold.co/400x300?text=Property+Image" alt="Default Image">
+                @endif
+            </div>
+        </a>
+
+        <div class="product-info">
+
+            <span>
+                <i class="fi fi-rr-location-alt"></i> {{ $property->city }}
+            </span>
+
+            <h3 class="text-body-lead color-gray-900">{{ $property->property_name }}</h3>
+
+            <div class="property-meta">
+                <span>{{ $property->apartment_type }}</span> |
+                <span>{{ $property->area }}</span> |
+                <span>{{ $property->facing_direction }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mt-2">
+                <span class="text-body-lead2"><i class="fi fi-rr-user"></i> {{ $property->vendor_name }}</span>
+                {{-- <span><i class="fi fi-rr-phone-call"></i> {{ $property->vendor_mobile }}</span> --}}
+            </div>
+
+            <a class="btn btn-cart mt-2" href="#">Contact</a>
+
+        </div>
+    </div>
+</div>
+@endforeach
+
+              {{-- <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="product-item-2 hover-up"><a href="#">
                     <div class="product-image1"><img src="{{ asset('wassets/assets/imgs/p2.jpg')}}" alt="agon"></div></a>
                   
@@ -112,13 +127,12 @@
                       <h4 class="text-body-lead2"><i class="fi fi-rr-phone-call"></i> xxxxxxx589 </h4>
                     </div>
 
-                    {{-- <div class="d-flex mt-20">
-                      <div class="box-prices">Sale</div> --}}
+                    
                       <a class="btn btn-cart" href="#">Contact</a>
-                    {{-- </div> --}}
+                    
                   </div>
                 </div>
-              </div>
+              </div> --}}
 
 
               
@@ -133,8 +147,44 @@
                 <li><a class="next-page" href="#"></a></li>
               </ul>
             </div> --}}
+
+            <div class="paginations mt-4">
+              <ul class="pager">
+
+                  {{-- Previous --}}
+                  @if ($propertiesdata->onFirstPage())
+                      <li><a class="prev-page disabled"></a></li>
+                  @else
+                      <li>
+                          <a class="prev-page" href="{{ $propertiesdata->previousPageUrl() }}"></a>
+                      </li>
+                  @endif
+
+                  {{-- Pages --}}
+                  @foreach ($propertiesdata->getUrlRange(1, $propertiesdata->lastPage()) as $page => $url)
+                      <li>
+                          <a href="{{ $url }}" class="{{ $page == $propertiesdata->currentPage() ? 'active' : '' }}">
+                              {{ $page }}
+                          </a>
+                      </li>
+                  @endforeach
+
+                  {{-- Next --}}
+                  @if ($propertiesdata->hasMorePages())
+                      <li>
+                          <a class="next-page" href="{{ $propertiesdata->nextPageUrl() }}"></a>
+                      </li>
+                  @else
+                      <li><a class="next-page disabled"></a></li>
+                  @endif
+
+              </ul>
+          </div>
           </div>
           <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 dr-ltr">
+
+            <form method="GET" action="{{ route('propertieslist') }}">
+
             <div class="sidebar">
               <div class="widget-title">
                 <h3 class="text-heading-5 color-gray-900">Filter items</h3>
@@ -146,17 +196,23 @@
                 <ul class="list-type">
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">Rent</span><span class="checkmark"></span>
+                      <input type="checkbox" name="price_type[]" value="1" 
+                      {{ in_array('1', request()->price_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">Rent</span><span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">Sale</span><span class="checkmark"></span>
+                      <input type="checkbox" name="price_type[]" value="2"
+                      {{ in_array('2', request()->price_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">Sale</span><span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">Lease</span><span class="checkmark"></span>
+                      <input type="checkbox" name="price_type[]" value="3"
+                      {{ in_array('3', request()->price_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">Lease</span><span class="checkmark"></span>
                     </label>
                   </li>
 
@@ -165,22 +221,30 @@
                 <ul class="list-type">
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">1Rk</span><span class="checkmark"></span>
+                      <input type="checkbox" name="apartment_type[]" value="1"
+                      {{ in_array('1', request()->apartment_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">1Rk</span><span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">1Bhk</span><span class="checkmark"></span>
+                      <input type="checkbox" name="apartment_type[]" value="2"
+                      {{ in_array('2', request()->apartment_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">1Bhk</span><span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">2Bhk</span><span class="checkmark"></span>
+                      <input type="checkbox" name="apartment_type[]" value="3"
+                      {{ in_array('3', request()->apartment_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">2Bhk</span><span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                     <label class="cb-container text-body-text color-gray-500">
-                      <input type="checkbox"><span class="text-lbl">3Bhk</span><span class="checkmark"></span>
+                      <input type="checkbox" name="apartment_type[]" value="4"
+                      {{ in_array('4', request()->apartment_type ?? []) ? 'checked' : '' }}
+                      ><span class="text-lbl">3Bhk</span><span class="checkmark"></span>
                     </label>
                   </li>
                   
@@ -190,14 +254,19 @@
                 <ul class="list-type">
                   <li>
                     <label class="cb-container">
-                      <input type="radio" name="parking_avalible" value="yes">
+                      <input type="radio" name="parking_avalible[]" value="1"
+                      {{ in_array('1', request()->parking_avalible ?? []) ? 'checked' : '' }}
+                      >
                       <span class="text-lbl">Yes</span>
                       <span class="checkmark"></span>
                     </label>
                   </li>
                   <li>
                    <label class="cb-container">
-                    <input type="radio" name="parking_avalible" value="no">
+                    <input type="radio" name="parking_avalible[]" value="0"
+                    
+                    {{ in_array('0', request()->parking_avalible ?? []) ? 'checked' : '' }}
+                    >
                     <span class="text-lbl">No</span>
                     <span class="checkmark"></span>
                     </label>
@@ -208,6 +277,7 @@
                
               </div>
             </div>
+            </form>
          
           
           </div>
@@ -219,4 +289,27 @@
   </main>
 
 
+@endsection
+
+
+
+@section('customscript')
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.querySelector("form");
+
+    // all inputs inside sidebar
+    const inputs = form.querySelectorAll("input");
+
+    inputs.forEach(input => {
+        input.addEventListener("change", function () {
+            form.submit();
+        });
+    });
+
+});
+</script>
+    
 @endsection

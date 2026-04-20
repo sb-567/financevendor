@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Website\HomeController;
+use App\Http\Controllers\Website\PropertyController;
 use App\Http\Controllers\Website\BlogController;
 
 
@@ -26,9 +27,12 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 Route::get('about-us',[HomeController::class, 'aboutus'])->name('aboutus');
 Route::get('contactus',[HomeController::class, 'contactus'])->name('contactus');
 
-Route::get('propertieslist',[HomeController::class, 'getproperties'])->name('propertieslist');
-Route::get('propertydetail',[HomeController::class, 'getpropertydetail'])->name('propertydetail');
+Route::get('direct-real-estate-agent-contact',[HomeController::class, 'direct_real_estate_agent_contact'])->name('direct_real_estate_agent_contact');
 
+Route::get('propertieslist',[PropertyController::class, 'getproperties'])->name('propertieslist');
+Route::get('propertydetail',[PropertyController::class, 'getpropertydetail'])->name('propertydetail');
+
+Route::get('agentlist',[HomeController::class, 'getagentlist'])->name('agentlist');
 
 Route::get('bloglist',[BlogController::class, 'getblog'])->name('bloglist');
 Route::get('blog-detail/{slug}',[BlogController::class, 'getblogdetail'])->name('blogdetail');

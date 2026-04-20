@@ -27,8 +27,27 @@ class HomeController extends Controller
          $data['title']='Contact Us';
     return view('website.contact',$data);
     }
+  
+  
+  
+    public function direct_real_estate_agent_contact(){
+         $data['title']='Direct Real Estate Agent Contact | Connect With Agents Directly | LocalAgent';
+         $data['description']='Connect directly with verified real estate agents through LocalAgent. No middlemen, no referral chains, and no unnecessary communication barriers.';
+         $data['keywords']='direct real estate agent contact, connect with real estate agents, local real estate agents, verified agents, LocalAgent';
+        $data['page_title']='Direct Real Estate Agent Contact';
+    return view('website.whylocalagent.direct_real_estate_agent_contact',$data);
+    }
+
+
+    public function getagentlist(){
+         $data['title']='Agent List';
+        return view('website.agent',$data);
+    }
+
+
     
     public function getproperties(){
+        
          $data['title']='Properties List';
         return view('website.properties',$data);
     }

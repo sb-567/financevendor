@@ -91,8 +91,8 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-5 mb-30"><span class="tag-1 color-gray-900">Built Exclusively For You</span>
-              <h3 class="text-heading-1 mt-30">Don&rsquo;t take our word for it. See what our clients say.</h3>
-              <p class="text-body-lead-large color-gray-600 mt-30">Aliquam a augue suscipit, luctus neque purus ipsum neque at dolor primis libero tempus, blandit</p>
+              <h3 class="text-heading-1 color-white mt-30">Don&rsquo;t take our word for it. See what our clients say.</h3>
+              <p class="text-body-lead-large color-white mt-30">Aliquam a augue suscipit, luctus neque purus ipsum neque at dolor primis libero tempus, blandit</p>
               <div class="mt-40"><a class="btn btn-default btn-white icon-arrow-right" href="page-service-2.html">Learn More</a></div>
             </div>
             <div class="col-lg-7">
@@ -146,7 +146,7 @@
         <div class="container mt-120">
           <div class="row">
             <div class="col-lg-6 col-sm-12 block-img-we-do"><img class="bdrd-16 img-responsive" src="{{ asset('wassets/assets/imgs/page/about/3/img-2.png')}}" alt="Agon"></div>
-            <div class="col-lg-6 col-sm-12 block-we-do"><span class="tag-1 bg-6 color-green-900">What We Do, What You Get</span>
+            <div class="col-lg-6 col-sm-12 block-we-do"><span class="tag-1 text-black">What We Do, What You Get</span>
               <h3 class="text-heading-1 mt-30">An Exceptionally unique experience Tailored to you</h3>
               <p class="text-body-lead-large color-gray-600 mt-30">In a professional context it often happens that private or corporate clients order a publication news while still not being ready. Business advisory service advises current and future businesses prospects of a client</p>
               <div class="line-bd-green mt-50"></div>

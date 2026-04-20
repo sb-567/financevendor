@@ -39,6 +39,10 @@
             box-shadow: 0 0px 15px #bababa;
 }
 
+.btn:hover{
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
     .hero {
       padding: 200px 0;
       position: relative;
@@ -105,7 +109,7 @@
 
 .curved-connector {
      position: absolute;
-    top: 23%;
+    top: 29%;
     left: 22.5%;
     width: 55%;
     height: 211px;
@@ -193,7 +197,11 @@
     }
     .how-it-works h2 {
       font-weight: 700;
-      margin-bottom: 50px;
+      /* margin-bottom: 50px; */
+    }
+    .how-it-works p {
+      /* font-weight: 700; */
+      margin-bottom: 100px !important;
     }
     .step {
       position: relative;
@@ -470,7 +478,14 @@
       width: 100%;
       padding: 8px;
       border-radius: 5px;
+
     }
+    .subscribe-btn svg{
+          width: 17px;
+      height: 17px;
+      margin-right: 1px;
+    }
+
     .footer-bottom {
       border-top:1px solid rgb(255 255 255 / 30%);
       padding-top: 20px;

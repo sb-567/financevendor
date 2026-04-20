@@ -10,8 +10,8 @@
           <!-- Left Content -->
           <div class="col-lg-6">
             <h1 class="fw-bold">
-              Find Your <span class="text-success">Local</span><br />
-              Real Estate <span class="text-danger">Agent</span>
+              Find <span class="text-success">Trusted</span> Real Estate
+               <span class="text-danger">Agent</span> Near You
             </h1>
             <p class="text-muted">Local Experts. Real Results.</p>
 
@@ -52,15 +52,15 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Search by location..."
+                placeholder="Search by Area, Locality, or City"
               />
-              <button class="btn btn-warning fw-bold">Find Local Agents</button>
+              <button class="btn btn-warning fw-bold">Find Verified Agents</button>
             </div>
 
             <!-- Ratings Info -->
             <p class="mt-3 text-muted small">
-              ⭐ 4.8/5 Average Agent Rating &nbsp; | &nbsp; Over 1,352 verified
-              agents &nbsp; | &nbsp; Free To Use
+              ⭐ 4.8/5 Average Agent Rating &nbsp;|&nbsp; Verified Local Experts
+               &nbsp;|&nbsp; 100% Free for Property Seekers
             </p>
           </div>
 
@@ -101,7 +101,8 @@
 
     <section class="how-it-works py-5 position-relative">
       <div class="container text-center">
-        <h2 class="fw-bold mb-5">How It Works!</h2>
+        <h2 class="fw-bold ">How It Works!</h2>
+        <p class="mb-5">Simple, transparent, and built for property seekers.</p>
 
         <!-- 
       <svg class="curved-connector" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
@@ -182,10 +183,9 @@
                 >1</span
               >
             </div>
-            <h5 class="fw-bold">Search</h5>
+            <h5 class="fw-bold">Search by Area</h5>
             <p class="text-muted">
-              Enter your preferred location to find experienced agents in your
-              neighborhood.
+              Enter your locality or city to discover verified real estate agents nearby.
             </p>
           </div>
 
@@ -217,10 +217,9 @@
                 >2</span
               >
             </div>
-            <h5 class="fw-bold">Compare</h5>
+            <h5 class="fw-bold">Compare Agents</h5>
             <p class="text-muted">
-              Browse through verified agent profiles, check their specialties,
-              areas served, and contact details.
+              Review verified profiles, ratings, specialties, and service areas before choosing.
             </p>
           </div>
 
@@ -252,10 +251,9 @@
                 >3</span
               >
             </div>
-            <h5 class="fw-bold">Connect</h5>
+            <h5 class="fw-bold">Connect Directly</h5>
             <p class="text-muted">
-              Call, WhatsApp, or email the agent directly. No middleman, no
-              extra charges.
+              Contact your chosen agent instantly via call, WhatsApp, or email—no middlemen involved.
             </p>
           </div>
         </div>
@@ -289,7 +287,8 @@
       "
     >
       <div class="container text-center">
-        <h2 class="fw-bold">Popular Location</h2>
+        {{-- <h2 class="fw-bold">Popular Location</h2> --}}
+        <h2 class="fw-bold">Find Real Estate Agents by Area</h2>
 
         <div class="row">
           <div class="col-md-3 col-sm-6 mb-5">
@@ -299,7 +298,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Mira Road East</h5>
                 <p class="text-white">120 Agents</p>
               </div>
 
@@ -333,7 +332,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Bhayandar West</h5>
                 <p class="text-muted">120 Agents</p>
               </div>
 
@@ -367,7 +366,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold text-white">New York</h5>
+                <h5 class="fw-bold text-white">Bhayandar East</h5>
                 <p class="text-white">120 Agents</p>
               </div>
 
@@ -401,7 +400,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Shanti Park</h5>
                 <p class="text-muted">120 Agents</p>
               </div>
 
@@ -438,7 +437,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold text-white">New York</h5>
+                <h5 class="fw-bold text-white">Shanti Park </h5>
                 <p class="text-white">120 Agents</p>
               </div>
 
@@ -472,7 +471,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Maxus Mall Area</h5>
                 <p class="text-muted">120 Agents</p>
               </div>
 
@@ -506,7 +505,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Padmavati Nagar</h5>
                 <p class="text-white">120 Agents</p>
               </div>
 
@@ -540,7 +539,7 @@
               <img src="{{ asset('wassets/img/s1.png')}}" alt="Delhi" class="location-icon" />
 
               <div class="text-start pt-3">
-                <h5 class="fw-bold">New York</h5>
+                <h5 class="fw-bold">Indralok</h5>
                 <p class="text-muted">120 Agents</p>
               </div>
 
@@ -687,11 +686,9 @@
           <!-- Text Column -->
           <div class="col-md-6">
             <div class="local-agent-text">
-              <h2>Are you a <span class="highlight">Local Agent</span>?</h2>
+              <h2>Every Agent Is <span class="highlight">Verified</span> Before Listing.</h2>
               <p>
-                Grow your real estate business by joining our trusted community
-                of local agents. Get discovered by homebuyers and sellers
-                searching in your neighborhood.
+                Every agent listed on LocalAgent goes through a manual verification process to ensure they meet our standards for professionalism, local expertise, and trustworthiness before being approved.
               </p>
               <a href="#herosection" class="join-btn">Search Now</a>
             </div>
