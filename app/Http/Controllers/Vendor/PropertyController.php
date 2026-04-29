@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session; 
+use Illuminate\Support\Str;
 
 use App\Exports\LeadExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -166,6 +167,7 @@ class PropertyController extends Controller
                 ->where('id', $request->input('id'))
                 ->update([
                     'property_name'        => $request->input('property_name'),
+                    // 'property_slug'        => Str::slug($request->input('property_name')),
                     'vendor_id'            => $vendor_id,
                     'status'               => $request->input('status'),
                     'facing_direction'     => $request->input('facing_direction'),
@@ -184,6 +186,7 @@ class PropertyController extends Controller
             // Insert
             DB::table('tbl_properties')->insert([
                 'property_name'        => $request->input('property_name'),
+                'property_slug'        => Str::slug($request->input('property_name')),
                 'vendor_id'            => $vendor_id,
                 'status'               => $request->input('status'),
                 'facing_direction'     => $request->input('facing_direction'),
