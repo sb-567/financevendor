@@ -30,7 +30,7 @@ Route::get('contactus',[HomeController::class, 'contactus'])->name('contactus');
 Route::get('direct-real-estate-agent-contact',[HomeController::class, 'direct_real_estate_agent_contact'])->name('direct_real_estate_agent_contact');
 
 Route::get('propertieslist',[PropertyController::class, 'getproperties'])->name('propertieslist');
-Route::get('propertydetail',[PropertyController::class, 'getpropertydetail'])->name('propertydetail');
+Route::get('propertydetail/{slug}',[PropertyController::class, 'getpropertydetail'])->name('propertydetail');
 
 Route::get('agentlist',[HomeController::class, 'getagentlist'])->name('agentlist');
 

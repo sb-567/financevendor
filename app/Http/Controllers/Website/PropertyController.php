@@ -9,7 +9,20 @@ use Carbon\Carbon;
 
 class PropertyController extends Controller
 {
-    
+    protected $apartment_type = [
+        '1' => '1BHK',
+        '2' => '2BHK',
+        '3' => '3BHK',
+        '4' => '4BHK',
+        '5' => '5BHK',
+    ];
+    protected $property_type = [
+        '1' => 'Rent',
+        '2' => 'Sale',
+        '3' => 'Lease',
+    ];
+
+
     public function getproperties(Request $request)
     {
         $data['title'] = 'Properties List';
@@ -50,16 +63,20 @@ class PropertyController extends Controller
         return view('website.properties', $data);
     }
     
-     public function getpropertydetail($id)
+     public function getpropertydetail(Request $request)
     {
         $data['title'] = 'Property Detail';
 
         $data['property'] = DB::table('tbl_properties as p')
             ->leftJoin('tbl_vendors as v', 'v.id', '=', 'p.vendor_id')
-            ->select('p.*', 'v.name as vendor_name', 'v.mobile as vendor_mobile')
-            ->where('p.id', $id)
+            ->select('p.*', 'v.name as vendor_name', 'v.phone as vendor_mobile')
+            ->where('p.property_slug', $request->slug)
             ->first();
-
+        // echo "<pre>";
+        // print_r($this->apartment_type);
+        // die;
+        $data['apartmentTypes'] = $this->apartment_type;
+        $data['propertyTypes'] = $this->property_type;
         return view('website.propertydetail', $data);
     }
     

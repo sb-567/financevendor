@@ -19,7 +19,7 @@
   <section class="section-box">
         <div class="banner-hero banner-breadcrums">
           <div class="container text-center">
-            <h1 class="text-heading-2 color-gray-1000 mb-20">Properties details</h1>
+            <h1 class="text-heading-2 color-gray-1000 mb-20">{{ $property->property_name }}</h1>
             
 
             <nav aria-label="breadcrumb">
@@ -29,7 +29,7 @@
                         </li>
                         <li class="breadcrumb-item" aria-current="page"><a href="page-portfolio-grid-1.html" >Properties</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Properties details
+                            {{ $property->property_name }}
                         </li>
                     </ul>
                 </nav>
@@ -53,25 +53,38 @@
             <div class="col-lg-10 mx-auto">
               
              <div class="swiper mySwiper">
-  <div class="swiper-wrapper">
-    
-   
-    
-    <div class="swiper-slide">
-      <img src="{{ asset('wassets/assets/imgs/p2.jpg')}}" />
-    </div>
-    
-    <div class="swiper-slide">
-      <img src="{{ asset('wassets/assets/imgs/p1.jpg')}}" />
-    </div>
+              <div class="swiper-wrapper">
+                
+              
+              @php
+                $images = json_decode($property->property_images, true);
+              @endphp
+              @if(!empty($images))
+                @foreach($images as $image)   
+                  @if(!empty($image) && file_exists(public_path('uploads/vendors/properties/'.$image)))
+                    <div class="swiper-slide">
+                      <img src="{{ asset('public/uploads/vendors/properties/'.$image)}}" />
+                    </div>
+                    @endif
+                @endforeach
+              @else
+                <div class="swiper-slide">
+                  <img src="{{ asset('wassets/assets/imgs/p2.jpg')}}" />
+                </div>
+              @endif
 
-  </div>
+                
+                {{-- <div class="swiper-slide">
+                  <img src="{{ asset('wassets/assets/imgs/p1.jpg')}}" />
+                </div> --}}
 
-  <!-- Pagination -->
-  <div class="swiper-pagination"></div>
+              </div>
 
- 
-</div>
+              <!-- Pagination -->
+              <div class="swiper-pagination"></div>
+
+            
+            </div>
 
                 {{-- <div id="carouselExampleFade" class="carousel slide carousel-fade">
                   <div class="carousel-inner">
@@ -106,7 +119,7 @@
           <div class="container text-center">
             <div class="row">
               <div class="col-lg-12">
-                <h1 class="text-display-3 color-gray-900 ">Real Estate UI/UX kit</h1>
+                <h1 class="text-display-3 color-gray-900 ">{{ $property->property_name }}</h1>
                 {{-- <p class="text-heading-6 color-gray-600 ">Streamlined, Modern, and User-Friendly<br class="d-lg-block d-none"> Design for Real Estate Platforms.</p> --}}
               </div>
             </div>
@@ -123,36 +136,36 @@
 
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"> <i class="fi fi-rr-info"></i> Agent</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15">AliThemes Coporation</p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->vendor_name }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"> <i class="fi fi-rr-info"></i> City</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15">January 2025</p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->city }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Area</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15">UI/UX design, Branding</p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->area }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Property Type</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15"><a href="https://alithemes.com">https://alithemes.com</a></p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $propertyTypes[$property->price_type] ?? 'N/A' }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Apartment Type</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15"><a href="https://alithemes.com">https://alithemes.com</a></p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $apartmentTypes[$property->apartment_type] ?? 'N/A' }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Facing Direction</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15"><a href="https://alithemes.com">https://alithemes.com</a></p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->facing_direction }}</p>
                 </div>
 
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Parking Availablity</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15"><a href="https://alithemes.com">https://alithemes.com</a></p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->parking_availability }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> No of Bathroom</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15"><a href="https://alithemes.com">https://alithemes.com</a></p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->no_of_bathroom }}</p>
                 </div>
               </div>
               

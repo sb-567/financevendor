@@ -68,7 +68,7 @@
 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
     <div class="product-item-2 hover-up">
 
-        <a href="{{ route('propertydetail', $property->id) }}">
+        <a href="{{ route('propertydetail', $property->property_slug) }}">
 
           @php
               $images = json_decode($property->property_images, true);
@@ -91,7 +91,7 @@
             <h3 class="text-body-lead color-gray-900">{{ $property->property_name }}</h3>
 
             <div class="property-meta">
-                <span>{{ $property->apartment_type }}</span> |
+                <span>{{ $data['apartment_type'][$property->apartment_type] ?? $property->apartment_type }}</span> |
                 <span>{{ $property->area }}</span> |
                 <span>{{ $property->facing_direction }}</span>
             </div>
