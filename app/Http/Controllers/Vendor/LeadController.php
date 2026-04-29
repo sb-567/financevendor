@@ -107,6 +107,9 @@ class LeadController extends Controller
             $dataTable->editColumn('created_at', function ($row) {
                 return date('d-m-Y h:i a', strtotime($row->created_at));
             });
+            $dataTable->editColumn('lead_type', function ($row) {
+                return $row->lead_type == 0 ? 'Agent' : 'Property';
+            });
     
             
          

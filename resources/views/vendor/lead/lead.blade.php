@@ -60,6 +60,7 @@
                                     </th>
                                     
                              
+                                    <th>Lead Type</th>
                                     <th>Lead Name</th>
                                     <th>Lead Email</th>
                                     <th>Lead Mobile Number</th>
@@ -147,6 +148,7 @@
             },  // You can't use Laravel's blade syntax in JS, use route helper
                 columns: [
                     { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false, className: 'action' }, // Checkbox as first column
+                    { data: 'lead_type', name: 'lead_type' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
                     { data: 'phone', name: 'phone' },
