@@ -324,7 +324,7 @@
                         }
                     });
                      $.ajax({
-                        url: "{{ route('deleteselectedlead') }}",
+                        url: "{{ route('vendors.deleteselectedlead') }}",
                          type: 'POST',
                          data:{
                                 items: items
