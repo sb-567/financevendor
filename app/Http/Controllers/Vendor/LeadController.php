@@ -31,8 +31,9 @@ class LeadController extends Controller
          $vendor_id = session('vid');
 
         $query = DB::table('tbl_leads')
-            ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name')
+            ->select('tbl_leads.*', 'tbl_vendors.name as vendor_name', 'tbl_properties.property_name')
             ->leftJoin('tbl_vendors', 'tbl_vendors.id', '=', 'tbl_leads.vendor_id')
+            ->leftJoin('tbl_properties', 'tbl_properties.id', '=', 'tbl_leads.property_id')
             ->orderBy('tbl_leads.id', 'desc');
 
         // if ($request->vendor_id) {
@@ -87,14 +88,24 @@ class LeadController extends Controller
             });
             // Action column
             $dataTable->addColumn('action', function ($row) {
+                    if($row->lead_type == 0){
                         $message = "Name: {$row->name}
                                     Email: {$row->email}
                                     Phone: {$row->phone}
                                     Area: {$row->area_name}
                                     City: {$row->city_name}
                                     Local Area: {$row->local_area_name}";
+                    } else {
+                        $message = "Name: {$row->name}
+                                    Email: {$row->email}
+                                    Phone: {$row->phone}
+                                    Property Name: {$row->property_name}
+                                    Area: {$row->area_name}
+                                    City: {$row->city_name}
+                                    Local Area: {$row->local_area_name}";  
+                    }
                         return '<div class="d-flex">
-                                    <a href="https://wa.me/'.$row->phone.'?text='.urlencode($message).'" class="btn btn-sm btn-success me-2"> Whatsapp </a>
+                                    <a href="https://wa.me/'.$row->phone.'?text='.urlencode($message).'" target="_blank" class="btn btn-sm btn-success me-2"> Whatsapp </a>
                         
                        
                                     <button type="button" onclick="viewdata(' . $row->id.')"  class="btn btn-sm btn-primary me-2"> View</button>
@@ -249,7 +260,24 @@ class LeadController extends Controller
      public function leadview(Request $request){
 
         $data['title']="Lead View";
-        $lead=DB::table('tbl_leads')->where('id','=',$request->id)->first();
+        $query=DB::table('tbl_leads as l')
+                ->select('l.*','p.property_name')
+                ->Leftjoin('tbl_properties as p', 'p.id', '=', 'l.property_id')
+                ->where('l.id','=',$request->id);
+
+                // Print SQL
+//         $sql = $query->toSql();
+// $bindings = $query->getBindings();
+
+// // Replace ? with actual values
+// $fullQuery = vsprintf(
+//     str_replace('?', "'%s'", $sql),
+//     $bindings
+// );
+
+// dd($fullQuery);
+        // Execute after debugging
+        $lead = $query->first();
 
         if (!$lead) {
             return response()->json([
@@ -264,6 +292,15 @@ class LeadController extends Controller
                     $lead->name   = $this->maskName($lead->name);
                     $lead->email  = $this->maskEmail($lead->email);
                     $lead->phone = $this->maskPhone($lead->phone);
+                    
+                    $lead->property_name = $lead->property_name;
+
+                    if($lead->lead_type == 0){
+                        $lead->lead_type   = 'Agent';
+                    } else {
+                        $lead->lead_type = 'Property';
+                    }
+                    
             }
         }
         return response()->json([

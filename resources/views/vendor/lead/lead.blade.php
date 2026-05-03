@@ -100,6 +100,8 @@
 
        <div class="row g-3">
   
+  <div class="col-md-6"><strong>Lead Type:</strong> <span id="lead_type"></span></div>
+  <div class="col-md-6"><strong>Property:</strong> <span id="property_name"></span></div>
   <div class="col-md-6"><strong>Lead Name:</strong> <span id="lead_name"></span></div>
   <div class="col-md-6"><strong>Lead Email:</strong> <span id="lead_email"></span></div>
   <div class="col-md-6"><strong>Lead Mobile:</strong> <span id="lead_mobile"></span></div>
@@ -210,6 +212,8 @@
                     },
                     success: function (res) {
                         if (res.success) {
+                            $('#lead_type').text(res.data.lead_type);
+                            $('#property_name').text(res.data.property_name);
                             $('#agent_name').text(res.data.agent_name);
                             $('#lead_name').text(res.data.name);
                             $('#lead_email').text(res.data.email);
