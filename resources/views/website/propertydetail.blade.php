@@ -9,6 +9,78 @@
 .swiper-pagination{
   position: absolute;
 }
+body.modal-open {
+    overflow-y: auto !important;
+    padding-right: 0 !important;
+}
+
+
+
+.modal-content {
+    background: #ffffff;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 16px;
+    border: none;
+    overflow: hidden;
+}
+
+/* Top brand strip */
+.modal-content::before {
+    content: "";
+    display: block;
+    height: 5px;
+    background: linear-gradient(90deg, #4CAF50, #F4A261);
+}
+
+/* Inputs */
+.form-control {
+    border: 1.5px solid #d1d1d1 !important;
+    padding: 14px;
+}
+
+/* Focus effect (Green theme) */
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+}
+
+/* Floating label */
+.form-floating > label {
+    color: #777;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    color: #4CAF50;
+}
+
+/* Primary Button (Green Gradient) */
+.btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #66bb6a);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #43a047, #5cb860);
+}
+
+/* Cancel Button */
+.btn-light {
+    background: #f5f5f5;
+    color: #333;
+    border-radius: 10px;
+}
+
+/* Header text */
+.modal-title {
+    color: #333;
+    font-weight: 600;
+}
 </style>
 @endsection
 
@@ -161,7 +233,7 @@
 
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> Parking Availablity</h4>
-                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->parking_availability }}</p>
+                  <p class="text-body-excerpt color-gray-600 mt-15">{{ $property->parking_availability == 1 ? 'Yes' : 'No' }}</p>
                 </div>
                 <div class="col-lg-3 col-sm-6 col-12 mt-50">
                   <h4 class="text-heading-6 icon-leaf"><i class="fi fi-rr-info"></i> No of Bathroom</h4>
@@ -201,7 +273,7 @@
                   <div class="border-bottom mt-50 mb-50"></div> --}}
                   <div class="media-block text-center mb-50">
                     {{-- <a class="btn btn-green-900 color-white text-heading-6 icon-arrow-right-white mr-20" href="page-signup.html">Get a Quote</a> --}}
-                    <a class="btn btn-default icon-arrow-right" href="">Contact Us</a>
+                    <a class="btn btn-default icon-arrow-right" data-bs-toggle="modal" data-bs-target="#exampleModal">Contact Us</a>
                     <!-- <div class="float-start float-lg-end mt-30"><a class="btn btn-media mr-10" href="#"><img src="assets/imgs/template/icons/facebook-share.svg" alt="Agon"> Share</a><a class="btn btn-media mr-10" href="#"><img src="assets/imgs/template/icons/twitter-share.svg" alt="Agon"> Tweet</a><a class="btn btn-media" href="#"><img src="assets/imgs/template/icons/pinterest-share.svg" alt="Agon"> Pin</a></div> -->
                   </div>
                 </div>
@@ -212,7 +284,60 @@
       </div>
       
      
-    
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 rounded-4 shadow-lg">
+
+      <!-- Header -->
+      <div class="modal-header border-0 px-4 pb-4 d-flex justify-content-between">
+        <h5 class="modal-title fw-bold">Get in Touch</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body pt-3 px-4">
+        <form method="post" action="{{ route('enquirysubmit') }}" id="contactForm">
+          @csrf
+          <input type="hidden" name="property_id" value="{{ $property->id }}">
+          <input type="hidden" name="vendor_id" value="{{ $property->vendor_id }}">
+          <!-- Name -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control rounded-3" name="name" id="name" placeholder="Full Name" required>
+            <label for="name">Full Name</label>
+          </div>
+
+          <!-- Email -->
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control rounded-3" name="email" id="email" placeholder="Email" required>
+            <label for="email">Email Address</label>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-floating mb-3">
+            <input type="tel" class="form-control rounded-3" name="mobile" id="phone" placeholder="Phone" maxlength="10" required>
+            <label for="phone">Phone Number</label>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer border-0 px-4 pb-4 d-flex justify-content-between">
+        <button type="button" class="btn btn-light px-4 rounded-3" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="submit" form="contactForm" class="btn btn-primary px-4 rounded-3 shadow-sm">
+          Submit
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
     </main>
 
 @endsection

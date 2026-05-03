@@ -79,5 +79,31 @@ class PropertyController extends Controller
         $data['propertyTypes'] = $this->property_type;
         return view('website.propertydetail', $data);
     }
+
+    public function submitenquiry(Request $request)
+    {
+        // echo "<pre>";
+        // print_r($request->all());
+        // die;
+
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required',
+            // 'property_id' => 'required|exists:tbl_properties,id',
+            'vendor_id' => 'required|exists:tbl_vendors,id',
+        ]);
+
+        DB::table('tbl_leads')->insert([
+            // 'property_id' => $request->property_id,
+            'vendor_id' => $request->vendor_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->mobile,
+            'created_at' => Carbon::now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Your enquiry has been submitted successfully!');
+    }
     
 }

@@ -31,6 +31,7 @@ Route::get('direct-real-estate-agent-contact',[HomeController::class, 'direct_re
 
 Route::get('propertieslist',[PropertyController::class, 'getproperties'])->name('propertieslist');
 Route::get('propertydetail/{slug}',[PropertyController::class, 'getpropertydetail'])->name('propertydetail');
+Route::post('enquirysubmit',[PropertyController::class, 'submitenquiry'])->name('enquirysubmit');
 
 Route::get('agentlist',[HomeController::class, 'getagentlist'])->name('agentlist');
 
